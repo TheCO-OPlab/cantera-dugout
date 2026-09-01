@@ -101,6 +101,10 @@
     transform: translateY(-3px);
     box-shadow: 0 7px 16px rgba(0,0,0,0.18);
     border-color: var(--accent); }
+  /* A hovered card rises above its neighbours, so its tooltips are
+     never cut off by the card to the right. */
+  .pcard:hover, .pcard:focus-within,
+  .cand:hover, .cand:focus-within { z-index: 15; }
   @media (prefers-reduced-motion: reduce) {
     .pcard, .cand { transition: none !important; }
     .pcard:hover { transform: none !important; }
@@ -293,68 +297,68 @@
   .scorepop { animation: scorepop 700ms ease; display: inline-block; }
 </style>
 <div class="wrap">
-  <div class="eyebrow">Project Cantera &middot; playable feel-rig &middot; the engine in the repo is the source of truth</div>
-  <h1 style="margin-top:0.3rem">Cantera Dugout</h1>
+  <div class="eyebrow" data-str="app.eyebrow">Project Cantera &middot; playable feel-rig &middot; the engine in the repo is the source of truth</div>
+  <h1 style="margin-top:0.3rem" data-str="app.h1">Cantera Dugout</h1>
 
   <div id="setup" class="panel setup">
-    <h3>Take the touchline</h3>
-    <label>Your squad</label>
+    <h3 data-str="setup.title">Take the touchline</h3>
+    <label data-str="setup.squad.label">Your squad</label>
     <select id="sel-squadsrc">
-      <option value="preset">A preset lineup</option>
-      <option value="draft">Draft your own: sign ten players, three choices at a time</option>
+      <option value="preset" data-str="setup.squad.preset">A preset lineup</option>
+      <option value="draft" data-str="setup.squad.draft">Draft your own: sign ten players, three choices at a time</option>
     </select>
     <div id="preset-row">
-      <label>Lineup</label>
+      <label data-str="setup.lineup.label">Lineup</label>
       <select id="sel-you"></select>
     </div>
     <div class="actions" style="margin-top:1rem">
-      <button class="primary" id="btn-quick">Quick match</button>
-      <button class="primary" id="btn-cup">Cup run</button>
+      <button class="primary" id="btn-quick" data-str="setup.btn.quick">Quick match</button>
+      <button class="primary" id="btn-cup" data-str="setup.btn.cup">Cup run</button>
     </div>
     <details id="dev-options">
-      <summary>Dev options</summary>
-      <label>Opponent lineup (quick match; the cup draws its own opponents)</label>
+      <summary data-str="setup.dev.summary">Dev options</summary>
+      <label data-str="setup.dev.opp.label">Opponent lineup (quick match; the cup draws its own opponents)</label>
       <select id="sel-opp"></select>
-      <label>Card set</label>
+      <label data-str="setup.dev.cardset.label">Card set</label>
       <select id="sel-cardset">
-        <option value="v3">v3: the sheet rulings of 2026-08-31 (Tackle 12 everywhere, PRESSURE, Metronome, Gain, Rainbow Flick...)</option>
-        <option value="v1">v1: the previous set (Engine Run era, kept as the control)</option>
+        <option value="v3" data-str="setup.dev.cardset.v3">v3: the sheet rulings of 2026-08-31</option>
+        <option value="v1" data-str="setup.dev.cardset.v1">v1: the previous set</option>
       </select>
-      <label>Keyword family overlay (applies to the v1 set only; v3 carries its own keywords)</label>
+      <label data-str="setup.dev.family.label">Keyword family overlay (applies to the v1 set only; v3 carries its own keywords)</label>
       <select id="sel-family">
-        <option value="current">current grammar only</option>
-        <option value="pressure">+ PRESSURE (the one percentage status, applied in stacks)</option>
-        <option value="tactics">+ tactics (SHELVED: future coach abilities)</option>
-        <option value="mentality">+ mentality (SHELVED: a future class)</option>
+        <option value="current" data-str="setup.dev.family.current">current grammar only</option>
+        <option value="pressure" data-str="setup.dev.family.pressure">+ PRESSURE</option>
+        <option value="tactics" data-str="setup.dev.family.tactics">+ tactics</option>
+        <option value="mentality" data-str="setup.dev.family.mentality">+ mentality</option>
       </select>
-      <label>Keeper moments (ruling 2026-08-31: beat their score in their box and it is ALWAYS a goal; a tie or a miss by up to 4 becomes a save, spill or corner, and corners are real 5-a-side set-piece duels from all your current hands)</label>
-      <select id="sel-moments"><option value="on">on (current direction)</option><option value="off">off (no moments: near misses just fail)</option></select>
-      <label>Walkover rule (experimental: conceding while you still hold cards lets them carry the ball two lines)</label>
-      <select id="sel-walkover"><option value="off">off</option><option value="on">on</option></select>
-      <label>Morale (experimental: every duel lost takes the margin from your morale; every full step lost is one fewer card per duel)</label>
+      <label data-str="setup.dev.moments.label">Keeper moments</label>
+      <select id="sel-moments"><option value="on" data-str="setup.dev.moments.on">on (current direction)</option><option value="off" data-str="setup.dev.moments.off">off</option></select>
+      <label data-str="setup.dev.walkover.label">Walkover rule</label>
+      <select id="sel-walkover"><option value="off" data-str="setup.dev.opt.off">off</option><option value="on" data-str="setup.dev.opt.on">on</option></select>
+      <label data-str="setup.dev.morale.label">Morale</label>
       <select id="sel-morale">
-        <option value="off">off</option>
-        <option value="raw">raw (Eduardo's spec: full margin, step 20)</option>
-        <option value="rawfloor">raw with a floor (full margin, but never worse than -3 plays)</option>
-        <option value="tamed">tamed (loss capped at 8, winning lifts heads, step 25)</option>
+        <option value="off" data-str="setup.dev.opt.off">off</option>
+        <option value="raw" data-str="setup.dev.morale.raw">raw</option>
+        <option value="rawfloor" data-str="setup.dev.morale.rawfloor">raw with a floor</option>
+        <option value="tamed" data-str="setup.dev.morale.tamed">tamed</option>
       </select>
-      <label>Match seed (same seed replays the same match if you make the same choices; randomized each visit)</label>
+      <label data-str="setup.dev.seed.label">Match seed</label>
       <input id="sel-seed" class="mono" type="number" value="1" style="padding:0.35rem 0.5rem;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:8rem">
     </details>
-    <p class="note">You are always the responder: the opponent commits first, face up, every duel. Play up to as many cards as you have players in the ball's line, or concede the duel and keep your legs. Cards spend until half-time. You are never re-dealt: what you draw in a lane stays in your hand there for the whole half, and every return to that lane draws 2 more cards.</p>
+    <p class="note" data-str="setup.note">You are always the responder: the opponent commits first, face up, every duel.</p>
   </div>
 
   <div id="draft" class="panel" hidden>
-    <h3>Draft your squad</h3>
+    <h3 data-str="draft.title">Draft your squad</h3>
     <div id="draft-progress" class="mono" style="font-size:0.82rem; margin-top:0.3rem"></div>
     <div class="cards" id="draft-choices" style="margin-top:0.7rem"></div>
     <div id="draft-roster" class="mono" style="font-size:0.78rem; margin-top:0.9rem; line-height:1.55"></div>
   </div>
 
   <div id="bracket" class="panel" hidden>
-    <h3 id="bracket-title">The draw</h3>
+    <h3 id="bracket-title" data-str="bracket.title">The draw</h3>
     <div id="bracket-body" class="mono" style="font-size:0.8rem; line-height:1.6"></div>
-    <div class="actions"><button class="primary" id="btn-cup-next">Play your tie</button></div>
+    <div class="actions"><button class="primary" id="btn-cup-next" data-str="cup.btn.play">Play your tie</button></div>
   </div>
 
   <div id="game" hidden>
@@ -365,63 +369,76 @@
     </div>
     <div class="scoreboard" style="margin-top:-0.5rem">
       <span class="minute" id="sb-minute">1'</span>
-      <span class="pill" id="sb-phase">first half</span>
+      <span class="pill" id="sb-phase" data-str="match.phase.first">first half</span>
       <span class="minute" id="sb-turn"></span>
     </div>
     <div class="scoreboard" id="calls-row" style="margin-top:-0.4rem" hidden>
       <span class="pill" id="call-you"></span>
-      <span class="pill">team calls</span>
+      <span class="pill" data-str="match.teamcalls">team calls</span>
       <span class="pill" id="call-opp"></span>
     </div>
     <div class="scoreboard" id="morale-row" style="margin-top:-0.4rem" hidden>
       <span class="moralewrap"><span class="mono moralelabel" id="mor-you-n"></span><span class="moralebar"><span class="moralefill" id="mor-you"></span></span></span>
-      <span class="pill">morale</span>
+      <span class="pill" data-str="match.morale">morale</span>
       <span class="moralewrap"><span class="moralebar"><span class="moralefill" id="mor-opp"></span></span><span class="mono moralelabel" id="mor-opp-n"></span></span>
     </div>
     <div class="pitch" id="pitch"></div>
 
     <div class="panel" id="opp-panel">
-      <h3 id="opp-title">They commit</h3>
+      <h3 id="opp-title" data-str="match.commit.initial">They commit</h3>
       <div class="cards" id="opp-cards"></div>
       <div class="totalline" id="opp-total"></div>
     </div>
 
     <div class="panel" id="you-panel">
-      <h3 id="you-title">Your answer</h3>
+      <h3 id="you-title" data-str="match.answer.initial">Your answer</h3>
       <div class="cards" id="you-cards"></div>
       <div class="totalline" id="you-total"></div>
       <div class="actions">
-        <button class="primary" id="btn-play">Play selected</button>
-        <button id="btn-clear" hidden>Deselect all</button>
-        <button id="btn-concede">Concede the duel</button>
-        <button id="btn-next" hidden>Next duel</button>
-        <button id="btn-again" hidden>New match</button>
+        <button class="primary" id="btn-play" data-str="match.btn.play">Play selected</button>
+        <button id="btn-clear" hidden data-str="match.btn.clear">Deselect all</button>
+        <button id="btn-concede" data-str="match.btn.concede">Concede the duel</button>
+        <button id="btn-next" hidden data-str="match.btn.next">Next duel</button>
+        <button id="btn-again" hidden data-str="match.btn.again">New match</button>
       </div>
     </div>
 
-    <div class="panel ticker" id="ticker"><h3>Commentary</h3><div id="ticker-list"></div></div>
+    <div class="panel ticker" id="ticker"><h3 data-str="match.commentary">Commentary</h3><div id="ticker-list"></div></div>
   </div>
 </div>
 <div id="kw-modal" hidden>
   <div id="kw-box">
     <h3 id="kw-title"></h3>
     <p id="kw-body"></p>
-    <button id="kw-close">Got it</button>
+    <button id="kw-close" data-str="kwmodal.close">Got it</button>
   </div>
 </div>
 <div id="cardpop" hidden></div>
 <script>
 "use strict";
+// Every player-facing string lives in content/strings_en.json (one
+// file per locale, some day); the build injects it here. T fills the
+// {slots}. A missing key renders AS the key, loudly, so a broken
+// string is visible in play, never silent.
+const STR = {"app.title": "Cantera Dugout", "app.eyebrow": "Project Cantera \u00b7 playable feel-rig \u00b7 the engine in the repo is the source of truth", "app.h1": "Cantera Dugout", "setup.title": "Take the touchline", "setup.squad.label": "Your squad", "setup.squad.preset": "A preset lineup", "setup.squad.draft": "Draft your own: sign ten players, three choices at a time", "setup.lineup.label": "Lineup", "setup.btn.quick": "Quick match", "setup.btn.cup": "Cup run", "setup.dev.summary": "Dev options", "setup.dev.opp.label": "Opponent lineup (quick match; the cup draws its own opponents)", "setup.dev.cardset.label": "Card set", "setup.dev.cardset.v3": "v3: the sheet rulings of 2026-08-31 (Tackle 12 everywhere, PRESSURE, Metronome, Gain, Rainbow Flick...)", "setup.dev.cardset.v1": "v1: the previous set (Engine Run era, kept as the control)", "setup.dev.family.label": "Keyword family overlay (applies to the v1 set only; v3 carries its own keywords)", "setup.dev.family.current": "current grammar only", "setup.dev.family.pressure": "+ PRESSURE (the one percentage status, applied in stacks)", "setup.dev.family.tactics": "+ tactics (SHELVED: future coach abilities)", "setup.dev.family.mentality": "+ mentality (SHELVED: a future class)", "setup.dev.moments.label": "Keeper moments (ruling 2026-08-31: beat their score in their box and it is ALWAYS a goal; a tie or a miss by up to 4 becomes a save, spill or corner, and corners are real 5-a-side set-piece duels from all your current hands)", "setup.dev.moments.on": "on (current direction)", "setup.dev.moments.off": "off (no moments: near misses just fail)", "setup.dev.walkover.label": "Walkover rule (experimental: conceding while you still hold cards lets them carry the ball two lines)", "setup.dev.opt.on": "on", "setup.dev.opt.off": "off", "setup.dev.morale.label": "Morale (experimental: every duel lost takes the margin from your morale; every full step lost is one fewer card per duel)", "setup.dev.morale.raw": "raw (Eduardo's spec: full margin, step 20)", "setup.dev.morale.rawfloor": "raw with a floor (full margin, but never worse than -3 plays)", "setup.dev.morale.tamed": "tamed (loss capped at 8, winning lifts heads, step 25)", "setup.dev.seed.label": "Match seed (same seed replays the same match if you make the same choices; randomized each visit)", "setup.note": "You are always the responder: the opponent commits first, face up, every duel. Play up to as many cards as you have players in the ball's line, or concede the duel and keep your legs. Cards spend until half-time. You are never re-dealt: what you draw in a lane stays in your hand there for the whole half, and every return to that lane draws 2 more cards.", "setup.consent": "This playtest build records anonymous gameplay events (which cards you play and what happens); no personal data is collected.", "draft.title": "Draft your squad", "draft.progress": "{band}: pick {n} of {count} \u00b7 squad {have}/10", "draft.portrait": "portrait not available", "draft.plays": "Plays", "draft.form": "form {q}", "draft.formtip.title": "FORM {q}", "draft.sign": "Sign him", "draft.band.defense": "Defense", "draft.band.midfield": "Midfield", "draft.band.attack": "Attack", "draft.line.def": "DEF", "draft.line.mid": "MID", "draft.line.att": "ATT", "team.you": "Ironhoof (you)", "team.friendly.opp": "Brackwater", "squad.drafted": "drafted XI", "names.first": "Korr, Vex, Bramble, Tido, Ashka, Rumen, Piek, Olo, Ferren, Skarn, Mott, Juba, Ilex, Dunno, Cava, Rasp, Nyx, Tarn, Ember, Quill, Sorrel, Vane, Hollo, Grieg", "names.last": "Longclaw, Brightmane, Thornhoof, Websson, Mudwhistle, Copperfell, Nightbark, Swiftwing, Stonepelt, Reedwalker, Frostwhisker, Emberback, Palefang, Deepburrow, Galehorn, Moorcroft, Silverquill, Blackbriar, Hazeltuft, Kilnsnout", "names.clubs": "Brackwater, Thornfield Rovers, Gloomharbour, Peakspur, Milldown Athletic, Vexford Wanderers, Saltmarsh Utd", "bracket.title": "The draw", "cup.round.quarters": "Quarter-finals", "cup.round.semis": "Semi-finals", "cup.round.final": "The final", "cup.over.title": "Cup run over", "cup.drawheader": "{round} draw", "cup.vs": "{a} v {b}", "cup.yourtie": "\u2190 your tie", "cup.run.summary": "Your run: {played} played, {gf} scored, {ga} conceded.", "cup.event.before": "Before the next round: {name}", "cup.decision": "Decision made: {label}.{coin}", "cup.coin.heads": " The coin lands heads.", "cup.coin.tails": " The coin lands tails.", "cup.btn.play": "Play your tie", "cup.btn.back": "Back to the touchline", "cup.msg.out": "Knocked out. The cup goes to {club}.", "cup.msg.champions": "CHAMPIONS! {team} lift the cup.", "cup.msg.through": "Through to the {round}.", "cup.note.aet": "aet", "cup.note.aetpens": "{score} aet, {pens} pens", "match.sb": "{team} \u00b7 {lineup}", "match.phase.first": "first half", "match.phase.second": "second half", "match.phase.stoppage": "stoppage time", "match.phase.et": "extra time", "match.duelcount": "duel {n} / {m}", "match.teamcalls": "team calls", "match.morale": "morale", "match.calls.you": "you: {calls}", "match.calls.opp": "them: {calls}", "match.calls.none": "no call", "match.calls.pressured": "PRESSURED x{n}", "match.morale.plays": " (-{n} plays)", "match.commit.initial": "They commit", "match.commit.title": "{team} commit, face up", "match.commit.none": "nothing committed", "match.wall.prefix": "keeper wall +{w} \u00b7 ", "match.their.total": "their total: <strong>{t}</strong>", "match.answer.initial": "Your answer", "match.answer.title": "Your answer \u00b7 play up to {cap} ({n} players in this line)", "match.answer.none": "no cards available: the wall stands alone", "match.your.total": "your total if played: <strong>{range}</strong> vs theirs {theirs}", "match.pressure.theirs": "<s>{t}</s> {t75} under pressure", "match.btn.play": "Play selected", "match.btn.clear": "Deselect all", "match.btn.concede": "Concede the duel", "match.btn.next": "Next duel", "match.btn.again": "New match", "match.commentary": "Commentary", "match.fulltime.title": "Full time", "match.final": "Final: <strong>{score}</strong>", "card.worthless": "worthless", "kw.term.push": "PUSH", "pitch.band0.name": "your defensive line", "pitch.band0.who": "your defenders + keeper vs their forwards", "pitch.band1.name": "midfield", "pitch.band1.who": "both midfields", "pitch.band2.name": "their defensive line", "pitch.band2.who": "your forwards vs their defenders + keeper", "pitch.players": "players: you {y} \u00b7 them {o}", "pitch.hand": "your hand {n} \u00b7 piles \u25b8", "pitch.theirs": "their cards: {n}", "corner.setpiece": "Set piece: both teams play from ALL their current hands, up to {cap} cards each. No wall, no effects, except the attacker's Poacher's Instinct: those cards count double here.", "corner.organize": "{team} organize the box, face up", "corner.nobodyback": "nobody back: an open goal beckons", "corner.defense.total": "their defense: <strong>{t}</strong>", "corner.delivery.title": "CORNER! Your delivery \u00b7 play up to {cap} from all your hands", "corner.load": "{team} load the box...", "corner.after": "their delivery is chosen after you set your defense", "corner.against.title": "CORNER against you! Set your defense \u00b7 up to {cap} from all your hands", "corner.nothingleft": "nothing left in your hands", "corner.yourdelivery": "Your delivery: {a} against their {d}.", "corner.theirdelivery.total": "their delivery: <strong>{t}</strong>", "corner.youset": "You set {d} against their delivery of {a}.", "corner.goal": "GOAL from the corner! {team} score. {score}.", "corner.cleared": "Cleared! The box holds and the ball comes out.", "corner.settotal": "your set-piece total: <strong>{range}</strong>{vs}", "corner.vsdef": " vs their defense of {d}", "corner.deliveryafter": " \u00b7 their delivery comes after", "comm.kickoff": "Kick off. {round}{you} against {opp}, stoppage will add {n} duels.", "comm.fx": "The training-ground decision travels with you: it applies to this match.", "comm.concede": "You concede the duel.", "comm.answer": "You answer {cards} for {t}.", "comm.committed": " They committed {t}.", "comm.void": "The duel is void; the ball stays where it is.", "comm.even": "Honours even.", "comm.stays": "The ball stays put.", "comm.goal": "GOAL! {team} win it by {margin}. {score}.", "comm.scorer.solo": "{player} scores it.", "comm.scorer.assist": "{player} scores it; {assist} with the assist.", "comm.keypass": "The move began with {player}'s ball into the attack.", "comm.walkover": "WALKOVER: {loser} gave it up without a fight; {winner} carry it two lines.", "comm.routeone": "ROUTE ONE: {team} launch it straight over the top into the final third.", "comm.pushon": "{team} win the duel by {margin} and push on.", "comm.half.numbers": "The half in numbers: you spent {y} cards to their {o}; corners {c}.", "comm.ht": "HT {score}. The dressing rooms refresh every technique{morale}.", "comm.ht.morale": " and the team talk lifts heads", "comm.et": "Level at the whistle. EXTRA TIME: {n} more duels, no refresh. What is spent stays spent.", "comm.ft": "FT {you} {score} {opp}.", "comm.match.numbers": "The match in numbers: cards spent {y} to {o}, corners {c}.", "comm.heads.drop": "Heads drop at {team}: they can now play {n} fewer per duel.", "comm.keeper.corner": "The keeper turns it behind. CORNER to {team}!", "comm.keeper.spill": "The keeper gets a hand to it but cannot hold! The ball stays alive and the keeper is down.", "comm.keeper.claim": "Claimed. The keeper gathers and rolls it out.", "comm.holdup": "HOLD_UP: {team} hold it in the final third; their midfield pushes up to join the attack.", "comm.recycle.return": "RECYCLE: {card} returns to your hand in this line.", "comm.recycle.leave": "RECYCLE: you leave the discard pile untouched.", "comm.recycle.none": "RECYCLE: nothing in this line's discard pile to bring back.", "pen.start": "Still level after extra time. PENALTIES: best of {k}, pure range duels: shot {slo}-{shi} against save {vlo}-{vhi}.", "pen.kick": "{team}, kick {n}: shot {shot} against save {save}", "pen.scores": ". Scores.", "pen.saved": ". SAVED!", "pen.coin": "The referee has seen enough; the coin decides.", "pen.result": "Shoot-out {p}.", "note.feint": "FEINT: their commit counted {n} lower.", "note.through": "THROUGH: {team} count {n} higher on the riposte.", "note.mark": "MARK: their {big} counts as {cap}.", "note.dribble": "DRIBBLE: {who} best card loses {n}.", "note.who.their": "their", "note.who.your": "your", "note.hoofit": "HOOF_IT: a worthless clearance is shuffled into {team}'s pool.", "note.overlap": "OVERLAP: {player} will sit out the next duel.", "note.pressure.applied": "PRESSURE {n} applied: {team}'s totals count 75 percent, starting right now.", "note.teamcall.half": "TEAM CALL {team}: {call}, for the rest of the half.", "note.steady": "TEAM CALL {team}: steady the ship; the mentality resets.", "note.mentality": "TEAM CALL {team}: {call}!", "note.pressure.counts1": "PRESSURE: {team}'s total counts 75 percent ({n} duel including this one).", "note.pressure.countsN": "PRESSURE: {team}'s total counts 75 percent ({n} duels including this one).", "note.manmark": "MAN MARK: their {big} counts {n} lower.", "note.incisive": "INCISIVE: {team}'s opening play counts 120 percent.", "note.boost": "BOOST: {card} counts 120 percent.", "note.incisive.queued": "INCISIVE queued: {team}'s first card next turn counts 120 percent.", "note.gain": "GAIN {step}: every {card} grows to {v} for the match.", "note.demotivate": "DEMOTIVATE {n}: heads drop at {team}.", "note.tired": "TIRED: {team} play one fewer card in this line next turn.", "note.hoofself": "The clearance lands with {team}'s own attack: a worthless ball to deal with up front.", "note.recycle": "RECYCLE: {team} pull {card} back into hand.", "note.holdup.mid": "HOLD IT UP: the move is smothered dead, and {player} pushes up for the next play.", "note.holdup": "HOLD IT UP: the move is smothered dead.", "note.rainbow.heads": "RAINBOW FLICK! It comes off: +20.", "note.rainbow.tails": "The rainbow flick is hacked behind: corner to {team}.", "note.press": "PRESS: {team}'s next hand is dealt {n} smaller.", "note.gegenpress": "GEGENPRESS: won back high; {team}'s next hand is dealt 1 smaller.", "note.switch": "SWITCH: {player}'s {card} is refreshed.", "piles.title": "{zone}: your piles", "piles.inhand": "In hand", "piles.draw": "Draw pile", "piles.discards": "Discards", "piles.empty": "empty", "recycle.title": "RECYCLE: pick a card to return to your hand", "kwmodal.close": "Got it", "kwmodal.nodesc": "No description.", "onboard.title": "How to read a duel", "onboard.body": "<strong>They already committed, face up.</strong> Their total is on the table; you always answer knowing the number to beat.<br><br><strong>Pick your cards in order.</strong> Play up to as many cards as you have players in the ball's line; selection order is play order, which some keywords care about. Bigger total moves the ball one line. Cards you spend are gone until half-time.<br><br><strong>The keeper wall.</strong> In a side's own line, the wall value is added to their total. Beat their score in THEIR box, wall included, and it is always a goal; a tie or a near miss becomes a save, a spill, or a real corner duel.<br><br><strong>PRESSURE.</strong> A struck-through total means pressure is shrinking it to 75 percent. Stacks tick down one per duel.<br><br><strong>Conceding is legal.</strong> Give up a duel you cannot win and keep your cards for one you can. Tap any keyword chip for its rules text.", "kw.label.RALLY_HOLDUP": "HOLD UP", "kw.label.HOOF_SELF": "HOOF", "kw.label.ATTACK_ONLY": "ATTACK ONLY", "kw.label.CORNER_X2": "POACHER'S INSTINCT", "kw.help.PUSH": "PUSH adds to your side's total this duel; the team with the bigger total moves the ball one zone up toward the opposing goal. Win the duel in THEIR box and it is a goal. A tie holds the ball where it stands.", "kw.help.FORM": "A temporary edge, rolled when a player joins your run: every play he owns counts this much higher (or lower) for the whole cup run. It is already priced into the numbers shown on his card.", "kw.help.BOOST_1": "The next card you play THIS turn counts 120 percent. Selection order is play order, so pick this before the card you want boosted.", "kw.help.INCISIVE_1": "Your first card NEXT turn counts 120 percent. The killer ball that sets up the next move.", "kw.help.METRONOME": "When played, this card returns to this line's draw pile at the end of the turn. Effectively infinite.", "kw.help.GAIN_1": "On play, every card named like this one in your squad permanently grows +1 push for the rest of the match, this copy included.", "kw.help.CORNER_X2": "Poacher's Instinct: taking a corner, this card counts DOUBLE. Defending one, or in open play, it is a plain number. The only keyword the set piece honors.", "kw.help.TIRED": "The price of the burst: next turn in this line you play one fewer card than players available. A cost you always pay, priced into the big number.", "kw.help.RECYCLE": "Pick any card you have already played in this line and put it straight back into your hand here, before this card discards.", "kw.help.RALLY_HOLDUP": "The duel is voided outright: no winner, no tie, no corner, the ball stays. One random midfielder joins your attack for the next turn only.", "kw.help.RAINBOW": "Attack line only. A coin from the match seed: heads adds 20 to your total, tails wins you a corner after the duel.", "kw.help.HOOF_SELF": "The +5 push is paid for by the clearance itself: a worthless Hoofed Clearance lands in YOUR attack hand.", "kw.help.ATTACK_ONLY": "This card can only be played in the attacking line. The restriction is the price of the number.", "kw.help.BREAK": "Win the duel by 6 or more with this card played: the ball surges two lines instead of one. A surge cannot score by itself; the finish is still next turn's duel.", "kw.help.THROUGH": "Counts 5 higher if your side lost the previous duel. The riposte ball.", "kw.help.CORNER": "Inactive since the 2026-08-31 box ruling: corners now come from any tie or near miss in the box, and play out as a real set-piece duel. This card is a plain range until its replacement is ruled on.", "kw.help.DRIBBLE": "Takes up to 5 off the opponent's single biggest played card, once per duel. The beaten defender's action mostly does not count.", "kw.help.HOLD_UP": "Lose the attacking-line duel by 10 or less with this played: the ball does not come out. Your striker holds it and your midfielders push up to join the attack, leaving your midfield empty until the ball leaves the line.", "kw.help.OVERLAP": "A big value now; the price is that this player sits out the next duel entirely.", "kw.help.SWITCH": "After this duel, one already-spent card of a teammate in this line refreshes and can be used again before half-time.", "kw.help.FEINT": "The opponent's next committed total counts 3 lower. The number you saw was a lie.", "kw.help.MARK": "The opponent's single biggest played card counts at most 18 in this duel.", "kw.help.PRESS": "Win the duel with this played: the opponent's next hand is dealt 2 cards smaller.", "kw.help.HOLD": "Counts 4 higher while your side is leading and the duel is in your own half.", "kw.help.HOOF_IT": "Shuffles a worthless Hoofed Clearance (value 0) into the opponent's pool. Sooner or later it clogs one of their hands.", "kw.help.PRESSURE_1": "Applies 1 PRESSURE to the opponent: their totals count 75 percent for 1 duel, starting with THIS one, so it shrinks the commit already on the table. PRESSURE is the game's one percentage effect; stacks from different cards add up, and half-time clears them.", "kw.help.PRESSURE_2": "Applies 2 PRESSURE to the opponent: their totals count 75 percent for 2 duels, this one included. Stacks add; half-time clears them.", "kw.help.PRESSURE_3": "Applies 3 PRESSURE to the opponent: their totals count 75 percent for 3 duels, this one included. Stacks add; half-time clears them.", "kw.help.GEGENPRESS": "SHELVED team call, for the rest of the half: every duel your side wins deals the opponent one fewer card next duel. A new team call replaces it.", "kw.help.OVERLAP_RUNS": "SHELVED team call, for the rest of the half: your full-backs and wing-backs also count as present in the attacking line. More plays up there; their cards burn faster.", "kw.help.DROP_DEEP": "SHELVED team call, for the rest of the half: your forwards also count as present in midfield.", "kw.help.ROUTE_ONE": "SHELVED team call, for the rest of the half: win a duel in your own defensive line and the ball launches straight to the attacking line. Never a direct goal; the finish is still a duel.", "kw.help.MAN_MARK": "SHELVED team call, for the rest of the half: the opponent's single biggest played card counts at 75 percent every duel.", "kw.help.ALL_OUT": "Team call until changed: your totals count 120 percent in their defensive line, but their totals count 120 percent in yours. The comeback lever, priced in exposure.", "kw.help.PARK_BUS": "Team call until changed: your totals count 120 percent in your own defensive line and 80 percent in theirs.", "kw.help.STEADY": "Team call: ends any mentality, yours included, and the exposure that came with it."};
+function T(key, vars) {
+  let s = STR[key];
+  if (s === undefined) return key;
+  if (vars)
+    for (const [k, v] of Object.entries(vars))
+      s = s.split("{" + k + "}").join(v);
+  return s;
+}
 const ROLES = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 13, 13, "ANYWHERE", "HOOF_IT"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Line Pass", 11, 11, "ANYWHERE", "SWITCH"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Read the Game", 10, 10, "ANYWHERE", "MARK"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Cross", 8, 14, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Overlap", 14, 14, "ANYWHERE", "OVERLAP"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Late Arrival", 8, 18, "ANYWHERE", "THROUGH"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 13, 13, "ANYWHERE", "PRESS"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Long Diagonal", 6, 18, "ANYWHERE", "FEINT"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["Killer Ball", 8, 20, "ANYWHERE", "THROUGH"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Hold It Up", 14, 14, "ANYWHERE", "HOLD_UP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Cross", 9, 19, "ANYWHERE", "CORNER"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Poach", 14, 24, "THEIR_BOX", ""]]}};
 const ROLES_V3 = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 18, 18, "ANYWHERE", "HOOF_SELF"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Recycle", 7, 7, "ANYWHERE", "RECYCLE"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Skilled Distribution", 10, 10, "ANYWHERE", "INCISIVE_1"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Overlap", 22, 22, "ANYWHERE", "TIRED"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Late Arrival", 8, 18, "ANYWHERE", "INCISIVE_1"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 10, 10, "ANYWHERE", "PRESSURE_1"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Long Diagonal", 6, 18, "ANYWHERE", "PRESSURE_2"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["Through Pass", 8, 20, "ANYWHERE", "INCISIVE_1"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Hold It Up", 0, 0, "ANYWHERE", "RALLY_HOLDUP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Rainbow Flick", 0, 0, "THEIR_BOX", "RAINBOW"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Poach", 14, 24, "THEIR_BOX", "ATTACK_ONLY"]]}};
 const LINEUPS = {"classic-442": ["centre-back", "centre-back", "full-back", "full-back", "ball-winner", "box-to-box", "deep-lying-playmaker", "advanced-playmaker", "target-forward", "poacher"], "wing-play": ["centre-back", "centre-back", "wing-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "winger", "target-forward", "poacher"], "tiki-taka": ["ball-playing-defender", "centre-back", "centre-back", "full-back", "deep-lying-playmaker", "advanced-playmaker", "advanced-playmaker", "box-to-box", "inside-forward", "poacher"], "low-block-counter": ["sweeper", "centre-back", "centre-back", "centre-back", "full-back", "ball-winner", "ball-winner", "box-to-box", "inside-forward", "poacher"], "direct-target": ["centre-back", "centre-back", "full-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "advanced-playmaker", "target-forward", "target-forward"]};
-const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-b42575e"}};
+const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-2b59fda"}};
 const FAMILIES = {"tactics": {"ball-winner": ["Gegenpress", 2, 2, "ANYWHERE", "GEGENPRESS"], "wing-back": ["Overlap Runs", 2, 2, "ANYWHERE", "OVERLAP_RUNS"], "advanced-playmaker": ["Drop Between Lines", 2, 2, "ANYWHERE", "DROP_DEEP"], "centre-back": ["Route One", 2, 2, "ANYWHERE", "ROUTE_ONE"]}, "pressure": {"ball-playing-defender": ["Shackle", 10, 10, "ANYWHERE", "PRESSURE_1"], "centre-back": ["Crowd Out", 8, 8, "ANYWHERE", "PRESSURE_2"], "ball-winner": ["Cut the Supply", 6, 6, "ANYWHERE", "PRESSURE_3"]}, "mentality": {"target-forward": ["All-Out Attack", 6, 6, "ANYWHERE", "ALL_OUT"], "sweeper": ["Park the Bus", 6, 6, "ANYWHERE", "PARK_BUS"], "deep-lying-playmaker": ["Steady the Ship", 6, 6, "ANYWHERE", "STEADY"]}};
 const EVENTS = [{"id": "open-training", "name": "Open training session", "shape": "pure_gift", "text": "The town turns out to watch training and the legs pump a little harder.", "options": [{"label": "Feed off it: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "Close the gates and rest (no effect)", "fx": {}}]}, {"id": "double-session", "name": "The gaffer's double session", "shape": "trade", "text": "Two sessions in one day. The patterns get sharper; the legs get heavier.", "options": [{"label": "Drill crossing: every Cross +2 next match, but your first deal is 1 card smaller", "fx": {"cardGain": [{"name": "Cross", "delta": 2}], "handExtra": -1}}, {"label": "One session is plenty (no effect)", "fx": {}}]}, {"id": "fog-morning", "name": "Fog on the training ground", "shape": "gamble", "text": "You can barely see the far goal. Some mornings like this forge a back line; some just waste everyone's time.", "options": [{"label": "Train through it: 50-50. Heads every Tackle +2 next match, tails your lane top-up is 1 smaller", "fx": {"coin": {"heads": {"cardGain": [{"name": "Tackle", "delta": 2}]}, "tails": {"laneTopup": -1}}}}, {"label": "Send them home (no effect)", "fx": {}}]}, {"id": "keeper-coach", "name": "The visiting keeper coach", "shape": "build_around", "text": "A famous old shot-stopper is in town for one day and offers a session with your keeper.", "options": [{"label": "Take the session: keeper wall +2 next match", "fx": {"wall": 2}}, {"label": "Politely decline (no effect)", "fx": {}}]}, {"id": "youth-minutes", "name": "A prospect wants minutes", "shape": "trade", "text": "The academy's best asks to travel with the squad. More bodies in the rotation, less rhythm in the first team.", "options": [{"label": "Bring him: first deal +1 card next match, but every Tackle -1", "fx": {"handExtra": 1, "cardGain": [{"name": "Tackle", "delta": -1}]}}, {"label": "Not yet, son (no effect)", "fx": {}}]}, {"id": "rondo-morning", "name": "Rondo morning", "shape": "build_around", "text": "Keep-ball in tight squares until the touch is automatic. Passing sides feast on this; direct sides shrug.", "options": [{"label": "Run the rondos: every Pass +2 next match", "fx": {"cardGain": [{"name": "Pass", "delta": 2}]}}, {"label": "Straight to shape work (no effect)", "fx": {}}]}, {"id": "set-piece-rehearsal", "name": "Set-piece rehearsal", "shape": "build_around", "text": "An hour of corners against the wall of mannequins. The poachers' eyes light up.", "options": [{"label": "Rehearse: every Strike +1 next match (and Strikes already count double at corners)", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "Save the legs (no effect)", "fx": {}}]}, {"id": "market-stall", "name": "The market stall", "shape": "shop_variant", "text": "A travelling trainer sets out his wares: one specialty per club, no refunds.", "options": [{"label": "The tackling dummy: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "The shooting gallery: every Strike +1 next match", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "The gloves: keeper wall +1 next match", "fx": {"wall": 1}}, {"label": "Keep walking (no effect)", "fx": {}}]}];
 const TACTICS = ["GEGENPRESS", "OVERLAP_RUNS", "DROP_DEEP", "ROUTE_ONE", "MAN_MARK"];
 const MENTALITIES = ["ALL_OUT", "PARK_BUS", "STEADY"];
-const FIRST = ["Korr","Vex","Bramble","Tido","Ashka","Rumen","Piek","Olo","Ferren","Skarn","Mott","Juba","Ilex","Dunno","Cava","Rasp","Nyx","Tarn","Ember","Quill","Sorrel","Vane","Hollo","Grieg"];
-const LAST = ["Longclaw","Brightmane","Thornhoof","Websson","Mudwhistle","Copperfell","Nightbark","Swiftwing","Stonepelt","Reedwalker","Frostwhisker","Emberback","Palefang","Deepburrow","Galehorn","Moorcroft","Silverquill","Blackbriar","Hazeltuft","Kilnsnout"];
+const FIRST = T("names.first").split(", ");
+const LAST = T("names.last").split(", ");
 
 // ---- playtest telemetry (TEL) ---------------------------------------
 // Logs anonymous gameplay events to the endpoint baked into the build
@@ -524,14 +541,18 @@ function buildSquad(label, lineupName, teamName, spec) {
                 name: spec ? spec[ri].name : pickName(),
                 role: roleName, pos: role.position, base: role.base,
                 extra: role.extra || [], wall: role.wall_bonus || 0,
+                stats: { goals: 0, assists: 0, keyPlays: 0 },
                 cards: [] };
     // Additive family mode: the family swaps the role's flavor card
     // (last slot); every other card keeps its current-grammar keyword.
     const specs = role.cards.slice();
     if (famCards && famCards[roleName]) specs[specs.length - 1] = famCards[roleName];
     for (const [cname, lo, hi, tag, kw] of specs) {
-      const lov = Math.max(1, lo + quality);
-      const hiv = Math.max(lov, hi + quality);
+      // A card printed 0/0 is a pure effect card (Hold It Up, Rainbow
+      // Flick): its value IS the effect; quality never lifts it off 0.
+      const effectCard = lo === 0 && hi === 0;
+      const lov = effectCard ? 0 : Math.max(1, lo + quality);
+      const hiv = effectCard ? 0 : Math.max(lov, hi + quality);
       p.cards.push({ id: label + "c" + (cid++), name: cname, lo: lov,
                      hi: hiv, tag, kw, owner: p });
     }
@@ -597,8 +618,8 @@ function moraleHit(loser, winner, margin, loserConceded) {
   loser.moraleLost += hit;
   winner.moraleLost = Math.max(0, winner.moraleLost - m.win);
   if (moralePenalty(loser) > before)
-    tick("Heads drop at " + teamName(loser) + ": they can now play "
-         + moralePenalty(loser) + " fewer per duel.", "big");
+    tick(T("comm.heads.drop", { team: teamName(loser),
+                                n: moralePenalty(loser) }), "big");
 }
 function moraleGoal(scorer) {
   const m = MORALE_MODES[CFG.morale];
@@ -613,7 +634,7 @@ function renderMorale() {
     const value = Math.max(0, 100 - side.moraleLost);
     $(bar).style.width = value + "%";
     $(label).textContent = value + (moralePenalty(side)
-      ? " (-" + moralePenalty(side) + " plays)" : "");
+      ? T("match.morale.plays", { n: moralePenalty(side) }) : "");
   }
 }
 function playsCap(side) {
@@ -976,7 +997,7 @@ function holdUpChance(side, played, margin) {
   if (offsetFor(side, S.ball) !== 2) return false;
   if (![...kwsOf(played)].includes("HOLD_UP")) return false;
   side.effects.mfUpUntil = S.turn + K.holdUpTurns;
-  tick("HOLD_UP: " + teamName(side) + " hold it in the final third; their midfield pushes up to join the attack.", "big");
+  tick(T("comm.holdup", { team: teamName(side) }), "big");
   return true;
 }
 function keeperMoment(attacker) {
@@ -991,13 +1012,13 @@ function keeperMoment(attacker) {
     // The corner is a real set-piece duel now; it plays out after the
     // duel wraps up. The ball stays in the box until it resolves.
     S.pendingCorner = attacker;
-    tick("The keeper turns it behind. CORNER to " + teamName(attacker) + "!", "big");
+    tick(T("comm.keeper.corner", { team: teamName(attacker) }), "big");
   } else if (roll <= wc + ws) {
     defender.effects.keeperDownUntil = S.turn + 1;
-    tick("The keeper gets a hand to it but cannot hold! The ball stays alive and the keeper is down.", "big");
+    tick(T("comm.keeper.spill"), "big");
   } else {
     S.ball += attacker === S.you ? -1 : 1;
-    tick("Claimed. The keeper gathers and rolls it out.");
+    tick(T("comm.keeper.claim"));
   }
 }
 
@@ -1017,54 +1038,58 @@ function combinedHand(side) {
 }
 function resolveCornerSide(side, hand, indices) {
   const played = []; let total = 0;
+  const attacking = S.corner && S.corner.attacker === side;
   for (const i of indices.slice(0, CFG.cornerCap)) {
     const c = hand[i];
     let v = c.lo === c.hi ? c.lo : rint(c.lo, c.hi);
-    // The set piece's one keyword: Poacher's Instinct counts double.
-    if (c.kw === "CORNER_X2" && v > 0) v *= 2;
+    // The set piece's one keyword, for the ATTACKER only (ruling
+    // 2026-09-01: you are not poaching while defending a corner).
+    if (attacking && c.kw === "CORNER_X2" && v > 0) v *= 2;
     played.push({ card: c, v }); total += v;
     side.spent.add(c.id);
   }
   return { played, total };
 }
-function cornerWorth(c) {
-  return c.kw === "CORNER_X2" ? 2 * c.lo : c.lo;
+function cornerWorth(c, attacking) {
+  return attacking && c.kw === "CORNER_X2" ? 2 * c.lo : c.lo;
 }
-function aiCornerPicks(hand) {
-  return [...hand.keys()].sort((a, b) => cornerWorth(hand[b]) - cornerWorth(hand[a]))
+function aiCornerPicks(hand, attacking) {
+  return [...hand.keys()]
+    .sort((a, b) => cornerWorth(hand[b], attacking) - cornerWorth(hand[a], attacking))
     .slice(0, CFG.cornerCap);
 }
 function startCorner(attacker) {
   S.corner = { attacker };
+  S.duelLocked = false;
+  // The corner is taken from the attacker's box, wherever a pending
+  // corner (a Rainbow Flick's tails) left the ball.
+  S.ball = attacker === S.you ? 2 : 0;
   S.cornerCount = S.cornerCount || { you: 0, opp: 0 };
   if (attacker === S.you) S.cornerCount.you += 1;
   else S.cornerCount.opp += 1;
-  tick("Set piece: both teams play from ALL their current hands, up to "
-       + CFG.cornerCap + " cards each. No wall, no effects, except "
-       + "Poacher's Instinct: those cards count double here.", "big");
+  tick(T("corner.setpiece", { cap: CFG.cornerCap }), "big");
   if (attacker === S.you) {
     const dHand = combinedHand(S.opp);
-    const res = resolveCornerSide(S.opp, dHand, aiCornerPicks(dHand));
+    const res = resolveCornerSide(S.opp, dHand, aiCornerPicks(dHand, false));
     S.corner.defTotal = res.total;
-    $("opp-title").textContent = teamName(S.opp) + " organize the box, face up";
+    $("opp-title").textContent = T("corner.organize", { team: teamName(S.opp) });
     $("opp-cards").innerHTML = res.played.map(p => cardHTML(p.card, p.v, false)).join("")
-      || '<span class="pill">nobody back: an open goal beckons</span>';
-    $("opp-total").innerHTML = "their defense: <strong>" + res.total + "</strong>";
-    $("you-title").textContent = "CORNER! Your delivery · play up to " + CFG.cornerCap
-      + " from all your hands";
+      || '<span class="pill">' + T("corner.nobodyback") + "</span>";
+    $("opp-total").innerHTML = T("corner.defense.total", { t: res.total });
+    $("you-title").textContent = T("corner.delivery.title", { cap: CFG.cornerCap });
   } else {
     S.corner.defTotal = null;  // you defend, blind: they deliver after
-    $("opp-title").textContent = teamName(S.opp) + " load the box...";
-    $("opp-cards").innerHTML = '<span class="pill">their delivery is chosen after you set your defense</span>';
+    $("opp-title").textContent = T("corner.load", { team: teamName(S.opp) });
+    $("opp-cards").innerHTML = '<span class="pill">' + T("corner.after") + "</span>";
     $("opp-total").innerHTML = "";
-    $("you-title").textContent = "CORNER against you! Set your defense · up to " + CFG.cornerCap
-      + " from all your hands";
+    $("you-title").textContent = T("corner.against.title", { cap: CFG.cornerCap });
   }
+  renderPitch();
   S.youHand = combinedHand(S.you);
   S.youCap = CFG.cornerCap;
   S.selected = new Set();
   $("you-cards").innerHTML = S.youHand.map(c => cardHTML(c, undefined, true)).join("")
-    || '<span class="pill">nothing left in your hands</span>';
+    || '<span class="pill">' + T("corner.nothingleft") + "</span>";
   for (const el of $("you-cards").querySelectorAll(".pcard"))
     el.addEventListener("click", ev => {
       if (ev.target.closest(".ckw") || ev.target.closest(".kwterm")) return;
@@ -1075,6 +1100,7 @@ function startCorner(attacker) {
   $("btn-concede").hidden = true; $("btn-next").hidden = true;
 }
 function resolveCornerPlay() {
+  S.duelLocked = true;
   $("btn-play").disabled = true; $("btn-clear").hidden = true;
   const indices = S.youHand.map((c, i) => S.selected.has(c.id) ? i : -1).filter(i => i >= 0);
   const mine = resolveCornerSide(S.you, S.youHand, indices);
@@ -1082,30 +1108,43 @@ function resolveCornerPlay() {
   let attTotal, defTotal;
   if (att === S.you) {
     attTotal = mine.total; defTotal = S.corner.defTotal;
-    tick("Your delivery: " + attTotal + " against their " + defTotal + ".");
+    tick(T("corner.yourdelivery", { a: attTotal, d: defTotal }));
   } else {
     defTotal = mine.total;
     const aHand = combinedHand(S.opp);
-    const res = resolveCornerSide(S.opp, aHand, aiCornerPicks(aHand));
+    const res = resolveCornerSide(S.opp, aHand, aiCornerPicks(aHand, true));
+    S.lastCornerAttPlayed = res.played;
     attTotal = res.total;
     $("opp-cards").innerHTML = res.played.map(p => cardHTML(p.card, p.v, false)).join("");
-    $("opp-total").innerHTML = "their delivery: <strong>" + attTotal + "</strong>";
-    tick("You set " + defTotal + " against their delivery of " + attTotal + ".");
+    $("opp-total").innerHTML = T("corner.theirdelivery.total", { t: attTotal });
+    tick(T("corner.youset", { d: defTotal, a: attTotal }));
   }
+  const attPlayed = att === S.you ? mine.played : S.lastCornerAttPlayed || [];
+  const credit = attTotal > defTotal ? creditGoal(att, attPlayed) : null;
   TEL.log("corner_duel", {
     turn: S.turn, attacker: att === S.you ? "you" : "opp",
     att: attTotal, def: defTotal,
     minePicked: mine.played.map(p => ({ n: p.card.name, v: p.v })),
     outcome: attTotal > defTotal ? "goal" : "cleared",
+    attrib: credit
+      ? { scorer: credit.scorer.name,
+          assist: credit.assist ? credit.assist.name : null,
+          key: credit.key ? credit.key.name : null }
+      : null,
   });
   if (attTotal > defTotal) {
     att.score += 1; S.ball = 1;
-    tick("GOAL from the corner! " + teamName(att) + " score. "
-         + S.you.score + "-" + S.opp.score + ".", "goal");
+    tick(T("corner.goal", { team: teamName(att),
+                            score: S.you.score + "-" + S.opp.score }), "goal");
+    if (credit)
+      tick(credit.assist
+        ? T("comm.scorer.assist", { player: credit.scorer.name,
+                                    assist: credit.assist.name })
+        : T("comm.scorer.solo", { player: credit.scorer.name }));
     popScore();
   } else {
     S.ball += att === S.you ? -1 : 1;
-    tick("Cleared! The box holds and the ball comes out.");
+    tick(T("corner.cleared"));
   }
   S.corner = null;
   renderPitch();
@@ -1121,12 +1160,12 @@ function afterDuel(winnerSide, cSide, cP, rP, notes) {
     const loser = winnerSide === S.you ? S.opp : S.you;
     if ([...kwsOf(wp)].includes("PRESS")) {
       loser.effects.dealPenalty = CFG.kw.pressSteal;
-      notes.push("PRESS: " + teamName(loser) + "'s next hand is dealt " + CFG.kw.pressSteal + " smaller.");
+      notes.push(T("note.press", { team: teamName(loser), n: CFG.kw.pressSteal }));
     }
     // GEGENPRESS team call: every duel won shrinks their next deal.
     if (winnerSide.effects.tactic === "GEGENPRESS") {
       loser.effects.dealPenalty = Math.max(loser.effects.dealPenalty || 0, 1);
-      notes.push("GEGENPRESS: won back high; " + teamName(loser) + "'s next hand is dealt 1 smaller.");
+      notes.push(T("note.gegenpress", { team: teamName(loser) }));
     }
   }
   // PRESSURE bookkeeping: one stack ticks away per duel, starting
@@ -1160,7 +1199,8 @@ function afterDuel(winnerSide, cSide, cP, rP, notes) {
         if (side.spent.has(c.id) && (!best || c.lo > best.lo)) best = c;
     }
     if (best) { side.spent.delete(best.id);
-                notes.push("SWITCH: " + best.owner.name + "'s " + best.name + " is refreshed."); }
+                notes.push(T("note.switch", { player: best.owner.name,
+                                              card: best.name })); }
   }
   // Expire dead players and hold-ups that lost the line
   for (const side of [S.you, S.opp]) {
@@ -1169,6 +1209,50 @@ function afterDuel(winnerSide, cSide, cP, rP, notes) {
     if (side.effects.mfUpUntil !== undefined
         && offsetFor(side, S.ball) !== 2) delete side.effects.mfUpUntil;
   }
+}
+
+// ---- goal attribution (Eduardo, 2026-09-01) -------------------------
+// The scorer is the last card with push in the winning turn; the
+// pusher before him (a different player) gets the assist. The player
+// whose win carried the ball INTO the box on an earlier turn gets a
+// key play. Stats live on the player; commentary and telemetry read
+// them here.
+function lastPusher(played) {
+  for (let i = played.length - 1; i >= 0; i--) {
+    const o = played[i].card.owner;
+    if (played[i].v > 0 && o && o.stats) return o;
+  }
+  return null;
+}
+function creditGoal(side, played) {
+  const pushers = played.filter(p => p.v > 0 && p.card.owner && p.card.owner.stats);
+  const scorer = pushers.length
+    ? pushers[pushers.length - 1].card.owner
+    : (played.length && played[played.length - 1].card.owner
+       && played[played.length - 1].card.owner.stats
+       ? played[played.length - 1].card.owner : null);
+  if (!scorer) return null;
+  scorer.stats.goals += 1;
+  let assist = null;
+  for (let i = pushers.length - 2; i >= 0; i--)
+    if (pushers[i].card.owner !== scorer) { assist = pushers[i].card.owner; break; }
+  if (assist) assist.stats.assists += 1;
+  const kp = (S.keyPlay || {})[side.label];
+  let key = null;
+  if (kp && kp.turn < S.turn && kp.player !== scorer && kp.player !== assist) {
+    key = kp.player;
+    key.stats.keyPlays += 1;
+  }
+  return { scorer, assist, key };
+}
+function trackKeyPlay(winner, played) {
+  S.keyPlay = S.keyPlay || {};
+  if (offsetFor(winner, S.ball) === 2) {
+    const p = lastPusher(played);
+    if (p) S.keyPlay[winner.label] = { player: p, turn: S.turn };
+  }
+  for (const side of [S.you, S.opp])
+    if (offsetFor(side, S.ball) !== 2) delete S.keyPlay[side.label];
 }
 
 // ---- UI helpers -----------------------------------------------------
@@ -1193,13 +1277,8 @@ function maybeOnboard() {
   // load. Dismiss and it never returns.
   if (ONBOARDED) return;
   ONBOARDED = true;
-  $("kw-title").textContent = "How to read a duel";
-  $("kw-body").innerHTML =
-    "<strong>They already committed, face up.</strong> Their total is on the table; you always answer knowing the number to beat.<br><br>"
-    + "<strong>Pick your cards in order.</strong> Play up to as many cards as you have players in the ball's line; selection order is play order, which some keywords care about. Bigger total moves the ball one line. Cards you spend are gone until half-time.<br><br>"
-    + "<strong>The keeper wall.</strong> In a side's own line, the wall value is added to their total. Beat their score in THEIR box, wall included, and it is always a goal; a tie or a near miss becomes a save, a spill, or a real corner duel.<br><br>"
-    + "<strong>PRESSURE.</strong> A struck-through total means pressure is shrinking it to 75 percent. Stacks tick down one per duel.<br><br>"
-    + "<strong>Conceding is legal.</strong> Give up a duel you cannot win and keep your cards for one you can. Tap any keyword chip for its rules text.";
+  $("kw-title").textContent = T("onboard.title");
+  $("kw-body").innerHTML = T("onboard.body");
   $("kw-modal").hidden = false;
 }
 function minuteStr() {
@@ -1210,7 +1289,9 @@ function minuteStr() {
 function cardHTML(c, v, selectable) {
   const val = v !== undefined ? v : (c.lo === c.hi ? c.lo : c.lo + "–" + c.hi);
   const dead = !cardLive(S.you, c);
-  const curse = c.lo === 0 && c.hi === 0;
+  // A curse is a junk ball someone shuffled in, never a 0-push effect
+  // card like Hold It Up: tell them apart by id, not value.
+  const curse = String(c.id).startsWith("curse");
   return '<div class="pcard' + (selectable ? "" : " static")
     + (dead && selectable ? " dead" : "") + (curse ? " cursecard" : "")
     + '" data-cid="' + c.id + '">'
@@ -1218,15 +1299,15 @@ function cardHTML(c, v, selectable) {
     + '<div class="cval"><span class="cvrow">' + pushTerm()
     + '<span class="cvnum">' + val + "</span></span>"
     + (c.kw ? kwChip(c.kw) : "")
-    + (curse ? '<span class="pill">worthless</span>' : "") + "</div>"
+    + (curse ? '<span class="pill">' + T("card.worthless") + "</span>" : "") + "</div>"
     + '<div class="cwho"><b>' + c.owner.name + "</b>"
     + (c.owner.role ? " · " + c.owner.role.replace(/-/g, " ") : "") + "</div></div>";
 }
 // PUSH is a keyword too: the label rides every card value, hoverable
 // and tappable like any chip.
 function pushTerm() {
-  return '<span class="kwterm" data-kw="PUSH" tabindex="0">PUSH'
-    + '<span class="kwtip"><span class="kwtipname">PUSH</span>'
+  return '<span class="kwterm" data-kw="PUSH" tabindex="0">' + T("kw.term.push")
+    + '<span class="kwtip"><span class="kwtipname">' + T("kw.term.push") + "</span>"
     + KW_HELP.PUSH + "</span></span>";
 }
 function kwChip(kw) {
@@ -1236,53 +1317,19 @@ function kwChip(kw) {
     + '</span>' + help + '</span></span>';
 }
 function chipLabel(kw) {
-  if (kw === "RALLY_HOLDUP") return "HOLD UP";
-  if (kw === "HOOF_SELF") return "HOOF";
-  if (kw === "ATTACK_ONLY") return "ATTACK ONLY";
-  if (kw === "CORNER_X2") return "POACHER'S INSTINCT";
+  const named = STR["kw.label." + kw];
+  if (named !== undefined) return named;
   return kw.replace(/_(\d+)$/, " $1").replace("PRESSURE_", "PRESSURE ");
 }
-const KW_HELP = {
-  PUSH: "PUSH adds to your side's total this duel; the team with the bigger total moves the ball one zone up toward the opposing goal. Win the duel in THEIR box and it is a goal. A tie holds the ball where it stands.",
-  FORM: "A temporary edge, rolled when a player joins your run: every play he owns counts this much higher (or lower) for the whole cup run. It is already priced into the numbers shown on his card.",
-  BOOST_1: "The next card you play THIS turn counts 120 percent. Selection order is play order, so pick this before the card you want boosted.",
-  INCISIVE_1: "Your first card NEXT turn counts 120 percent. The killer ball that sets up the next move.",
-  METRONOME: "When played, this card returns to this line's draw pile at the end of the turn. Effectively infinite.",
-  GAIN_1: "On play, every card named like this one in your squad permanently grows +1 push for the rest of the match, this copy included.",
-  CORNER_X2: "Poacher's Instinct: in a corner duel this card counts DOUBLE. In open play it is a plain number. The only keyword the set piece honors.",
-  TIRED: "The price of the burst: next turn in this line you play one fewer card than players available. A cost you always pay, priced into the big number.",
-  RECYCLE: "Pick any card you have already played in this line and put it straight back into your hand here, before this card discards.",
-  RALLY_HOLDUP: "Push 0, two effects: the duel is voided outright (no winner, no tie, no corner, ball stays), and one random midfielder joins your attack for the next turn only.",
-  RAINBOW: "Attack line only. A coin from the match seed: heads adds 20 to your total, tails wins you a corner after the duel.",
-  HOOF_SELF: "The +5 push is paid for by the clearance itself: a worthless Hoofed Clearance lands in YOUR attack hand.",
-  ATTACK_ONLY: "This card can only be played in the attacking line. The restriction is the price of the number.",
-  BREAK: "Win the duel by 6 or more with this card played: the ball surges two lines instead of one. A surge cannot score by itself; the finish is still next turn's duel.",
-  THROUGH: "Counts 5 higher if your side lost the previous duel. The riposte ball.",
-  CORNER: "Inactive since the 2026-08-31 box ruling: corners now come from any tie or near miss in the box, and play out as a real set-piece duel. This card is a plain range until its replacement is ruled on.",
-  DRIBBLE: "Takes up to 5 off the opponent's single biggest played card, once per duel. The beaten defender's action mostly does not count.",
-  HOLD_UP: "Lose the attacking-line duel by 10 or less with this played: the ball does not come out. Your striker holds it and your midfielders push up to join the attack, leaving your midfield empty until the ball leaves the line.",
-  OVERLAP: "A big value now; the price is that this player sits out the next duel entirely.",
-  SWITCH: "After this duel, one already-spent card of a teammate in this line refreshes and can be used again before half-time.",
-  FEINT: "The opponent's next committed total counts 3 lower. The number you saw was a lie.",
-  MARK: "The opponent's single biggest played card counts at most 18 in this duel.",
-  PRESS: "Win the duel with this played: the opponent's next hand is dealt 2 cards smaller.",
-  HOLD: "Counts 4 higher while your side is leading and the duel is in your own half.",
-  HOOF_IT: "Shuffles a worthless Hoofed Clearance (value 0) into the opponent's pool. Sooner or later it clogs one of their hands.",
-  PRESSURE_1: "Applies 1 PRESSURE to the opponent: their totals count 75 percent for 1 duel, starting with THIS one, so it shrinks the commit already on the table. PRESSURE is the game's one percentage effect; stacks from different cards add up, and half-time clears them.",
-  PRESSURE_2: "Applies 2 PRESSURE to the opponent: their totals count 75 percent for 2 duels, this one included. Stacks add; half-time clears them.",
-  PRESSURE_3: "Applies 3 PRESSURE to the opponent: their totals count 75 percent for 3 duels, this one included. Stacks add; half-time clears them.",
-  GEGENPRESS: "SHELVED team call, for the rest of the half: every duel your side wins deals the opponent one fewer card next duel. A new team call replaces it.",
-  OVERLAP_RUNS: "SHELVED team call, for the rest of the half: your full-backs and wing-backs also count as present in the attacking line. More plays up there; their cards burn faster.",
-  DROP_DEEP: "SHELVED team call, for the rest of the half: your forwards also count as present in midfield.",
-  ROUTE_ONE: "SHELVED team call, for the rest of the half: win a duel in your own defensive line and the ball launches straight to the attacking line. Never a direct goal; the finish is still a duel.",
-  MAN_MARK: "SHELVED team call, for the rest of the half: the opponent's single biggest played card counts at 75 percent every duel.",
-  ALL_OUT: "Team call until changed: your totals count 120 percent in their defensive line, but their totals count 120 percent in yours. The comeback lever, priced in exposure.",
-  PARK_BUS: "Team call until changed: your totals count 120 percent in your own defensive line and 80 percent in theirs.",
-  STEADY: "Team call: ends any mentality, yours included, and the exposure that came with it.",
-};
+// The keyword glossary and labels come from the strings file:
+// kw.help.<KEYWORD> is the rules text, kw.label.<KEYWORD> a display
+// name where the internal id reads badly.
+const KW_HELP = {};
+for (const [k, v] of Object.entries(STR))
+  if (k.startsWith("kw.help.")) KW_HELP[k.slice(8)] = v;
 function showKw(kw) {
   $("kw-title").textContent = kw;
-  $("kw-body").textContent = KW_HELP[kw] || "No description.";
+  $("kw-body").textContent = KW_HELP[kw] || T("kwmodal.nodesc");
   $("cardpop").hidden = true;
   $("kw-modal").hidden = false;
 }
@@ -1360,7 +1407,7 @@ document.addEventListener("click", e => {
     if (c) {
       S.you.spent.delete(c.id);
       (S.you.laneHands[S.duelBall] = S.you.laneHands[S.duelBall] || []).push(c);
-      tick("RECYCLE: " + c.name + " returns to your hand in this line.");
+      tick(T("comm.recycle.return", { card: c.name }));
       TEL.log("recycle_pick", { card: c.name });
       renderPitch();
     }
@@ -1372,7 +1419,7 @@ document.addEventListener("click", e => {
   if (pv) { showPiles(parseInt(pv.dataset.zone, 10)); return; }
   if (e.target.closest("#kw-close") || e.target.id === "kw-modal") {
     if (S.recyclePile) {
-      tick("RECYCLE: you leave the discard pile untouched.");
+      tick(T("comm.recycle.leave"));
       S.recyclePile = null;
     }
     $("kw-modal").hidden = true;
@@ -1390,11 +1437,12 @@ function showPiles(zone) {
   const block = (title, cards) => "<p style='margin:0.5rem 0 0.2rem'><strong>"
     + title + " (" + cards.length + ")</strong></p><div class='cards'>"
     + (cards.map(c => cardHTML(c, undefined, false)).join("")
-       || "<span class='pill'>empty</span>") + "</div>";
-  $("kw-title").textContent = ["your defensive line", "midfield",
-                               "their defensive line"][zone] + ": your piles";
-  $("kw-body").innerHTML = block("In hand", held) + block("Draw pile", draw)
-    + block("Discards", disc);
+       || "<span class='pill'>" + T("piles.empty") + "</span>") + "</div>";
+  $("kw-title").textContent = T("piles.title", {
+    zone: [T("pitch.band0.name"), T("pitch.band1.name"),
+           T("pitch.band2.name")][zone] });
+  $("kw-body").innerHTML = block(T("piles.inhand"), held)
+    + block(T("piles.draw"), draw) + block(T("piles.discards"), disc);
   $("kw-modal").hidden = false;
 }
 document.addEventListener("keydown", e => {
@@ -1426,9 +1474,9 @@ const PITCH_CHALK = '<svg class="pitchchalk" viewBox="0 0 300 140"'
   + '</svg>';
 function renderPitch() {
   const bands = [
-    ["your defensive line", "your defenders + keeper vs their forwards"],
-    ["midfield", "both midfields"],
-    ["their defensive line", "your forwards vs their defenders + keeper"],
+    [T("pitch.band0.name"), T("pitch.band0.who")],
+    [T("pitch.band1.name"), T("pitch.band1.who")],
+    [T("pitch.band2.name"), T("pitch.band2.who")],
   ];
   $("pitch").innerHTML = PITCH_CHALK + bands.map(([n, who], i) => {
     const youN = S.you.players.filter(p => playerOffsets(S.you, p).includes(i)).length;
@@ -1440,10 +1488,10 @@ function renderPitch() {
       + (S.ball === i ? '<span class="ballmark">⚽</span>' : "")
       + '<div class="bandname">' + n + "</div>"
       + '<div class="who">' + who + "</div>"
-      + '<div class="who mono">players: you ' + youN + " · them " + oppN + "</div>"
-      + '<div class="who mono pileview" data-zone="' + i + '" style="cursor:pointer;text-decoration:underline dotted">your hand ' + youHeld
-      + ' · piles ▸</div>'
-      + '<div class="who mono">their cards: ' + oppCards + "</div></div>";
+      + '<div class="who mono">' + T("pitch.players", { y: youN, o: oppN }) + "</div>"
+      + '<div class="who mono pileview" data-zone="' + i + '" style="cursor:pointer;text-decoration:underline dotted">'
+      + T("pitch.hand", { n: youHeld }) + "</div>"
+      + '<div class="who mono">' + T("pitch.theirs", { n: oppCards }) + "</div></div>";
   }).join("");
   $("sb-score").textContent = S.you.score + " - " + S.opp.score;
   $("calls-row").hidden = CFG.family === "current";
@@ -1452,26 +1500,26 @@ function renderPitch() {
       const bits = [side.effects.tactic, side.effects.mentality]
         .filter(Boolean).map(k => k.replace(/_/g, " ").toLowerCase());
       if ((side.effects.pressureActive || 0) > 0)
-        bits.push("PRESSURED x" + side.effects.pressureActive);
-      return bits.join(" + ") || "no call";
+        bits.push(T("match.calls.pressured", { n: side.effects.pressureActive }));
+      return bits.join(" + ") || T("match.calls.none");
     };
-    $("call-you").textContent = "you: " + callStr(S.you);
-    $("call-opp").textContent = "them: " + callStr(S.opp);
+    $("call-you").textContent = T("match.calls.you", { calls: callStr(S.you) });
+    $("call-opp").textContent = T("match.calls.opp", { calls: callStr(S.opp) });
   }
   $("sb-minute").textContent = minuteStr();
-  $("sb-phase").textContent = S.inExtraTime ? "extra time"
-    : (S.turn < CFG.halfAt ? "first half"
-       : (S.turn < CFG.turns ? "second half" : "stoppage time"));
-  $("sb-turn").textContent = "duel " + (S.turn + 1) + " / " + S.totalTurns;
+  $("sb-phase").textContent = S.inExtraTime ? T("match.phase.et")
+    : (S.turn < CFG.halfAt ? T("match.phase.first")
+       : (S.turn < CFG.turns ? T("match.phase.second")
+          : T("match.phase.stoppage")));
+  $("sb-turn").textContent = T("match.duelcount", { n: S.turn + 1, m: S.totalTurns });
 }
 
 // ---- turn flow ------------------------------------------------------
 function startTurn() {
+  S.duelLocked = false;
   if (S.turn === CFG.halfAt && !S.halftimeDone) {
-    tick("The half in numbers: you spent " + S.you.spent.size
-         + " cards to their " + S.opp.spent.size + "; corners "
-         + (S.cornerCount ? S.cornerCount.you + "-" + S.cornerCount.opp
-            : "0-0") + ".");
+    tick(T("comm.half.numbers", { y: S.you.spent.size, o: S.opp.spent.size,
+                                  c: S.cornerCount ? S.cornerCount.you + "-" + S.cornerCount.opp : "0-0" }));
     for (const side of [S.you, S.opp]) {
       // Exhausted cards (MAGIC) are gone for the MATCH: the one thing
       // the dressing room cannot give back. Team calls also reset.
@@ -1489,8 +1537,8 @@ function startTurn() {
       S.opp.moraleLost = Math.max(0, S.opp.moraleLost - m.half);
       renderMorale();
     }
-    tick("HT " + S.you.score + "-" + S.opp.score + ". The dressing rooms refresh every technique"
-         + (m ? " and the team talk lifts heads" : "") + ".", "big");
+    tick(T("comm.ht", { score: S.you.score + "-" + S.opp.score,
+                        morale: m ? T("comm.ht.morale") : "" }), "big");
     TEL.log("halftime", { score: [S.you.score, S.opp.score] });
   }
   if (S.turn >= S.totalTurns) return fullTime();
@@ -1504,19 +1552,19 @@ function startTurn() {
   S.oppPlayed = res.played;
   S.oppTotal = res.total + (wallActive(S.opp) ? wallValue(S.opp) : 0);
   S.oppWallNote = wallActive(S.opp) ? wallValue(S.opp) : 0;
-  $("opp-title").textContent = teamName(S.opp) + " commit, face up";
+  $("opp-title").textContent = T("match.commit.title", { team: teamName(S.opp) });
   $("opp-cards").innerHTML = S.oppPlayed.map(p => cardHTML(p.card, p.v, false)).join("")
-    || '<span class="pill">nothing committed</span>';
-  $("opp-total").innerHTML = (S.oppWallNote ? "keeper wall +" + S.oppWallNote + " · " : "")
-    + "their total: <strong>" + S.oppTotal + "</strong>";
+    || '<span class="pill">' + T("match.commit.none") + "</span>";
+  $("opp-total").innerHTML = (S.oppWallNote ? T("match.wall.prefix", { w: S.oppWallNote }) : "")
+    + T("match.their.total", { t: S.oppTotal });
   // Your hand
   S.youHand = deal(S.you);
   S.youCap = playsCap(S.you);
   S.selected = new Set();
-  $("you-title").textContent = "Your answer · play up to " + S.youCap
-    + " (" + presentPlayers(S.you).length + " players in this line)";
+  $("you-title").textContent = T("match.answer.title",
+    { cap: S.youCap, n: presentPlayers(S.you).length });
   $("you-cards").innerHTML = S.youHand.map(c => cardHTML(c, undefined, true)).join("")
-    || '<span class="pill">no cards available: the wall stands alone</span>';
+    || '<span class="pill">' + T("match.answer.none") + "</span>";
   for (const el of $("you-cards").querySelectorAll(".pcard"))
     el.addEventListener("click", ev => {
       // Chip and term taps open the glossary, not the card.
@@ -1530,6 +1578,9 @@ function startTurn() {
   maybeOnboard();
 }
 function toggleCard(el) {
+  // The duel is settled once you play or concede; the leftovers in
+  // your hand stay put until the next deal.
+  if (S.duelLocked) return;
   const cid = el.dataset.cid;
   if (el.classList.contains("dead")) return;
   if (S.selected.has(cid)) { S.selected.delete(cid); el.classList.remove("sel"); }
@@ -1557,15 +1608,14 @@ function updateYourTotal() {
     // Instinct: a CORNER_X2 card counts double here.
     lo = 0; hi = 0;
     for (const c of S.youHand) if (S.selected.has(c.id)) {
-      const m = c.kw === "CORNER_X2" ? 2 : 1;
+      const m = c.kw === "CORNER_X2" && S.corner.attacker === S.you ? 2 : 1;
       lo += m * c.lo; hi += m * c.hi;
     }
     const range = lo === hi ? String(lo) : lo + "–" + hi;
     const vs = S.corner.defTotal !== null && S.corner.attacker === S.you
-      ? " vs their defense of " + S.corner.defTotal
-      : " · their delivery comes after";
-    $("you-total").innerHTML = "your set-piece total: <strong>" + range
-      + "</strong>" + vs;
+      ? T("corner.vsdef", { d: S.corner.defTotal })
+      : T("corner.deliveryafter");
+    $("you-total").innerHTML = T("corner.settotal", { range, vs });
     $("btn-clear").hidden = $("btn-play").hidden || $("btn-play").disabled
       || S.selected.size === 0;
     return;
@@ -1573,15 +1623,17 @@ function updateYourTotal() {
   const wall = wallActive(S.you) ? wallValue(S.you) : 0;
   const range = lo === hi ? String(lo + wall) : (lo + wall) + "–" + (hi + wall);
   const theirs = pressuring
-    ? '<s>' + S.oppTotal + "</s> " + Math.round(S.oppTotal * 0.75) + " under pressure"
+    ? T("match.pressure.theirs", { t: S.oppTotal,
+                                   t75: Math.round(S.oppTotal * 0.75) })
     : String(S.oppTotal);
-  $("you-total").innerHTML = (wall ? "keeper wall +" + wall + " · " : "")
-    + "your total if played: <strong>" + range + "</strong> vs theirs " + theirs;
+  $("you-total").innerHTML = (wall ? T("match.wall.prefix", { w: wall }) : "")
+    + T("match.your.total", { range, theirs });
   $("btn-clear").hidden = $("btn-play").hidden || $("btn-play").disabled
     || S.selected.size === 0;
 }
 function playAnswer(concede) {
   if (S.corner) return resolveCornerPlay();
+  S.duelLocked = true;
   $("btn-play").disabled = true; $("btn-concede").disabled = true;
   $("btn-clear").hidden = true;
   const scoreBefore = { you: S.you.score, opp: S.opp.score };
@@ -1596,8 +1648,9 @@ function playAnswer(concede) {
                                   S.you, res.played, youT, notes);
   youT = youT2;
   const played = res.played.map(p => p.card.name + " (" + p.v + ")").join(", ");
-  tick((concede ? "You concede the duel." : "You answer " + played + " for " + youT + ".")
-       + " They committed " + oppT + ".");
+  tick((concede ? T("comm.concede")
+                : T("comm.answer", { cards: played, t: youT }))
+       + T("comm.committed", { t: oppT }));
   for (const n of notes) tick(n);
   let winner = null;
   if (oppT > youT) winner = S.opp;
@@ -1612,18 +1665,18 @@ function playAnswer(concede) {
     S.cancelDuel = false;
     S.pendingCorner = null;
     S.lastLoser = null;
-    tick("The duel is void; the ball stays where it is.", "big");
+    tick(T("comm.void"), "big");
     const notesC = [];
     afterDuel(null, S.opp, S.oppPlayed, res.played, notesC);
     for (const n of notesC) tick(n);
   } else if (!winner) {
-    tick("Honours even.");
+    tick(T("comm.even"));
     if (boxAttacker && CFG.keeperMoments) {
       // A tie in the box is a scramble, not nothing (ruling 2026-08-31).
       const attPlayed = boxAttacker === S.you ? res.played : S.oppPlayed;
       holdUpChance(boxAttacker, attPlayed, 0) || keeperMoment(boxAttacker);
     } else {
-      tick("The ball stays put.");
+      tick(T("comm.stays"));
     }
     S.lastLoser = null;
     const notes2 = [];
@@ -1638,9 +1691,19 @@ function playAnswer(concede) {
     if (offsetFor(winner, S.ball) === 2) {
       // Beat their score in their box, wall included: ALWAYS a goal
       // (ruling 2026-08-31).
-      winner.score += 1; S.ball = 1;
-      tick("GOAL! " + teamName(winner) + " win it by " + margin + ". "
-           + S.you.score + "-" + S.opp.score + ".", "goal");
+      winner.score += 1;
+      S.goalCredit = creditGoal(winner,
+        winner === S.you ? res.played : S.oppPlayed);
+      S.ball = 1;
+      tick(T("comm.goal", { team: teamName(winner), margin,
+                            score: S.you.score + "-" + S.opp.score }), "goal");
+      if (S.goalCredit)
+        tick(S.goalCredit.assist
+          ? T("comm.scorer.assist", { player: S.goalCredit.scorer.name,
+                                      assist: S.goalCredit.assist.name })
+          : T("comm.scorer.solo", { player: S.goalCredit.scorer.name }));
+      if (S.goalCredit && S.goalCredit.key)
+        tick(T("comm.keypass", { player: S.goalCredit.key.name }));
       popScore();
       handled = true;
     }
@@ -1660,18 +1723,19 @@ function playAnswer(concede) {
             && livePool(loser).length > 0
             && offsetFor(winner, S.ball) !== 2) {
           S.ball += winner === S.you ? 1 : -1;
-          tick("WALKOVER: " + teamName(loser) + " gave it up without a fight; "
-               + teamName(winner) + " carry it two lines.", "big");
+          tick(T("comm.walkover", { loser: teamName(loser),
+                                    winner: teamName(winner) }), "big");
         } else if (winner.effects.tactic === "ROUTE_ONE"
                    && offsetFor(winner, S.duelBall) === 0) {
           // Route one: ANY win at your own line launches the ball long
           // (Eduardo's ruling: no margin threshold), but never a
           // direct goal; the finish is still a duel.
           S.ball = winner === S.you ? 2 : 0;
-          tick("ROUTE ONE: " + teamName(winner) + " launch it straight over the top into the final third.", "big");
+          tick(T("comm.routeone", { team: teamName(winner) }), "big");
         } else {
-          tick(teamName(winner) + " win the duel by " + margin + " and push on.");
+          tick(T("comm.pushon", { team: teamName(winner), margin }));
         }
+        trackKeyPlay(winner, winner === S.you ? res.played : S.oppPlayed);
       }
     }
     const loserForMorale = winner === S.you ? S.opp : S.you;
@@ -1690,8 +1754,15 @@ function playAnswer(concede) {
     outcome: telOutcome,
     goal: S.you.score > scoreBefore.you ? "you"
       : (S.opp.score > scoreBefore.opp ? "opp" : null),
+    attrib: (S.you.score > scoreBefore.you || S.opp.score > scoreBefore.opp)
+      && S.goalCredit
+      ? { scorer: S.goalCredit.scorer.name,
+          assist: S.goalCredit.assist ? S.goalCredit.assist.name : null,
+          key: S.goalCredit.key ? S.goalCredit.key.name : null }
+      : null,
     score: [S.you.score, S.opp.score],
   });
+  S.goalCredit = null;
   if (S.you.score > scoreBefore.you) moraleGoal(S.you);
   if (S.opp.score > scoreBefore.opp) moraleGoal(S.opp);
   renderMorale();
@@ -1721,11 +1792,11 @@ function offerRecycle() {
   const pile = (S.you.zoneDiscards[S.duelBall] || [])
     .filter(c => S.you.spent.has(c.id) && c.kw !== "RECYCLE");
   if (!pile.length) {
-    tick("RECYCLE: nothing in this line's discard pile to bring back.");
+    tick(T("comm.recycle.none"));
     return;
   }
   S.recyclePile = pile;
-  $("kw-title").textContent = "RECYCLE: pick a card to return to your hand";
+  $("kw-title").textContent = T("recycle.title");
   $("kw-body").innerHTML = '<div class="cards">'
     + pile.map(c => cardHTML(c, undefined, true)).join("") + "</div>";
   $("kw-modal").hidden = false;
@@ -1739,32 +1810,31 @@ function fullTime() {
       S.inExtraTime = true;
       S.totalTurns += CFG.extraTimeTurns;
       TEL.log("extra_time", { score: [S.you.score, S.opp.score] });
-      tick("Level at the whistle. EXTRA TIME: " + CFG.extraTimeTurns
-           + " more duels, no refresh. What is spent stays spent.", "big");
+      tick(T("comm.et", { n: CFG.extraTimeTurns }), "big");
       $("btn-play").hidden = true; $("btn-concede").hidden = true;
       $("btn-next").hidden = false;
       return;
     }
     return shootout();
   }
-  tick("FT " + teamName(S.you) + " " + S.you.score + "-" + S.opp.score + " " + teamName(S.opp) + ".", "goal");
-  tick("The match in numbers: cards spent " + S.you.spent.size + " to "
-       + S.opp.spent.size + ", corners "
-       + (S.cornerCount ? S.cornerCount.you + "-" + S.cornerCount.opp
-          : "0-0") + ".");
+  tick(T("comm.ft", { you: teamName(S.you),
+                      score: S.you.score + "-" + S.opp.score,
+                      opp: teamName(S.opp) }), "goal");
+  tick(T("comm.match.numbers", { y: S.you.spent.size, o: S.opp.spent.size,
+                                 c: S.cornerCount ? S.cornerCount.you + "-" + S.cornerCount.opp : "0-0" }));
   TEL.log("match_end", {
     score: [S.you.score, S.opp.score], et: S.inExtraTime,
     spent: [S.you.spent.size, S.opp.spent.size],
     corners: S.cornerCount || null,
   });
   TEL.flush();
-  $("you-title").textContent = "Full time";
+  $("you-title").textContent = T("match.fulltime.title");
   $("you-cards").innerHTML = "";
-  $("you-total").innerHTML = "Final: <strong>" + S.you.score + " - " + S.opp.score + "</strong>";
+  $("you-total").innerHTML = T("match.final", { score: S.you.score + " - " + S.opp.score });
   $("btn-play").hidden = true; $("btn-concede").hidden = true;
   $("btn-next").hidden = true;
   if (S.cup) return finishCupTie(S.you.score > S.opp.score,
-                                 S.inExtraTime ? "aet" : "");
+                                 S.inExtraTime ? T("cup.note.aet") : "");
   $("btn-again").hidden = false;
 }
 
@@ -1772,11 +1842,10 @@ function fullTime() {
 // You play your ties; every other tie is a squad-strength roll (the
 // world-sim rule: rosters, not matches). No persistence between
 // matches beyond the bracket itself.
-const CLUB_NAMES = ["Brackwater", "Thornfield Rovers", "Gloomharbour",
-  "Peakspur", "Milldown Athletic", "Vexford Wanderers", "Saltmarsh Utd"];
+const CLUB_NAMES = T("names.clubs").split(", ");
 function newCup(yourLineup) {
   const lineups = Object.keys(LINEUPS);
-  const teams = [{ you: true, name: "Ironhoof (you)", lineup: yourLineup,
+  const teams = [{ you: true, name: T("team.you"), lineup: yourLineup,
                    strength: 50 }];
   for (let i = 0; i < 7; i++)
     teams.push({ you: false, name: CLUB_NAMES[i],
@@ -1788,7 +1857,8 @@ function newCup(yourLineup) {
   }
   return { alive: teams, round: 0, history: [], over: false,
            played: 0, goalsFor: 0, goalsAgainst: 0,
-           roundNames: ["Quarter-finals", "Semi-finals", "The final"] };
+           roundNames: [T("cup.round.quarters"), T("cup.round.semis"),
+                        T("cup.round.final")] };
 }
 function offscreenTie(a, b) {
   let ra, rb;
@@ -1809,7 +1879,7 @@ function showBracket(message) {
   const cup = S.cup;
   $("setup").hidden = true; $("game").hidden = true;
   $("bracket").hidden = false;
-  $("bracket-title").textContent = cup.over ? "Cup run over"
+  $("bracket-title").textContent = cup.over ? T("cup.over.title")
     : cup.roundNames[cup.round];
   let html = "";
   for (const round of cup.history) {
@@ -1817,18 +1887,18 @@ function showBracket(message) {
       + round.ties.map(t => "<div>" + t + "</div>").join("") + "<br>";
   }
   if (!cup.over) {
-    html += "<div><strong>" + cup.roundNames[cup.round] + " draw</strong></div>";
+    html += "<div><strong>" + T("cup.drawheader", { round: cup.roundNames[cup.round] }) + "</strong></div>";
     for (let i = 0; i < cup.alive.length; i += 2) {
       const a = cup.alive[i], b = cup.alive[i + 1];
-      html += "<div>" + a.name + " v " + b.name
-        + ((a.you || b.you) ? " &nbsp;<strong>&larr; your tie</strong>" : "")
+      html += "<div>" + T("cup.vs", { a: a.name, b: b.name })
+        + ((a.you || b.you) ? " &nbsp;<strong>" + T("cup.yourtie") + "</strong>" : "")
         + "</div>";
     }
   }
   if (message) html += "<br><div><strong>" + message + "</strong></div>";
   if (cup.over)
-    html += "<br><div>Your run: " + cup.played + " played, "
-      + cup.goalsFor + " scored, " + cup.goalsAgainst + " conceded.</div>";
+    html += "<br><div>" + T("cup.run.summary", { played: cup.played,
+      gf: cup.goalsFor, ga: cup.goalsAgainst }) + "</div>";
   // Between-round event (red-pen candidates from content/events.json):
   // one decision per advance, costs printed, always walkable-away.
   const wantEvent = !cup.over && cup.round > 0
@@ -1839,8 +1909,8 @@ function showBracket(message) {
     cup.event = pool.length ? pool[Math.floor(rng() * pool.length)]
       : EVENTS[Math.floor(rng() * EVENTS.length)];
     cup.usedEvents.push(cup.event.id);
-    html += "<br><div><strong>Before the next round: "
-      + cup.event.name + "</strong></div><div>" + cup.event.text + "</div>"
+    html += "<br><div><strong>" + T("cup.event.before", { name: cup.event.name })
+      + "</strong></div><div>" + cup.event.text + "</div>"
       + cup.event.options.map((o, i) =>
           '<div style="margin-top:0.35rem"><button class="evt-opt" data-i="'
           + i + '">' + o.label + "</button></div>").join("");
@@ -1850,25 +1920,27 @@ function showBracket(message) {
     b.addEventListener("click", () =>
       chooseEventOption(parseInt(b.dataset.i, 10)));
   $("btn-cup-next").hidden = wantEvent;
-  $("btn-cup-next").textContent = cup.over ? "Back to the touchline"
-    : "Play your tie";
+  $("btn-cup-next").textContent = cup.over ? T("cup.btn.back")
+    : T("cup.btn.play");
 }
 function chooseEventOption(i) {
   const cup = S.cup, o = cup.event.options[i];
   let effects = o.fx || {};
   let note = "";
+  let coinResult = null;
   if (effects.coin) {
     const heads = rng() < 0.5;
     effects = (heads ? effects.coin.heads : effects.coin.tails) || {};
-    note = heads ? " The coin lands heads." : " The coin lands tails.";
+    coinResult = heads ? "heads" : "tails";
+    note = heads ? T("cup.coin.heads") : T("cup.coin.tails");
   }
   cup.pendingFx = JSON.parse(JSON.stringify(effects));
   cup.eventRound = cup.round;
   TEL.log("event_choice", {
     event: cup.event.id, option: i, label: o.label,
-    coin: note ? (note.includes("heads") ? "heads" : "tails") : null,
+    coin: coinResult,
   });
-  showBracket("Decision made: " + o.label + "." + note);
+  showBracket(T("cup.decision", { label: o.label, coin: note }));
 }
 function startCupMatch() {
   const pair = yourPair(S.cup);
@@ -1911,12 +1983,12 @@ function finishCupTie(youWon, note) {
       cup.alive = next2; cup.round += 1;
     }
     cup.over = true;
-    message = "Knocked out. The cup goes to " + cup.alive[0].name + ".";
+    message = T("cup.msg.out", { club: cup.alive[0].name });
   } else if (cup.alive.length === 1) {
     cup.over = true;
-    message = "CHAMPIONS! " + teamName(S.you) + " lift the cup.";
+    message = T("cup.msg.champions", { team: teamName(S.you) });
   } else {
-    message = "Through to the " + cup.roundNames[cup.round].toLowerCase() + ".";
+    message = T("cup.msg.through", { round: cup.roundNames[cup.round].toLowerCase() });
   }
   if (cup.over) {
     TEL.log("cup_end", {
@@ -1931,9 +2003,9 @@ function finishCupTie(youWon, note) {
   showBracket(message);
 }
 function shootout() {
-  tick("Still level after extra time. PENALTIES: best of " + CFG.penKicks
-       + ", pure range duels: shot " + CFG.penRange[0] + "-" + CFG.penRange[1]
-       + " against save " + CFG.saveRange[0] + "-" + CFG.saveRange[1] + ".", "big");
+  tick(T("pen.start", { k: CFG.penKicks,
+                        slo: CFG.penRange[0], shi: CFG.penRange[1],
+                        vlo: CFG.saveRange[0], vhi: CFG.saveRange[1] }), "big");
   const pens = { you: 0, opp: 0 }, kick = { you: 0, opp: 0 };
   const take = who => {
     kick[who] += 1;
@@ -1941,9 +2013,10 @@ function shootout() {
     const save = rint(CFG.saveRange[0], CFG.saveRange[1]);
     const scored = shot > save;
     if (scored) pens[who] += 1;
-    tick((who === "you" ? teamName(S.you) : teamName(S.opp)) + ", kick "
-         + kick[who] + ": shot " + shot + " against save " + save
-         + (scored ? ". Scores." : ". SAVED!"), scored ? "goal" : undefined);
+    tick(T("pen.kick", { team: who === "you" ? teamName(S.you) : teamName(S.opp),
+                         n: kick[who], shot, save })
+         + (scored ? T("pen.scores") : T("pen.saved")),
+         scored ? "goal" : undefined);
   };
   const decided = () =>
     pens.you > pens.opp + (CFG.penKicks - kick.opp) ||
@@ -1960,9 +2033,9 @@ function shootout() {
   }
   if (pens.you === pens.opp) {
     if (rng() < 0.5) pens.you += 1; else pens.opp += 1;
-    tick("The referee has seen enough; the coin decides.");
+    tick(T("pen.coin"));
   }
-  tick("Shoot-out " + pens.you + "-" + pens.opp + ".", "big");
+  tick(T("pen.result", { p: pens.you + "-" + pens.opp }), "big");
   TEL.log("shootout", {
     score: [S.you.score, S.opp.score],
     pens: [pens.you, pens.opp], kicks: [kick.you, kick.opp],
@@ -1970,8 +2043,8 @@ function shootout() {
   $("btn-play").hidden = true; $("btn-concede").hidden = true;
   $("btn-next").hidden = true;
   finishCupTie(pens.you > pens.opp,
-               S.you.score + "-" + S.opp.score + " aet, "
-               + pens.you + "-" + pens.opp + " pens");
+               T("cup.note.aetpens", { score: S.you.score + "-" + S.opp.score,
+                                       pens: pens.you + "-" + pens.opp }));
 }
 
 // ---- setup ----------------------------------------------------------
@@ -1983,8 +2056,8 @@ function fillSetup() {
 }
 function startMatch(oppLineup, oppName) {
   S.cancelDuel = false; S.pendingRecycle = false; S.recyclePile = null;
-  S.you = buildSquad("Y", S.draftSpec ? "drafted XI" : $("sel-you").value,
-                     "Ironhoof (you)", S.draftSpec);
+  S.you = buildSquad("Y", S.draftSpec ? T("squad.drafted") : $("sel-you").value,
+                     T("team.you"), S.draftSpec);
   S.opp = buildSquad("O", oppLineup, oppName);
   // Apply the between-round event decision to YOUR next match only.
   S.matchFx = (S.cup && S.cup.pendingFx) ? S.cup.pendingFx : null;
@@ -2003,8 +2076,8 @@ function startMatch(oppLineup, oppName) {
   S.cornerCount = { you: 0, opp: 0 };
   S.halftimeDone = false; S.inExtraTime = false;
   S.totalTurns = CFG.turns + rint(CFG.stoppageMin, CFG.stoppageMax);
-  $("sb-you").textContent = S.you.teamName + " · " + S.you.lineupName;
-  $("sb-opp").textContent = S.opp.teamName + " · " + S.opp.lineupName;
+  $("sb-you").textContent = T("match.sb", { team: S.you.teamName, lineup: S.you.lineupName });
+  $("sb-opp").textContent = T("match.sb", { team: S.opp.teamName, lineup: S.opp.lineupName });
   $("ticker-list").innerHTML = "";
   const roundName = S.cup ? S.cup.roundNames[S.cup.round] + ": " : "";
   TEL.log("match_start", {
@@ -2012,10 +2085,11 @@ function startMatch(oppLineup, oppName) {
     opp: oppName, oppLineup, totalTurns: S.totalTurns,
     fx: S.matchFx || null,
   });
-  tick("Kick off. " + roundName + teamName(S.you) + " against " + teamName(S.opp)
-       + ", stoppage will add " + (S.totalTurns - CFG.turns) + " duels.", "big");
+  tick(T("comm.kickoff", { round: roundName, you: teamName(S.you),
+                          opp: teamName(S.opp),
+                          n: S.totalTurns - CFG.turns }), "big");
   if (S.matchFx && Object.keys(S.matchFx).length)
-    tick("The training-ground decision travels with you: it applies to this match.");
+    tick(T("comm.fx"));
   $("setup").hidden = true; $("bracket").hidden = true; $("game").hidden = false;
   $("btn-again").hidden = true;
   renderMorale();
@@ -2028,14 +2102,16 @@ function startMatch(oppLineup, oppName) {
 // identity beyond the wall. Candidates draw from the seeded match
 // stream, so a drafted run replays like everything else.
 const DRAFT_BANDS = [
-  ["Defense", 4, ["centre-back", "ball-playing-defender", "sweeper",
-                  "full-back", "wing-back"]],
-  ["Midfield", 3, ["box-to-box", "ball-winner", "deep-lying-playmaker",
-                   "advanced-playmaker"]],
-  ["Attack", 3, ["inside-forward", "target-forward", "winger",
-                 "poacher"]],
+  [T("draft.band.defense"), 4, ["centre-back", "ball-playing-defender",
+                                "sweeper", "full-back", "wing-back"]],
+  [T("draft.band.midfield"), 3, ["box-to-box", "ball-winner",
+                                 "deep-lying-playmaker",
+                                 "advanced-playmaker"]],
+  [T("draft.band.attack"), 3, ["inside-forward", "target-forward",
+                               "winger", "poacher"]],
 ];
-const LINE_NAMES = ["DEF", "MID", "ATT"];
+const LINE_NAMES = [T("draft.line.def"), T("draft.line.mid"),
+                    T("draft.line.att")];
 function draftName(used) {
   while (true) {
     const n = FIRST[Math.floor(rng() * FIRST.length)] + " "
@@ -2054,8 +2130,9 @@ function candidateHTML(c, i) {
     + n + "</span>").join("");
   const grouped = [];
   for (const [n, lo, hi, tag, kw] of role.cards) {
-    const lov = Math.max(1, lo + c.quality);
-    const hiv = Math.max(lov, hi + c.quality);
+    const effectCard = lo === 0 && hi === 0;
+    const lov = effectCard ? 0 : Math.max(1, lo + c.quality);
+    const hiv = effectCard ? 0 : Math.max(lov, hi + c.quality);
     const val = lov === hiv ? String(lov) : lov + "–" + hiv;
     const key = n + "|" + val + "|" + kw;
     const last = grouped[grouped.length - 1];
@@ -2073,23 +2150,24 @@ function candidateHTML(c, i) {
     + '" data-owner="' + c.name + '" data-role="'
     + c.role.replace(/-/g, " ") + '">' + g.n + "</span>"
     + '<span class="tright">'
-    + '<span class="tv"><span class="kwterm" data-kw="PUSH">PUSH</span> '
-    + g.val + "</span>"
+    + '<span class="tv"><span class="kwterm" data-kw="PUSH">'
+    + T("kw.term.push") + "</span> " + g.val + "</span>"
     + (g.kw ? kwChip(g.kw) : "") + "</span></div>"
   ).join("");
   const q = c.quality > 0 ? "+" + c.quality : String(c.quality);
   return '<div class="cand" tabindex="0" data-i="' + i + '">'
     + '<div class="candname">' + c.name + '</div>'
-    + '<div class="candportrait">portrait not available</div>'
+    + '<div class="candportrait">' + T("draft.portrait") + "</div>"
     + '<div class="candmeta">' + c.role.replace(/-/g, " ")
     + '<span class="formbadge' + (c.quality > 0 ? " up" : "")
-    + '" data-kw="FORM" tabindex="0">form ' + q
-    + '<span class="kwtip"><span class="kwtipname">FORM ' + q
+    + '" data-kw="FORM" tabindex="0">' + T("draft.form", { q })
+    + '<span class="kwtip"><span class="kwtipname">'
+    + T("draft.formtip.title", { q })
     + "</span>" + KW_HELP.FORM + "</span></span></div>"
     + '<div class="candcards"><div class="linesrow">' + lines + "</div>"
-    + '<div class="playshead">Plays</div>'
+    + '<div class="playshead">' + T("draft.plays") + "</div>"
     + rows + "</div>"
-    + '<div class="signhint">Sign him</div></div>';
+    + '<div class="signhint">' + T("draft.sign") + "</div></div>";
 }
 function startDraft(mode) {
   S.draft = { mode, band: 0, inBand: 0, spec: [], used: new Set() };
@@ -2108,9 +2186,8 @@ function nextDraftPick() {
   for (let i = 0; i < 3; i++)
     d.cands.push({ role: roles[Math.floor(rng() * roles.length)],
                    name: draftName(d.used), quality: rint(-2, 2) });
-  $("draft-progress").textContent = bandName + ": pick "
-    + (d.inBand + 1) + " of " + count + " · squad "
-    + d.spec.length + "/10";
+  $("draft-progress").textContent = T("draft.progress",
+    { band: bandName, n: d.inBand + 1, count, have: d.spec.length });
   $("draft-choices").innerHTML =
     d.cands.map((c, i) => candidateHTML(c, i)).join("");
   for (const el of $("draft-choices").querySelectorAll(".cand"))
@@ -2195,7 +2272,7 @@ function proceed(mode) {
     return;
   }
   S.cup = null;
-  startMatch($("sel-opp").value, "Brackwater");
+  startMatch($("sel-opp").value, T("team.friendly.opp"));
 }
 $("btn-quick").addEventListener("click", () => start("friendly"));
 $("btn-cup").addEventListener("click", () => start("cup"));
@@ -2217,13 +2294,14 @@ $("btn-clear").addEventListener("click", () => {
 $("btn-concede").addEventListener("click", () => playAnswer(true));
 $("btn-next").addEventListener("click", startTurn);
 $("btn-again").addEventListener("click", backToSetup);
+document.title = T("app.title");
+for (const el of document.querySelectorAll("[data-str]"))
+  el.textContent = T(el.dataset.str);
 fillSetup();
 freshSetup();
 if (CFG.tel) {
   // Consent line, shown only in telemetry-carrying builds.
   const note = document.querySelector("#setup .note");
-  if (note) note.textContent += " This playtest build records anonymous"
-    + " gameplay events (which cards you play and what happens);"
-    + " no personal data is collected.";
+  if (note) note.textContent += " " + T("setup.consent");
 }
 </script>
