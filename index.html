@@ -134,6 +134,19 @@
           background: var(--chip); border: 1px solid var(--line);
           border-radius: 5px; padding: 0.12rem 0.4rem; color: var(--ink-2); }
   [hidden] { display: none !important; }
+  #dev-options { margin-top: 1.1rem; border-top: 1px solid var(--line);
+                 padding-top: 0.6rem; }
+  #dev-options summary { cursor: pointer; color: var(--muted);
+                         font-family: "Bricolage Grotesque", system-ui, sans-serif;
+                         font-size: 0.85rem; }
+  .cand { border: 1.5px solid var(--line); border-radius: 10px;
+          padding: 0.6rem 0.7rem; background: var(--ground);
+          cursor: pointer; flex: 1 1 15rem; user-select: none; }
+  .cand:hover, .cand:focus-visible { border-color: var(--accent); }
+  .cand .cname { font-size: 0.88rem; }
+  .cand .candcards { font-family: "IBM Plex Mono", monospace;
+                     font-size: 0.72rem; color: var(--ink-2);
+                     margin-top: 0.35rem; line-height: 1.5; }
   @keyframes scorepop { 0% { transform: scale(1); }
     35% { transform: scale(1.3); color: var(--accent); }
     100% { transform: scale(1); } }
@@ -145,42 +158,57 @@
 
   <div id="setup" class="panel setup">
     <h3>Take the touchline</h3>
-    <label>Mode</label>
-    <select id="sel-mode">
-      <option value="friendly">Friendly: one match</option>
-      <option value="cup">Cup run: 8 clubs, straight knockout. You play your ties; the rest of the draw resolves on squad strength. Knockout draws go to extra time, then penalties.</option>
+    <label>Your squad</label>
+    <select id="sel-squadsrc">
+      <option value="preset">A preset lineup</option>
+      <option value="draft">Draft your own: sign ten players, three choices at a time</option>
     </select>
-    <label>Your lineup</label>
-    <select id="sel-you"></select>
-    <label>Opponent lineup (friendly mode; the cup draws its own opponents)</label>
-    <select id="sel-opp"></select>
-    <label>Card set</label>
-    <select id="sel-cardset">
-      <option value="v3">v3: your sheet rulings of 2026-08-31 (Tackle 12 everywhere, PRESSURE, Metronome, Gain, Rainbow Flick...)</option>
-      <option value="v1">v1: the previous set (Engine Run era, kept as the control)</option>
-    </select>
-    <label>Keyword family overlay (applies to the v1 set only; v3 carries its own keywords)</label>
-    <select id="sel-family">
-      <option value="current">current grammar only</option>
-      <option value="pressure">+ PRESSURE (the one percentage status, applied in stacks)</option>
-      <option value="tactics">+ tactics (SHELVED: future coach abilities)</option>
-      <option value="mentality">+ mentality (SHELVED: a future class)</option>
-    </select>
-    <label>Keeper moments (ruling 2026-08-31: beat their score in their box and it is ALWAYS a goal; a tie or a miss by up to 4 becomes a save, spill or corner, and corners are real 5-a-side set-piece duels from all your current hands)</label>
-    <select id="sel-moments"><option value="on">on (current direction)</option><option value="off">off (no moments: near misses just fail)</option></select>
-    <label>Walkover rule (experimental: conceding while you still hold cards lets them carry the ball two lines)</label>
-    <select id="sel-walkover"><option value="off">off</option><option value="on">on</option></select>
-    <label>Morale (experimental: every duel lost takes the margin from your morale; every full step lost is one fewer card per duel)</label>
-    <select id="sel-morale">
-      <option value="off">off</option>
-      <option value="raw">raw (Eduardo's spec: full margin, step 20)</option>
-      <option value="rawfloor">raw with a floor (full margin, but never worse than -3 plays)</option>
-      <option value="tamed">tamed (loss capped at 8, winning lifts heads, step 25)</option>
-    </select>
-    <label>Match seed (same seed replays the same match if you make the same choices)</label>
-    <input id="sel-seed" class="mono" type="number" value="1" style="padding:0.35rem 0.5rem;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:8rem">
-    <div class="actions"><button class="primary" id="btn-start">Kick off</button></div>
+    <div id="preset-row">
+      <label>Lineup</label>
+      <select id="sel-you"></select>
+    </div>
+    <div class="actions" style="margin-top:1rem">
+      <button class="primary" id="btn-quick">Quick match</button>
+      <button class="primary" id="btn-cup">Cup run</button>
+    </div>
+    <details id="dev-options">
+      <summary>Dev options</summary>
+      <label>Opponent lineup (quick match; the cup draws its own opponents)</label>
+      <select id="sel-opp"></select>
+      <label>Card set</label>
+      <select id="sel-cardset">
+        <option value="v3">v3: the sheet rulings of 2026-08-31 (Tackle 12 everywhere, PRESSURE, Metronome, Gain, Rainbow Flick...)</option>
+        <option value="v1">v1: the previous set (Engine Run era, kept as the control)</option>
+      </select>
+      <label>Keyword family overlay (applies to the v1 set only; v3 carries its own keywords)</label>
+      <select id="sel-family">
+        <option value="current">current grammar only</option>
+        <option value="pressure">+ PRESSURE (the one percentage status, applied in stacks)</option>
+        <option value="tactics">+ tactics (SHELVED: future coach abilities)</option>
+        <option value="mentality">+ mentality (SHELVED: a future class)</option>
+      </select>
+      <label>Keeper moments (ruling 2026-08-31: beat their score in their box and it is ALWAYS a goal; a tie or a miss by up to 4 becomes a save, spill or corner, and corners are real 5-a-side set-piece duels from all your current hands)</label>
+      <select id="sel-moments"><option value="on">on (current direction)</option><option value="off">off (no moments: near misses just fail)</option></select>
+      <label>Walkover rule (experimental: conceding while you still hold cards lets them carry the ball two lines)</label>
+      <select id="sel-walkover"><option value="off">off</option><option value="on">on</option></select>
+      <label>Morale (experimental: every duel lost takes the margin from your morale; every full step lost is one fewer card per duel)</label>
+      <select id="sel-morale">
+        <option value="off">off</option>
+        <option value="raw">raw (Eduardo's spec: full margin, step 20)</option>
+        <option value="rawfloor">raw with a floor (full margin, but never worse than -3 plays)</option>
+        <option value="tamed">tamed (loss capped at 8, winning lifts heads, step 25)</option>
+      </select>
+      <label>Match seed (same seed replays the same match if you make the same choices; randomized each visit)</label>
+      <input id="sel-seed" class="mono" type="number" value="1" style="padding:0.35rem 0.5rem;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:8rem">
+    </details>
     <p class="note">You are always the responder: the opponent commits first, face up, every duel. Play up to as many cards as you have players in the ball's line, or concede the duel and keep your legs. Cards spend until half-time. You are never re-dealt: what you draw in a lane stays in your hand there for the whole half, and every return to that lane draws 2 more cards.</p>
+  </div>
+
+  <div id="draft" class="panel" hidden>
+    <h3>Draft your squad</h3>
+    <div id="draft-progress" class="mono" style="font-size:0.82rem; margin-top:0.3rem"></div>
+    <div class="cards" id="draft-choices" style="margin-top:0.7rem"></div>
+    <div id="draft-roster" class="mono" style="font-size:0.78rem; margin-top:0.9rem; line-height:1.55"></div>
   </div>
 
   <div id="bracket" class="panel" hidden>
@@ -246,7 +274,7 @@
 const ROLES = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 13, 13, "ANYWHERE", "HOOF_IT"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Line Pass", 11, 11, "ANYWHERE", "SWITCH"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Read the Game", 10, 10, "ANYWHERE", "MARK"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Cross", 8, 14, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Overlap", 14, 14, "ANYWHERE", "OVERLAP"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Late Arrival", 8, 18, "ANYWHERE", "THROUGH"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 13, 13, "ANYWHERE", "PRESS"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Long Diagonal", 6, 18, "ANYWHERE", "FEINT"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["Killer Ball", 8, 20, "ANYWHERE", "THROUGH"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Hold It Up", 14, 14, "ANYWHERE", "HOLD_UP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Cross", 9, 19, "ANYWHERE", "CORNER"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Poach", 14, 24, "THEIR_BOX", ""]]}};
 const ROLES_V3 = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 18, 18, "ANYWHERE", "HOOF_SELF"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Recycle", 7, 7, "ANYWHERE", "RECYCLE"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Skilled Distribution", 10, 10, "ANYWHERE", "INCISIVE_1"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Overlap", 22, 22, "ANYWHERE", "TIRED"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Late Arrival", 8, 18, "ANYWHERE", "INCISIVE_1"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 10, 10, "ANYWHERE", "PRESSURE_1"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Long Diagonal", 6, 18, "ANYWHERE", "PRESSURE_2"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["Through Pass", 8, 20, "ANYWHERE", "INCISIVE_1"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Hold It Up", 0, 0, "ANYWHERE", "RALLY_HOLDUP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Rainbow Flick", 0, 0, "THEIR_BOX", "RAINBOW"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Poach", 14, 24, "THEIR_BOX", "ATTACK_ONLY"]]}};
 const LINEUPS = {"classic-442": ["centre-back", "centre-back", "full-back", "full-back", "ball-winner", "box-to-box", "deep-lying-playmaker", "advanced-playmaker", "target-forward", "poacher"], "wing-play": ["centre-back", "centre-back", "wing-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "winger", "target-forward", "poacher"], "tiki-taka": ["ball-playing-defender", "centre-back", "centre-back", "full-back", "deep-lying-playmaker", "advanced-playmaker", "advanced-playmaker", "box-to-box", "inside-forward", "poacher"], "low-block-counter": ["sweeper", "centre-back", "centre-back", "centre-back", "full-back", "ball-winner", "ball-winner", "box-to-box", "inside-forward", "poacher"], "direct-target": ["centre-back", "centre-back", "full-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "advanced-playmaker", "target-forward", "target-forward"]};
-const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-f98a9b1"}};
+const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-933dc71"}};
 const FAMILIES = {"tactics": {"ball-winner": ["Gegenpress", 2, 2, "ANYWHERE", "GEGENPRESS"], "wing-back": ["Overlap Runs", 2, 2, "ANYWHERE", "OVERLAP_RUNS"], "advanced-playmaker": ["Drop Between Lines", 2, 2, "ANYWHERE", "DROP_DEEP"], "centre-back": ["Route One", 2, 2, "ANYWHERE", "ROUTE_ONE"]}, "pressure": {"ball-playing-defender": ["Shackle", 10, 10, "ANYWHERE", "PRESSURE_1"], "centre-back": ["Crowd Out", 8, 8, "ANYWHERE", "PRESSURE_2"], "ball-winner": ["Cut the Supply", 6, 6, "ANYWHERE", "PRESSURE_3"]}, "mentality": {"target-forward": ["All-Out Attack", 6, 6, "ANYWHERE", "ALL_OUT"], "sweeper": ["Park the Bus", 6, 6, "ANYWHERE", "PARK_BUS"], "deep-lying-playmaker": ["Steady the Ship", 6, 6, "ANYWHERE", "STEADY"]}};
 const EVENTS = [{"id": "open-training", "name": "Open training session", "shape": "pure_gift", "text": "The town turns out to watch training and the legs pump a little harder.", "options": [{"label": "Feed off it: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "Close the gates and rest (no effect)", "fx": {}}]}, {"id": "double-session", "name": "The gaffer's double session", "shape": "trade", "text": "Two sessions in one day. The patterns get sharper; the legs get heavier.", "options": [{"label": "Drill crossing: every Cross +2 next match, but your first deal is 1 card smaller", "fx": {"cardGain": [{"name": "Cross", "delta": 2}], "handExtra": -1}}, {"label": "One session is plenty (no effect)", "fx": {}}]}, {"id": "fog-morning", "name": "Fog on the training ground", "shape": "gamble", "text": "You can barely see the far goal. Some mornings like this forge a back line; some just waste everyone's time.", "options": [{"label": "Train through it: 50-50. Heads every Tackle +2 next match, tails your lane top-up is 1 smaller", "fx": {"coin": {"heads": {"cardGain": [{"name": "Tackle", "delta": 2}]}, "tails": {"laneTopup": -1}}}}, {"label": "Send them home (no effect)", "fx": {}}]}, {"id": "keeper-coach", "name": "The visiting keeper coach", "shape": "build_around", "text": "A famous old shot-stopper is in town for one day and offers a session with your keeper.", "options": [{"label": "Take the session: keeper wall +2 next match", "fx": {"wall": 2}}, {"label": "Politely decline (no effect)", "fx": {}}]}, {"id": "youth-minutes", "name": "A prospect wants minutes", "shape": "trade", "text": "The academy's best asks to travel with the squad. More bodies in the rotation, less rhythm in the first team.", "options": [{"label": "Bring him: first deal +1 card next match, but every Tackle -1", "fx": {"handExtra": 1, "cardGain": [{"name": "Tackle", "delta": -1}]}}, {"label": "Not yet, son (no effect)", "fx": {}}]}, {"id": "rondo-morning", "name": "Rondo morning", "shape": "build_around", "text": "Keep-ball in tight squares until the touch is automatic. Passing sides feast on this; direct sides shrug.", "options": [{"label": "Run the rondos: every Pass +2 next match", "fx": {"cardGain": [{"name": "Pass", "delta": 2}]}}, {"label": "Straight to shape work (no effect)", "fx": {}}]}, {"id": "set-piece-rehearsal", "name": "Set-piece rehearsal", "shape": "build_around", "text": "An hour of corners against the wall of mannequins. The poachers' eyes light up.", "options": [{"label": "Rehearse: every Strike +1 next match (and Strikes already count double at corners)", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "Save the legs (no effect)", "fx": {}}]}, {"id": "market-stall", "name": "The market stall", "shape": "shop_variant", "text": "A travelling trainer sets out his wares: one specialty per club, no refunds.", "options": [{"label": "The tackling dummy: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "The shooting gallery: every Strike +1 next match", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "The gloves: keeper wall +1 next match", "fx": {"wall": 1}}, {"label": "Keep walking (no effect)", "fx": {}}]}];
 const TACTICS = ["GEGENPRESS", "OVERLAP_RUNS", "DROP_DEEP", "ROUTE_ONE", "MAN_MARK"];
@@ -330,7 +358,10 @@ function shuffle(arr) {
 }
 
 // ---- squad construction (mirrors build_role_squad) ------------------
-function buildSquad(label, lineupName, teamName) {
+// spec: optional [{role, name, quality}] from the draft; names and
+// quality rolls are then fixed (the players the coach signed), and
+// lineupName is only a display label.
+function buildSquad(label, lineupName, teamName, spec) {
   const used = new Set();
   function pickName() {
     while (true) {
@@ -343,10 +374,13 @@ function buildSquad(label, lineupName, teamName) {
   const roleSet = CFG.cardset === "v3" ? ROLES_V3 : ROLES;
   const famCards = (CFG.cardset !== "v3" && CFG.family !== "current")
     ? FAMILIES[CFG.family] : null;
-  for (const roleName of LINEUPS[lineupName]) {
+  const roleList = spec ? spec.map(s => s.role) : LINEUPS[lineupName];
+  for (let ri = 0; ri < roleList.length; ri++) {
+    const roleName = roleList[ri];
     const role = roleSet[roleName];
-    const quality = rint(-2, 2);
-    const p = { id: label + "-" + players.length, name: pickName(),
+    const quality = spec ? spec[ri].quality : rint(-2, 2);
+    const p = { id: label + "-" + players.length,
+                name: spec ? spec[ri].name : pickName(),
                 role: roleName, pos: role.position, base: role.base,
                 extra: role.extra || [], wall: role.wall_bonus || 0,
                 cards: [] };
@@ -1688,7 +1722,8 @@ function fillSetup() {
 }
 function startMatch(oppLineup, oppName) {
   S.cancelDuel = false; S.pendingRecycle = false; S.recyclePile = null;
-  S.you = buildSquad("Y", $("sel-you").value, "Ironhoof (you)");
+  S.you = buildSquad("Y", S.draftSpec ? "drafted XI" : $("sel-you").value,
+                     "Ironhoof (you)", S.draftSpec);
   S.opp = buildSquad("O", oppLineup, oppName);
   // Apply the between-round event decision to YOUR next match only.
   S.matchFx = (S.cup && S.cup.pendingFx) ? S.cup.pendingFx : null;
@@ -1725,7 +1760,120 @@ function startMatch(oppLineup, oppName) {
   renderMorale();
   startTurn();
 }
-$("btn-start").addEventListener("click", () => {
+// ---- the draft (v1: pick ten, three choices at a time) --------------
+// Walking up the pitch: 4 defense picks, 3 midfield, 3 attack. Each
+// pick offers three candidates with fresh names and quality rolls,
+// their actual cards on show. No goalkeeper pick yet: keepers have no
+// identity beyond the wall. Candidates draw from the seeded match
+// stream, so a drafted run replays like everything else.
+const DRAFT_BANDS = [
+  ["Defense", 4, ["centre-back", "ball-playing-defender", "sweeper",
+                  "full-back", "wing-back"]],
+  ["Midfield", 3, ["box-to-box", "ball-winner", "deep-lying-playmaker",
+                   "advanced-playmaker"]],
+  ["Attack", 3, ["inside-forward", "target-forward", "winger",
+                 "poacher"]],
+];
+const LINE_NAMES = ["DEF", "MID", "ATT"];
+function draftName(used) {
+  while (true) {
+    const n = FIRST[Math.floor(rng() * FIRST.length)] + " "
+      + LAST[Math.floor(rng() * LAST.length)];
+    if (!used.has(n)) { used.add(n); return n; }
+  }
+}
+function candidateHTML(c, i) {
+  const roleSet = CFG.cardset === "v3" ? ROLES_V3 : ROLES;
+  const role = roleSet[c.role];
+  const lines = [role.base, ...(role.extra || [])]
+    .map(b => LINE_NAMES[b]).join("+");
+  const grouped = [];
+  for (const [n, lo, hi, tag, kw] of role.cards) {
+    const lov = Math.max(1, lo + c.quality);
+    const hiv = Math.max(lov, hi + c.quality);
+    const val = lov === hiv ? String(lov) : lov + "-" + hiv;
+    const txt = n + " " + val + (kw ? " [" + chipLabel(kw) + "]" : "");
+    const last = grouped[grouped.length - 1];
+    if (last && last.txt === txt) last.n += 1;
+    else grouped.push({ txt, n: 1 });
+  }
+  const q = c.quality > 0 ? "+" + c.quality : String(c.quality);
+  return '<div class="cand" tabindex="0" data-i="' + i + '">'
+    + '<div class="cname">' + c.name + '</div>'
+    + '<div class="cwho">' + c.role.replace(/-/g, " ") + " · " + lines
+    + " · form " + q + '</div>'
+    + '<div class="candcards">'
+    + grouped.map(g => (g.n > 1 ? g.n + "x " : "") + g.txt).join("<br>")
+    + '</div></div>';
+}
+function startDraft(mode) {
+  S.draft = { mode, band: 0, inBand: 0, spec: [], used: new Set() };
+  $("setup").hidden = true; $("draft").hidden = false;
+  nextDraftPick();
+}
+function nextDraftPick() {
+  const d = S.draft;
+  while (d.band < DRAFT_BANDS.length
+         && d.inBand >= DRAFT_BANDS[d.band][1]) {
+    d.band += 1; d.inBand = 0;
+  }
+  if (d.band >= DRAFT_BANDS.length) return finishDraft();
+  const [bandName, count, roles] = DRAFT_BANDS[d.band];
+  d.cands = [];
+  for (let i = 0; i < 3; i++)
+    d.cands.push({ role: roles[Math.floor(rng() * roles.length)],
+                   name: draftName(d.used), quality: rint(-2, 2) });
+  $("draft-progress").textContent = bandName + ": pick "
+    + (d.inBand + 1) + " of " + count + " · squad "
+    + d.spec.length + "/10";
+  $("draft-choices").innerHTML =
+    d.cands.map((c, i) => candidateHTML(c, i)).join("");
+  for (const el of $("draft-choices").querySelectorAll(".cand"))
+    el.addEventListener("click", () =>
+      draftPick(parseInt(el.dataset.i, 10)));
+  $("draft-roster").innerHTML = d.spec.map((s, i) =>
+    (i + 1) + " " + s.name + " · " + s.role.replace(/-/g, " "))
+    .join("<br>");
+}
+function draftPick(i) {
+  const d = S.draft;
+  TEL.log("draft_pick", {
+    band: DRAFT_BANDS[d.band][0], pick: d.spec.length + 1,
+    offered: d.cands.map(c => ({ role: c.role, quality: c.quality })),
+    chosen: i,
+  });
+  d.spec.push(d.cands[i]);
+  d.inBand += 1;
+  nextDraftPick();
+}
+function finishDraft() {
+  const d = S.draft;
+  S.draftSpec = d.spec;
+  S.draft = null;
+  $("draft").hidden = true;
+  $("draft-choices").innerHTML = "";
+  $("draft-roster").innerHTML = "";
+  proceed(d.mode);
+}
+
+// ---- setup ----------------------------------------------------------
+function freshSetup() {
+  // A new visit gets a new world: random seed (still visible and
+  // editable in Dev options, always logged) and a random quick-match
+  // opponent. Math.random on purpose: the seeded stream starts at
+  // kickoff.
+  $("sel-seed").value = 1 + Math.floor(Math.random() * 99999);
+  const names = Object.keys(LINEUPS);
+  $("sel-opp").value = names[Math.floor(Math.random() * names.length)];
+}
+function backToSetup() {
+  S.cup = null; S.draftSpec = null;
+  $("game").hidden = true; $("bracket").hidden = true;
+  $("draft").hidden = true; $("setup").hidden = false;
+  $("btn-again").hidden = true;
+  freshSetup();
+}
+function start(mode) {
   const seed = parseInt($("sel-seed").value || "1", 10);
   rng = mulberry32(seed);
   CFG.keeperMoments = $("sel-moments").value === "on";
@@ -1733,30 +1881,38 @@ $("btn-start").addEventListener("click", () => {
   CFG.morale = $("sel-morale").value;
   CFG.family = $("sel-family").value;
   CFG.cardset = $("sel-cardset").value;
+  const drafting = $("sel-squadsrc").value === "draft";
   TEL.begin({
-    mode: $("sel-mode").value, seed, cardset: CFG.cardset,
+    mode, seed, cardset: CFG.cardset,
     family: CFG.family, morale: CFG.morale, moments: CFG.keeperMoments,
-    lineup: $("sel-you").value,
-    opp: $("sel-mode").value === "cup" ? null : $("sel-opp").value,
+    squad: drafting ? "draft" : $("sel-you").value,
+    dev: $("dev-options").open,
+    opp: mode === "cup" ? null : $("sel-opp").value,
     config: { keeper: CFG.keeper, handExtra: CFG.handExtra,
               laneTopup: CFG.laneTopup, nearMiss: CFG.nearMiss,
               cornerCap: CFG.cornerCap, turns: CFG.turns },
     screen: Math.round(innerWidth / 100) * 100,
   });
-  if ($("sel-mode").value === "cup") {
+  S.draftSpec = null;
+  if (drafting) return startDraft(mode);
+  proceed(mode);
+}
+function proceed(mode) {
+  if (mode === "cup") {
     S.cup = newCup($("sel-you").value);
     showBracket("");
     return;
   }
   S.cup = null;
   startMatch($("sel-opp").value, "Brackwater");
+}
+$("btn-quick").addEventListener("click", () => start("friendly"));
+$("btn-cup").addEventListener("click", () => start("cup"));
+$("sel-squadsrc").addEventListener("change", () => {
+  $("preset-row").hidden = $("sel-squadsrc").value === "draft";
 });
 $("btn-cup-next").addEventListener("click", () => {
-  if (!S.cup || S.cup.over) {
-    S.cup = null;
-    $("bracket").hidden = true; $("setup").hidden = false;
-    return;
-  }
+  if (!S.cup || S.cup.over) return backToSetup();
   startCupMatch();
 });
 $("btn-play").addEventListener("click", () => playAnswer(false));
@@ -1768,12 +1924,9 @@ $("btn-clear").addEventListener("click", () => {
 });
 $("btn-concede").addEventListener("click", () => playAnswer(true));
 $("btn-next").addEventListener("click", startTurn);
-$("btn-again").addEventListener("click", () => {
-  S.cup = null;
-  $("game").hidden = true; $("setup").hidden = false;
-  $("btn-again").hidden = true;
-});
+$("btn-again").addEventListener("click", backToSetup);
 fillSetup();
+freshSetup();
 if (CFG.tel) {
   // Consent line, shown only in telemetry-carrying builds.
   const note = document.querySelector("#setup .note");
