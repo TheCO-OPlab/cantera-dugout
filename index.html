@@ -123,9 +123,11 @@
                   border-bottom: 1px solid var(--line);
                   border-radius: 9.5px 9.5px 0 0; }
   .pcard .cval { font-family: "IBM Plex Mono", monospace;
-                 font-size: 1.65rem; flex: 1; display: flex;
+                 flex: 1; display: flex; flex-direction: column;
                  align-items: center; justify-content: center;
-                 gap: 0.3rem; padding: 0.2rem 0.4rem; }
+                 gap: 0.1rem; padding: 0.2rem 0.4rem; }
+  .pcard .cval .cvnum { font-size: 1.65rem; line-height: 1.1; }
+  .pcard .cval .kwterm { font-size: 0.55rem; }
   .pcard .cval .pill { font-size: 0.58rem; }
   .pcard .cwho { font-size: 0.62rem; color: var(--muted);
                  font-family: "Bricolage Grotesque", system-ui, sans-serif;
@@ -152,7 +154,20 @@
   .kwtip .kwtipname { display: block; font-family: "IBM Plex Mono", monospace;
                       font-size: 0.66rem; letter-spacing: 0.06em;
                       color: var(--accent-ink); margin-bottom: 0.25rem; }
-  .ckw:hover .kwtip, .ckw:focus .kwtip { display: block; }
+  .ckw:hover .kwtip, .ckw:focus .kwtip,
+  .kwterm:hover .kwtip, .kwterm:focus .kwtip,
+  .formbadge:hover .kwtip, .formbadge:focus .kwtip { display: block; }
+  /* PUSH (and friends) as a hoverable term: quieter than a chip, same
+     tooltip and tap-to-glossary behavior. */
+  .kwterm { font-family: "IBM Plex Mono", monospace;
+            color: var(--accent-ink); letter-spacing: 0.1em;
+            border-bottom: 1px dotted var(--accent-ink);
+            cursor: help; position: relative; white-space: nowrap; }
+  /* Floating card preview: hover or tap a play's name and the actual
+     card appears next to it. */
+  #cardpop { position: fixed; z-index: 30;
+             filter: drop-shadow(0 10px 24px rgba(0,0,0,0.28)); }
+  #cardpop .pcard { width: 8.4rem; min-height: 10.6rem; }
   #kw-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.45);
               display: flex; align-items: center; justify-content: center;
               z-index: 20; padding: 1rem; }
@@ -218,25 +233,44 @@
               text-transform: capitalize; }
   .lchip { font-family: "IBM Plex Mono", monospace; font-size: 0.56rem;
            padding: 0.1rem 0.32rem; border-radius: 4px;
+           border: 1px solid var(--accent);
            background: var(--accent); color: #fff; font-weight: 500; }
+  .lchip.off { background: transparent; border: 1px dashed var(--line);
+               color: var(--muted); font-weight: 400; }
   .formbadge { font-family: "IBM Plex Mono", monospace;
                font-size: 0.62rem; padding: 0.1rem 0.35rem;
                border-radius: 4px; border: 1px solid var(--line);
                background: var(--chip); color: var(--ink-2);
-               margin-left: auto; }
+               margin-left: auto; cursor: help; position: relative; }
   .formbadge.up { border-color: var(--accent);
                   color: var(--accent-ink); font-weight: 500; }
+  .candportrait { margin: 0.45rem 0.65rem 0; height: 3.1rem;
+                  border: 1px dashed var(--line); border-radius: 7px;
+                  background: var(--chip); color: var(--muted);
+                  display: flex; align-items: center; justify-content: center;
+                  font-family: "IBM Plex Mono", monospace;
+                  font-size: 0.56rem; letter-spacing: 0.1em;
+                  text-transform: uppercase; }
   .candcards { padding: 0.35rem 0.65rem 0.2rem; flex: 1; }
+  .playshead { font-family: "IBM Plex Mono", monospace;
+               font-size: 0.56rem; letter-spacing: 0.12em;
+               text-transform: uppercase; color: var(--muted);
+               padding: 0.1rem 0 0.05rem; }
   .trow { display: flex; align-items: baseline; gap: 0.35rem;
           font-family: "Bricolage Grotesque", system-ui, sans-serif;
           font-size: 0.76rem; padding: 0.22rem 0;
           border-top: 1px dashed var(--line); }
   .trow:first-child { border-top: none; }
+  .trow .tmono { font-family: "IBM Plex Mono", monospace;
+                 font-size: 0.68rem; color: var(--muted); }
+  .trow .tname { font-weight: 700; cursor: pointer;
+                 border-bottom: 1px dotted var(--muted); }
+  .trow .tname:hover, .trow .tname:focus-visible {
+    color: var(--accent-ink); border-bottom-color: var(--accent-ink); }
   .trow .tv { font-family: "IBM Plex Mono", monospace;
-              font-size: 0.86rem; margin-left: auto; }
-  .tshort { font-size: 0.68rem; color: var(--muted); line-height: 1.35;
-            font-family: "Source Serif 4", Georgia, serif;
-            padding: 0 0 0.25rem; }
+              font-size: 0.86rem; margin-left: auto;
+              white-space: nowrap; }
+  .trow .tv .kwterm { font-size: 0.58rem; }
   .signhint { text-align: center; font-family: "Bricolage Grotesque",
               system-ui, sans-serif; font-size: 0.72rem; font-weight: 700;
               color: var(--accent-ink); padding: 0.4rem 0 0.5rem;
@@ -365,12 +399,13 @@
     <button id="kw-close">Got it</button>
   </div>
 </div>
+<div id="cardpop" hidden></div>
 <script>
 "use strict";
 const ROLES = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 13, 13, "ANYWHERE", "HOOF_IT"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Line Pass", 11, 11, "ANYWHERE", "SWITCH"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Read the Game", 10, 10, "ANYWHERE", "MARK"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Cross", 8, 14, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Overlap", 14, 14, "ANYWHERE", "OVERLAP"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Late Arrival", 8, 18, "ANYWHERE", "THROUGH"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 13, 13, "ANYWHERE", "PRESS"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Long Diagonal", 6, 18, "ANYWHERE", "FEINT"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["Killer Ball", 8, 20, "ANYWHERE", "THROUGH"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Hold It Up", 14, 14, "ANYWHERE", "HOLD_UP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Cross", 9, 19, "ANYWHERE", "CORNER"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Poach", 14, 24, "THEIR_BOX", ""]]}};
 const ROLES_V3 = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 18, 18, "ANYWHERE", "HOOF_SELF"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Recycle", 7, 7, "ANYWHERE", "RECYCLE"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Skilled Distribution", 10, 10, "ANYWHERE", "INCISIVE_1"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Overlap", 22, 22, "ANYWHERE", "TIRED"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Late Arrival", 8, 18, "ANYWHERE", "INCISIVE_1"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 10, 10, "ANYWHERE", "PRESSURE_1"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Long Diagonal", 6, 18, "ANYWHERE", "PRESSURE_2"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["Through Pass", 8, 20, "ANYWHERE", "INCISIVE_1"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Hold It Up", 0, 0, "ANYWHERE", "RALLY_HOLDUP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Rainbow Flick", 0, 0, "THEIR_BOX", "RAINBOW"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Poach", 14, 24, "THEIR_BOX", "ATTACK_ONLY"]]}};
 const LINEUPS = {"classic-442": ["centre-back", "centre-back", "full-back", "full-back", "ball-winner", "box-to-box", "deep-lying-playmaker", "advanced-playmaker", "target-forward", "poacher"], "wing-play": ["centre-back", "centre-back", "wing-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "winger", "target-forward", "poacher"], "tiki-taka": ["ball-playing-defender", "centre-back", "centre-back", "full-back", "deep-lying-playmaker", "advanced-playmaker", "advanced-playmaker", "box-to-box", "inside-forward", "poacher"], "low-block-counter": ["sweeper", "centre-back", "centre-back", "centre-back", "full-back", "ball-winner", "ball-winner", "box-to-box", "inside-forward", "poacher"], "direct-target": ["centre-back", "centre-back", "full-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "advanced-playmaker", "target-forward", "target-forward"]};
-const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-7448d83"}};
+const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-49f6fa2"}};
 const FAMILIES = {"tactics": {"ball-winner": ["Gegenpress", 2, 2, "ANYWHERE", "GEGENPRESS"], "wing-back": ["Overlap Runs", 2, 2, "ANYWHERE", "OVERLAP_RUNS"], "advanced-playmaker": ["Drop Between Lines", 2, 2, "ANYWHERE", "DROP_DEEP"], "centre-back": ["Route One", 2, 2, "ANYWHERE", "ROUTE_ONE"]}, "pressure": {"ball-playing-defender": ["Shackle", 10, 10, "ANYWHERE", "PRESSURE_1"], "centre-back": ["Crowd Out", 8, 8, "ANYWHERE", "PRESSURE_2"], "ball-winner": ["Cut the Supply", 6, 6, "ANYWHERE", "PRESSURE_3"]}, "mentality": {"target-forward": ["All-Out Attack", 6, 6, "ANYWHERE", "ALL_OUT"], "sweeper": ["Park the Bus", 6, 6, "ANYWHERE", "PARK_BUS"], "deep-lying-playmaker": ["Steady the Ship", 6, 6, "ANYWHERE", "STEADY"]}};
 const EVENTS = [{"id": "open-training", "name": "Open training session", "shape": "pure_gift", "text": "The town turns out to watch training and the legs pump a little harder.", "options": [{"label": "Feed off it: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "Close the gates and rest (no effect)", "fx": {}}]}, {"id": "double-session", "name": "The gaffer's double session", "shape": "trade", "text": "Two sessions in one day. The patterns get sharper; the legs get heavier.", "options": [{"label": "Drill crossing: every Cross +2 next match, but your first deal is 1 card smaller", "fx": {"cardGain": [{"name": "Cross", "delta": 2}], "handExtra": -1}}, {"label": "One session is plenty (no effect)", "fx": {}}]}, {"id": "fog-morning", "name": "Fog on the training ground", "shape": "gamble", "text": "You can barely see the far goal. Some mornings like this forge a back line; some just waste everyone's time.", "options": [{"label": "Train through it: 50-50. Heads every Tackle +2 next match, tails your lane top-up is 1 smaller", "fx": {"coin": {"heads": {"cardGain": [{"name": "Tackle", "delta": 2}]}, "tails": {"laneTopup": -1}}}}, {"label": "Send them home (no effect)", "fx": {}}]}, {"id": "keeper-coach", "name": "The visiting keeper coach", "shape": "build_around", "text": "A famous old shot-stopper is in town for one day and offers a session with your keeper.", "options": [{"label": "Take the session: keeper wall +2 next match", "fx": {"wall": 2}}, {"label": "Politely decline (no effect)", "fx": {}}]}, {"id": "youth-minutes", "name": "A prospect wants minutes", "shape": "trade", "text": "The academy's best asks to travel with the squad. More bodies in the rotation, less rhythm in the first team.", "options": [{"label": "Bring him: first deal +1 card next match, but every Tackle -1", "fx": {"handExtra": 1, "cardGain": [{"name": "Tackle", "delta": -1}]}}, {"label": "Not yet, son (no effect)", "fx": {}}]}, {"id": "rondo-morning", "name": "Rondo morning", "shape": "build_around", "text": "Keep-ball in tight squares until the touch is automatic. Passing sides feast on this; direct sides shrug.", "options": [{"label": "Run the rondos: every Pass +2 next match", "fx": {"cardGain": [{"name": "Pass", "delta": 2}]}}, {"label": "Straight to shape work (no effect)", "fx": {}}]}, {"id": "set-piece-rehearsal", "name": "Set-piece rehearsal", "shape": "build_around", "text": "An hour of corners against the wall of mannequins. The poachers' eyes light up.", "options": [{"label": "Rehearse: every Strike +1 next match (and Strikes already count double at corners)", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "Save the legs (no effect)", "fx": {}}]}, {"id": "market-stall", "name": "The market stall", "shape": "shop_variant", "text": "A travelling trainer sets out his wares: one specialty per club, no refunds.", "options": [{"label": "The tackling dummy: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "The shooting gallery: every Strike +1 next match", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "The gloves: keeper wall +1 next match", "fx": {"wall": 1}}, {"label": "Keep walking (no effect)", "fx": {}}]}];
 const TACTICS = ["GEGENPRESS", "OVERLAP_RUNS", "DROP_DEEP", "ROUTE_ONE", "MAN_MARK"];
@@ -1022,7 +1057,7 @@ function startCorner(attacker) {
     || '<span class="pill">nothing left in your hands</span>';
   for (const el of $("you-cards").querySelectorAll(".pcard"))
     el.addEventListener("click", ev => {
-      if (ev.target.closest(".ckw")) return;
+      if (ev.target.closest(".ckw") || ev.target.closest(".kwterm")) return;
       toggleCard(el);
     });
   updateYourTotal();
@@ -1170,28 +1205,18 @@ function cardHTML(c, v, selectable) {
     + (dead && selectable ? " dead" : "") + (curse ? " cursecard" : "")
     + '" data-cid="' + c.id + '">'
     + '<div class="cname">' + c.name + (c.kw ? ' ' + kwChip(c.kw) : "") + "</div>"
-    + '<div class="cval">' + val + (curse ? ' <span class="pill">worthless</span>' : "") + "</div>"
+    + '<div class="cval">' + pushTerm()
+    + '<span class="cvnum">' + val + "</span>"
+    + (curse ? ' <span class="pill">worthless</span>' : "") + "</div>"
     + '<div class="cwho">' + c.owner.name + (c.owner.role ? " · " + c.owner.role.replace(/-/g, " ") : "") + "</div></div>";
 }
-// One-line effect text for tight spots (draft cards); the full rules
-// live in KW_HELP, served by the hover tooltip and the tap modal.
-const KW_SHORT = {
-  BOOST_1: "the next card played after it counts 120 percent",
-  INCISIVE_1: "your first card next turn counts 120 percent",
-  METRONOME: "returns to the draw pile after every play",
-  GAIN_1: "every copy in the squad grows +1 each time one is played",
-  CORNER_X2: "counts double in corner duels",
-  TIRED: "huge value now; one fewer play in this line next turn",
-  RECYCLE: "pulls a spent card in this line back into your hand",
-  RALLY_HOLDUP: "voids the whole duel; a midfielder joins the attack",
-  RAINBOW: "a coin: +20, or it wins you a corner",
-  HOOF_SELF: "its junk ball lands in YOUR attack hand",
-  ATTACK_ONLY: "can only be played in the attacking line",
-  DRIBBLE: "their best card counts up to 5 less",
-  PRESSURE_1: "their totals count 75 percent for 1 duel, this one included",
-  PRESSURE_2: "their totals count 75 percent for 2 duels, this one included",
-  PRESSURE_3: "their totals count 75 percent for 3 duels, this one included",
-};
+// PUSH is a keyword too: the label rides every card value, hoverable
+// and tappable like any chip.
+function pushTerm() {
+  return '<span class="kwterm" data-kw="PUSH" tabindex="0">PUSH'
+    + '<span class="kwtip"><span class="kwtipname">PUSH</span>'
+    + KW_HELP.PUSH + "</span></span>";
+}
 function kwChip(kw) {
   const help = KW_HELP[kw] || "";
   return '<span class="ckw" data-kw="' + kw + '">' + chipLabel(kw)
@@ -1206,6 +1231,8 @@ function chipLabel(kw) {
   return kw.replace(/_(\d+)$/, " $1").replace("PRESSURE_", "PRESSURE ");
 }
 const KW_HELP = {
+  PUSH: "The game's one number. Every card you play adds its PUSH to your side's total this duel; the bigger total shoves the ball one line toward the other goal. Win the duel in THEIR box and it is a goal. A tie holds the ball where it stands.",
+  FORM: "A temporary edge, rolled when a player joins your run: every play he owns counts this much higher (or lower) for the whole cup run. It is already priced into the numbers shown on his card.",
   BOOST_1: "The next card you play THIS turn counts 120 percent. Selection order is play order, so pick this before the card you want boosted.",
   INCISIVE_1: "Your first card NEXT turn counts 120 percent. The killer ball that sets up the next move.",
   METRONOME: "When played, this card returns to this line's draw pile at the end of the turn. Effectively infinite.",
@@ -1244,9 +1271,75 @@ const KW_HELP = {
 function showKw(kw) {
   $("kw-title").textContent = kw;
   $("kw-body").textContent = KW_HELP[kw] || "No description.";
+  $("cardpop").hidden = true;
   $("kw-modal").hidden = false;
 }
+// The floating card preview. Hovering a play's name shows the actual
+// card; a short grace timer keeps it open while the mouse travels from
+// the name into the popup, so the chips inside stay hoverable too.
+const POP = { timer: null, anchor: null, openedAt: 0 };
+function showCardPop(el) {
+  clearTimeout(POP.timer);
+  if (POP.anchor !== el) POP.openedAt = Date.now();
+  POP.anchor = el;
+  const d = el.dataset;
+  const pop = $("cardpop");
+  pop.innerHTML = '<div class="pcard static">'
+    + '<div class="cname">' + d.n + (d.kw ? " " + kwChip(d.kw) : "")
+    + "</div>"
+    + '<div class="cval">' + pushTerm()
+    + '<span class="cvnum">' + d.val + "</span></div>"
+    + '<div class="cwho">' + d.owner
+    + (d.role ? " · " + d.role : "") + "</div></div>";
+  pop.hidden = false;
+  const r = el.getBoundingClientRect();
+  const pr = pop.getBoundingClientRect();
+  let x = r.left + r.width / 2 - pr.width / 2;
+  x = Math.max(8, Math.min(x, window.innerWidth - pr.width - 8));
+  let y = r.top - pr.height - 6;
+  if (y < 8) y = r.bottom + 6;
+  pop.style.left = x + "px";
+  pop.style.top = y + "px";
+}
+function hideCardPopSoon() {
+  clearTimeout(POP.timer);
+  POP.timer = setTimeout(() => {
+    $("cardpop").hidden = true;
+    POP.anchor = null;
+  }, 250);
+}
+document.addEventListener("mouseover", e => {
+  const t = e.target.closest(".tname");
+  if (t) return showCardPop(t);
+  if (e.target.closest("#cardpop")) clearTimeout(POP.timer);
+});
+document.addEventListener("mouseout", e => {
+  if (e.target.closest(".tname") || e.target.closest("#cardpop"))
+    hideCardPopSoon();
+});
+document.addEventListener("focusin", e => {
+  const t = e.target.closest(".tname");
+  if (t) showCardPop(t);
+});
+document.addEventListener("focusout", e => {
+  if (e.target.closest(".tname")) hideCardPopSoon();
+});
 document.addEventListener("click", e => {
+  const tn = e.target.closest(".tname");
+  if (tn) {
+    e.stopPropagation();
+    // On touch, the tap's own mouseover just opened the popup; only a
+    // click clearly after that should toggle it closed.
+    if (POP.anchor === tn && !$("cardpop").hidden
+        && Date.now() - POP.openedAt > 500) {
+      $("cardpop").hidden = true;
+      POP.anchor = null;
+    } else showCardPop(tn);
+    return;
+  }
+  if (!e.target.closest("#cardpop")) $("cardpop").hidden = true;
+  const term = e.target.closest(".kwterm, .formbadge[data-kw]");
+  if (term) { e.stopPropagation(); showKw(term.dataset.kw); return; }
   const chip = e.target.closest(".ckw");
   if (chip) { e.stopPropagation(); showKw(chip.dataset.kw); return; }
   const rec = e.target.closest("#kw-box .pcard");
@@ -1293,7 +1386,10 @@ function showPiles(zone) {
   $("kw-modal").hidden = false;
 }
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") $("kw-modal").hidden = true;
+  if (e.key === "Escape") {
+    $("kw-modal").hidden = true;
+    $("cardpop").hidden = true;
+  }
 });
 // Faint chalk so the strip reads as a pitch: touchlines, halfway
 // line, centre circle, boxes, spots, penalty and corner arcs.
@@ -1411,7 +1507,8 @@ function startTurn() {
     || '<span class="pill">no cards available: the wall stands alone</span>';
   for (const el of $("you-cards").querySelectorAll(".pcard"))
     el.addEventListener("click", ev => {
-      if (ev.target.closest(".ckw")) return; // chip taps open the glossary
+      // Chip and term taps open the glossary, not the card.
+      if (ev.target.closest(".ckw") || ev.target.closest(".kwterm")) return;
       toggleCard(el);
     });
   updateYourTotal();
@@ -1937,8 +2034,12 @@ function draftName(used) {
 function candidateHTML(c, i) {
   const roleSet = CFG.cardset === "v3" ? ROLES_V3 : ROLES;
   const role = roleSet[c.role];
-  const lines = [role.base, ...(role.extra || [])]
-    .map(b => '<span class="lchip">' + LINE_NAMES[b] + "</span>").join("");
+  // All three lines on show; the ones this player actually stands in
+  // by default are lit, the rest grayed out.
+  const active = new Set([role.base, ...(role.extra || [])]);
+  const lines = LINE_NAMES.map((n, b) =>
+    '<span class="lchip' + (active.has(b) ? "" : " off") + '">'
+    + n + "</span>").join("");
   const grouped = [];
   for (const [n, lo, hi, tag, kw] of role.cards) {
     const lov = Math.max(1, lo + c.quality);
@@ -1949,20 +2050,30 @@ function candidateHTML(c, i) {
     if (last && last.key === key) last.count += 1;
     else grouped.push({ key, n, val, kw, count: 1 });
   }
+  // Each play: count, the card's name (hover or tap it and the real
+  // card floats up), its keyword chip, its push. Rules text lives in
+  // the chips, not on the player card.
   const rows = grouped.map(g =>
-    '<div class="trow"><span>' + (g.count > 1 ? g.count + "x " : "")
-    + g.n + (g.kw ? " " + kwChip(g.kw) : "")
-    + '</span><span class="tv">' + g.val + "</span></div>"
-    + (g.kw && KW_SHORT[g.kw]
-       ? '<div class="tshort">' + KW_SHORT[g.kw] + "</div>" : "")
+    '<div class="trow"><span class="tmono">' + g.count + "x</span>"
+    + '<span class="tname" tabindex="0" data-n="' + g.n
+    + '" data-val="' + g.val + '" data-kw="' + (g.kw || "")
+    + '" data-owner="' + c.name + '" data-role="'
+    + c.role.replace(/-/g, " ") + '">' + g.n + "</span>"
+    + (g.kw ? " " + kwChip(g.kw) : "")
+    + '<span class="tv"><span class="kwterm" data-kw="PUSH">PUSH</span> '
+    + g.val + "</span></div>"
   ).join("");
   const q = c.quality > 0 ? "+" + c.quality : String(c.quality);
   return '<div class="cand" tabindex="0" data-i="' + i + '">'
     + '<div class="candname">' + c.name + '</div>'
+    + '<div class="candportrait">portrait not available</div>'
     + '<div class="candmeta">' + c.role.replace(/-/g, " ") + lines
     + '<span class="formbadge' + (c.quality > 0 ? " up" : "")
-    + '">form ' + q + '</span></div>'
-    + '<div class="candcards">' + rows + '</div>'
+    + '" data-kw="FORM" tabindex="0">form ' + q
+    + '<span class="kwtip"><span class="kwtipname">FORM ' + q
+    + "</span>" + KW_HELP.FORM + "</span></span></div>"
+    + '<div class="candcards"><div class="playshead">Plays</div>'
+    + rows + "</div>"
     + '<div class="signhint">Sign him</div></div>';
 }
 function startDraft(mode) {
@@ -1989,7 +2100,11 @@ function nextDraftPick() {
     d.cands.map((c, i) => candidateHTML(c, i)).join("");
   for (const el of $("draft-choices").querySelectorAll(".cand"))
     el.addEventListener("click", ev => {
-      if (ev.target.closest(".ckw")) return; // chip taps open the glossary
+      // Chips, terms, the form badge and play names have their own
+      // hover/tap behavior; they must not sign the player.
+      if (ev.target.closest(".ckw") || ev.target.closest(".kwterm")
+          || ev.target.closest(".tname")
+          || ev.target.closest(".formbadge")) return;
       draftPick(parseInt(el.dataset.i, 10));
     });
   $("draft-roster").innerHTML = d.spec.map((s, i) =>
