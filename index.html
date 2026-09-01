@@ -79,25 +79,74 @@
                margin-top: 0.5rem; }
   .totalline strong { font-size: 1.2rem; }
 
-  /* Cards */
-  .cards { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-  .pcard { border: 1.5px solid var(--line); border-radius: 9px;
-           padding: 0.45rem 0.55rem; background: var(--ground);
-           min-width: 6.2rem; flex: 0 1 auto; cursor: pointer;
-           user-select: none; }
+  /* Cards: real card anatomy. Name strip on top, the push value as
+     the big centered focal point, owner as the footer. */
+  .cards { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+  .pcard { width: 7.6rem; min-height: 9.8rem; flex: 0 0 auto;
+           display: flex; flex-direction: column; padding: 0;
+           border: 1.5px solid var(--line); border-radius: 11px;
+           background: linear-gradient(var(--surface), var(--ground));
+           box-shadow: 0 1px 3px rgba(0,0,0,0.10);
+           cursor: pointer; user-select: none; position: relative;
+           transition: transform 120ms ease, box-shadow 120ms ease,
+                       border-color 120ms ease; }
+  .pcard:not(.static):not(.dead):hover,
+  .pcard:not(.static):not(.dead):focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 16px rgba(0,0,0,0.18);
+    border-color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) {
+    .pcard, .cand { transition: none !important; }
+    .pcard:hover { transform: none !important; }
+  }
   .pcard.static { cursor: default; }
-  .pcard.sel { border-color: var(--accent); background: var(--sel); }
+  .pcard.sel { border: 2px solid var(--accent); background:
+               linear-gradient(var(--sel), var(--ground)); }
+  .pcard[data-order]::after { content: attr(data-order);
+    position: absolute; top: -0.55rem; right: -0.55rem;
+    width: 1.35rem; height: 1.35rem; border-radius: 50%;
+    background: var(--accent); color: #fff; z-index: 5;
+    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
   .pcard.dead { opacity: 0.45; cursor: default; }
   .pcard .cname { font-family: "Bricolage Grotesque", system-ui, sans-serif;
-                  font-weight: 700; font-size: 0.78rem; line-height: 1.15; }
-  .pcard .cval { font-family: "IBM Plex Mono", monospace; font-size: 1.05rem; }
-  .pcard .cwho { font-size: 0.68rem; color: var(--muted);
-                 font-family: "Bricolage Grotesque", system-ui, sans-serif; }
-  .pcard .ckw { font-family: "IBM Plex Mono", monospace; font-size: 0.58rem;
-                background: var(--accent); color: #fff; border-radius: 4px;
-                padding: 0.08rem 0.3rem; cursor: help;
-                border-bottom: 1.5px dotted rgba(255,255,255,0.7); }
+                  font-weight: 700; font-size: 0.74rem; line-height: 1.2;
+                  padding: 0.4rem 0.5rem; min-height: 2.5em;
+                  background: var(--chip);
+                  border-bottom: 1px solid var(--line);
+                  border-radius: 9.5px 9.5px 0 0; }
+  .pcard .cval { font-family: "IBM Plex Mono", monospace;
+                 font-size: 1.65rem; flex: 1; display: flex;
+                 align-items: center; justify-content: center;
+                 gap: 0.3rem; padding: 0.2rem 0.4rem; }
+  .pcard .cval .pill { font-size: 0.58rem; }
+  .pcard .cwho { font-size: 0.62rem; color: var(--muted);
+                 font-family: "Bricolage Grotesque", system-ui, sans-serif;
+                 padding: 0.3rem 0.5rem 0.4rem;
+                 border-top: 1px dashed var(--line); }
   .pcard.cursecard { border-style: dashed; opacity: 0.75; }
+  /* Keyword chips: a term you can hover (instant tooltip) or tap
+     (glossary modal). */
+  .ckw { font-family: "IBM Plex Mono", monospace; font-size: 0.58rem;
+         background: var(--accent); color: #fff; border-radius: 4px;
+         padding: 0.08rem 0.3rem; cursor: help; position: relative;
+         border-bottom: 1.5px dotted rgba(255,255,255,0.7);
+         white-space: nowrap; }
+  .kwtip { display: none; position: absolute; z-index: 40;
+           bottom: calc(100% + 7px); left: 50%;
+           transform: translateX(-50%); width: 15.5rem;
+           white-space: normal; text-align: left; text-transform: none;
+           letter-spacing: 0; font-family: "Source Serif 4", Georgia, serif;
+           font-size: 0.8rem; font-weight: 400; line-height: 1.45;
+           background: var(--surface); color: var(--ink-2);
+           border: 1px solid var(--line); border-radius: 9px;
+           padding: 0.55rem 0.65rem; pointer-events: none;
+           box-shadow: 0 8px 22px rgba(0,0,0,0.22); }
+  .kwtip .kwtipname { display: block; font-family: "IBM Plex Mono", monospace;
+                      font-size: 0.66rem; letter-spacing: 0.06em;
+                      color: var(--accent-ink); margin-bottom: 0.25rem; }
+  .ckw:hover .kwtip, .ckw:focus .kwtip { display: block; }
   #kw-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.45);
               display: flex; align-items: center; justify-content: center;
               z-index: 20; padding: 1rem; }
@@ -139,14 +188,55 @@
   #dev-options summary { cursor: pointer; color: var(--muted);
                          font-family: "Bricolage Grotesque", system-ui, sans-serif;
                          font-size: 0.85rem; }
-  .cand { border: 1.5px solid var(--line); border-radius: 10px;
-          padding: 0.6rem 0.7rem; background: var(--ground);
-          cursor: pointer; flex: 1 1 15rem; user-select: none; }
-  .cand:hover, .cand:focus-visible { border-color: var(--accent); }
-  .cand .cname { font-size: 0.88rem; }
-  .cand .candcards { font-family: "IBM Plex Mono", monospace;
-                     font-size: 0.72rem; color: var(--ink-2);
-                     margin-top: 0.35rem; line-height: 1.5; }
+  /* Draft candidates: player cards. Name plate, role and lines, the
+     form roll, his techniques as mini card rows, a sign hint. */
+  .cand { width: 13.5rem; flex: 0 0 auto; display: flex;
+          flex-direction: column; padding: 0; user-select: none;
+          border: 1.5px solid var(--line); border-radius: 13px;
+          background: linear-gradient(var(--surface), var(--ground));
+          box-shadow: 0 1px 3px rgba(0,0,0,0.10); cursor: pointer;
+          transition: transform 120ms ease, box-shadow 120ms ease,
+                      border-color 120ms ease; }
+  .cand:hover, .cand:focus-visible { transform: translateY(-3px);
+          border-color: var(--accent);
+          box-shadow: 0 8px 18px rgba(0,0,0,0.18); }
+  .candname { font-family: "Bricolage Grotesque", system-ui, sans-serif;
+              font-weight: 800; font-size: 0.95rem;
+              padding: 0.5rem 0.65rem 0.35rem; background: var(--chip);
+              border-bottom: 1px solid var(--line);
+              border-radius: 11.5px 11.5px 0 0; }
+  .candmeta { display: flex; align-items: center; gap: 0.35rem;
+              flex-wrap: wrap; padding: 0.4rem 0.65rem 0.1rem;
+              font-family: "Bricolage Grotesque", system-ui, sans-serif;
+              font-size: 0.74rem; color: var(--ink-2);
+              text-transform: capitalize; }
+  .lchip { font-family: "IBM Plex Mono", monospace; font-size: 0.56rem;
+           padding: 0.1rem 0.32rem; border-radius: 4px;
+           background: var(--accent); color: #fff; font-weight: 500; }
+  .formbadge { font-family: "IBM Plex Mono", monospace;
+               font-size: 0.62rem; padding: 0.1rem 0.35rem;
+               border-radius: 4px; border: 1px solid var(--line);
+               background: var(--chip); color: var(--ink-2);
+               margin-left: auto; }
+  .formbadge.up { border-color: var(--accent);
+                  color: var(--accent-ink); font-weight: 500; }
+  .candcards { padding: 0.35rem 0.65rem 0.2rem; flex: 1; }
+  .trow { display: flex; align-items: baseline; gap: 0.35rem;
+          font-family: "Bricolage Grotesque", system-ui, sans-serif;
+          font-size: 0.76rem; padding: 0.22rem 0;
+          border-top: 1px dashed var(--line); }
+  .trow:first-child { border-top: none; }
+  .trow .tv { font-family: "IBM Plex Mono", monospace;
+              font-size: 0.86rem; margin-left: auto; }
+  .tshort { font-size: 0.68rem; color: var(--muted); line-height: 1.35;
+            font-family: "Source Serif 4", Georgia, serif;
+            padding: 0 0 0.25rem; }
+  .signhint { text-align: center; font-family: "Bricolage Grotesque",
+              system-ui, sans-serif; font-size: 0.72rem; font-weight: 700;
+              color: var(--accent-ink); padding: 0.4rem 0 0.5rem;
+              border-top: 1px solid var(--line); }
+  .cand:hover .signhint { background: var(--accent); color: #fff;
+                          border-radius: 0 0 11.5px 11.5px; }
   @keyframes scorepop { 0% { transform: scale(1); }
     35% { transform: scale(1.3); color: var(--accent); }
     100% { transform: scale(1); } }
@@ -274,7 +364,7 @@
 const ROLES = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 13, 13, "ANYWHERE", "HOOF_IT"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Line Pass", 11, 11, "ANYWHERE", "SWITCH"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Read the Game", 10, 10, "ANYWHERE", "MARK"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Cross", 8, 14, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Overlap", 14, 14, "ANYWHERE", "OVERLAP"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Late Arrival", 8, 18, "ANYWHERE", "THROUGH"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 13, 13, "ANYWHERE", "PRESS"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Long Diagonal", 6, 18, "ANYWHERE", "FEINT"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["Killer Ball", 8, 20, "ANYWHERE", "THROUGH"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Hold It Up", 14, 14, "ANYWHERE", "HOLD_UP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Cross", 9, 19, "ANYWHERE", "CORNER"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Poach", 14, 24, "THEIR_BOX", ""]]}};
 const ROLES_V3 = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 18, 18, "ANYWHERE", "HOOF_SELF"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Recycle", 7, 7, "ANYWHERE", "RECYCLE"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Skilled Distribution", 10, 10, "ANYWHERE", "INCISIVE_1"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Overlap", 22, 22, "ANYWHERE", "TIRED"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Late Arrival", 8, 18, "ANYWHERE", "INCISIVE_1"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 10, 10, "ANYWHERE", "PRESSURE_1"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Long Diagonal", 6, 18, "ANYWHERE", "PRESSURE_2"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["Through Pass", 8, 20, "ANYWHERE", "INCISIVE_1"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Hold It Up", 0, 0, "ANYWHERE", "RALLY_HOLDUP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Rainbow Flick", 0, 0, "THEIR_BOX", "RAINBOW"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Poach", 14, 24, "THEIR_BOX", "ATTACK_ONLY"]]}};
 const LINEUPS = {"classic-442": ["centre-back", "centre-back", "full-back", "full-back", "ball-winner", "box-to-box", "deep-lying-playmaker", "advanced-playmaker", "target-forward", "poacher"], "wing-play": ["centre-back", "centre-back", "wing-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "winger", "target-forward", "poacher"], "tiki-taka": ["ball-playing-defender", "centre-back", "centre-back", "full-back", "deep-lying-playmaker", "advanced-playmaker", "advanced-playmaker", "box-to-box", "inside-forward", "poacher"], "low-block-counter": ["sweeper", "centre-back", "centre-back", "centre-back", "full-back", "ball-winner", "ball-winner", "box-to-box", "inside-forward", "poacher"], "direct-target": ["centre-back", "centre-back", "full-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "advanced-playmaker", "target-forward", "target-forward"]};
-const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-933dc71"}};
+const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-71513ec"}};
 const FAMILIES = {"tactics": {"ball-winner": ["Gegenpress", 2, 2, "ANYWHERE", "GEGENPRESS"], "wing-back": ["Overlap Runs", 2, 2, "ANYWHERE", "OVERLAP_RUNS"], "advanced-playmaker": ["Drop Between Lines", 2, 2, "ANYWHERE", "DROP_DEEP"], "centre-back": ["Route One", 2, 2, "ANYWHERE", "ROUTE_ONE"]}, "pressure": {"ball-playing-defender": ["Shackle", 10, 10, "ANYWHERE", "PRESSURE_1"], "centre-back": ["Crowd Out", 8, 8, "ANYWHERE", "PRESSURE_2"], "ball-winner": ["Cut the Supply", 6, 6, "ANYWHERE", "PRESSURE_3"]}, "mentality": {"target-forward": ["All-Out Attack", 6, 6, "ANYWHERE", "ALL_OUT"], "sweeper": ["Park the Bus", 6, 6, "ANYWHERE", "PARK_BUS"], "deep-lying-playmaker": ["Steady the Ship", 6, 6, "ANYWHERE", "STEADY"]}};
 const EVENTS = [{"id": "open-training", "name": "Open training session", "shape": "pure_gift", "text": "The town turns out to watch training and the legs pump a little harder.", "options": [{"label": "Feed off it: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "Close the gates and rest (no effect)", "fx": {}}]}, {"id": "double-session", "name": "The gaffer's double session", "shape": "trade", "text": "Two sessions in one day. The patterns get sharper; the legs get heavier.", "options": [{"label": "Drill crossing: every Cross +2 next match, but your first deal is 1 card smaller", "fx": {"cardGain": [{"name": "Cross", "delta": 2}], "handExtra": -1}}, {"label": "One session is plenty (no effect)", "fx": {}}]}, {"id": "fog-morning", "name": "Fog on the training ground", "shape": "gamble", "text": "You can barely see the far goal. Some mornings like this forge a back line; some just waste everyone's time.", "options": [{"label": "Train through it: 50-50. Heads every Tackle +2 next match, tails your lane top-up is 1 smaller", "fx": {"coin": {"heads": {"cardGain": [{"name": "Tackle", "delta": 2}]}, "tails": {"laneTopup": -1}}}}, {"label": "Send them home (no effect)", "fx": {}}]}, {"id": "keeper-coach", "name": "The visiting keeper coach", "shape": "build_around", "text": "A famous old shot-stopper is in town for one day and offers a session with your keeper.", "options": [{"label": "Take the session: keeper wall +2 next match", "fx": {"wall": 2}}, {"label": "Politely decline (no effect)", "fx": {}}]}, {"id": "youth-minutes", "name": "A prospect wants minutes", "shape": "trade", "text": "The academy's best asks to travel with the squad. More bodies in the rotation, less rhythm in the first team.", "options": [{"label": "Bring him: first deal +1 card next match, but every Tackle -1", "fx": {"handExtra": 1, "cardGain": [{"name": "Tackle", "delta": -1}]}}, {"label": "Not yet, son (no effect)", "fx": {}}]}, {"id": "rondo-morning", "name": "Rondo morning", "shape": "build_around", "text": "Keep-ball in tight squares until the touch is automatic. Passing sides feast on this; direct sides shrug.", "options": [{"label": "Run the rondos: every Pass +2 next match", "fx": {"cardGain": [{"name": "Pass", "delta": 2}]}}, {"label": "Straight to shape work (no effect)", "fx": {}}]}, {"id": "set-piece-rehearsal", "name": "Set-piece rehearsal", "shape": "build_around", "text": "An hour of corners against the wall of mannequins. The poachers' eyes light up.", "options": [{"label": "Rehearse: every Strike +1 next match (and Strikes already count double at corners)", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "Save the legs (no effect)", "fx": {}}]}, {"id": "market-stall", "name": "The market stall", "shape": "shop_variant", "text": "A travelling trainer sets out his wares: one specialty per club, no refunds.", "options": [{"label": "The tackling dummy: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "The shooting gallery: every Strike +1 next match", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "The gloves: keeper wall +1 next match", "fx": {"wall": 1}}, {"label": "Keep walking (no effect)", "fx": {}}]}];
 const TACTICS = ["GEGENPRESS", "OVERLAP_RUNS", "DROP_DEEP", "ROUTE_ONE", "MAN_MARK"];
@@ -1073,9 +1163,34 @@ function cardHTML(c, v, selectable) {
   return '<div class="pcard' + (selectable ? "" : " static")
     + (dead && selectable ? " dead" : "") + (curse ? " cursecard" : "")
     + '" data-cid="' + c.id + '">'
-    + '<div class="cname">' + c.name + (c.kw ? ' <span class="ckw" data-kw="' + c.kw + '">' + chipLabel(c.kw) + "</span>" : "") + "</div>"
+    + '<div class="cname">' + c.name + (c.kw ? ' ' + kwChip(c.kw) : "") + "</div>"
     + '<div class="cval">' + val + (curse ? ' <span class="pill">worthless</span>' : "") + "</div>"
     + '<div class="cwho">' + c.owner.name + (c.owner.role ? " · " + c.owner.role.replace(/-/g, " ") : "") + "</div></div>";
+}
+// One-line effect text for tight spots (draft cards); the full rules
+// live in KW_HELP, served by the hover tooltip and the tap modal.
+const KW_SHORT = {
+  BOOST_1: "the next card played after it counts 120 percent",
+  INCISIVE_1: "your first card next turn counts 120 percent",
+  METRONOME: "returns to the draw pile after every play",
+  GAIN_1: "every copy in the squad grows +1 each time one is played",
+  CORNER_X2: "counts double in corner duels",
+  TIRED: "huge value now; one fewer play in this line next turn",
+  RECYCLE: "pulls a spent card in this line back into your hand",
+  RALLY_HOLDUP: "voids the whole duel; a midfielder joins the attack",
+  RAINBOW: "a coin: +20, or it wins you a corner",
+  HOOF_SELF: "its junk ball lands in YOUR attack hand",
+  ATTACK_ONLY: "can only be played in the attacking line",
+  DRIBBLE: "their best card counts up to 5 less",
+  PRESSURE_1: "their totals count 75 percent for 1 duel, this one included",
+  PRESSURE_2: "their totals count 75 percent for 2 duels, this one included",
+  PRESSURE_3: "their totals count 75 percent for 3 duels, this one included",
+};
+function kwChip(kw) {
+  const help = KW_HELP[kw] || "";
+  return '<span class="ckw" data-kw="' + kw + '">' + chipLabel(kw)
+    + '<span class="kwtip"><span class="kwtipname">' + chipLabel(kw)
+    + '</span>' + help + '</span></span>';
 }
 function chipLabel(kw) {
   if (kw === "RALLY_HOLDUP") return "HOLD UP";
@@ -1283,7 +1398,17 @@ function toggleCard(el) {
   if (el.classList.contains("dead")) return;
   if (S.selected.has(cid)) { S.selected.delete(cid); el.classList.remove("sel"); }
   else if (S.selected.size < S.youCap) { S.selected.add(cid); el.classList.add("sel"); }
+  refreshOrderBadges();
   updateYourTotal();
+}
+function refreshOrderBadges() {
+  // Selection order IS play order (BOOST chains care); wear it.
+  const order = [...S.selected];
+  for (const el of $("you-cards").querySelectorAll(".pcard")) {
+    const i = order.indexOf(el.dataset.cid);
+    if (i >= 0) el.setAttribute("data-order", i + 1);
+    else el.removeAttribute("data-order");
+  }
 }
 function updateYourTotal() {
   let lo = 0, hi = 0, pressuring = false;
@@ -1786,25 +1911,32 @@ function candidateHTML(c, i) {
   const roleSet = CFG.cardset === "v3" ? ROLES_V3 : ROLES;
   const role = roleSet[c.role];
   const lines = [role.base, ...(role.extra || [])]
-    .map(b => LINE_NAMES[b]).join("+");
+    .map(b => '<span class="lchip">' + LINE_NAMES[b] + "</span>").join("");
   const grouped = [];
   for (const [n, lo, hi, tag, kw] of role.cards) {
     const lov = Math.max(1, lo + c.quality);
     const hiv = Math.max(lov, hi + c.quality);
-    const val = lov === hiv ? String(lov) : lov + "-" + hiv;
-    const txt = n + " " + val + (kw ? " [" + chipLabel(kw) + "]" : "");
+    const val = lov === hiv ? String(lov) : lov + "–" + hiv;
+    const key = n + "|" + val + "|" + kw;
     const last = grouped[grouped.length - 1];
-    if (last && last.txt === txt) last.n += 1;
-    else grouped.push({ txt, n: 1 });
+    if (last && last.key === key) last.count += 1;
+    else grouped.push({ key, n, val, kw, count: 1 });
   }
+  const rows = grouped.map(g =>
+    '<div class="trow"><span>' + (g.count > 1 ? g.count + "x " : "")
+    + g.n + (g.kw ? " " + kwChip(g.kw) : "")
+    + '</span><span class="tv">' + g.val + "</span></div>"
+    + (g.kw && KW_SHORT[g.kw]
+       ? '<div class="tshort">' + KW_SHORT[g.kw] + "</div>" : "")
+  ).join("");
   const q = c.quality > 0 ? "+" + c.quality : String(c.quality);
   return '<div class="cand" tabindex="0" data-i="' + i + '">'
-    + '<div class="cname">' + c.name + '</div>'
-    + '<div class="cwho">' + c.role.replace(/-/g, " ") + " · " + lines
-    + " · form " + q + '</div>'
-    + '<div class="candcards">'
-    + grouped.map(g => (g.n > 1 ? g.n + "x " : "") + g.txt).join("<br>")
-    + '</div></div>';
+    + '<div class="candname">' + c.name + '</div>'
+    + '<div class="candmeta">' + c.role.replace(/-/g, " ") + lines
+    + '<span class="formbadge' + (c.quality > 0 ? " up" : "")
+    + '">form ' + q + '</span></div>'
+    + '<div class="candcards">' + rows + '</div>'
+    + '<div class="signhint">Sign him</div></div>';
 }
 function startDraft(mode) {
   S.draft = { mode, band: 0, inBand: 0, spec: [], used: new Set() };
@@ -1829,8 +1961,10 @@ function nextDraftPick() {
   $("draft-choices").innerHTML =
     d.cands.map((c, i) => candidateHTML(c, i)).join("");
   for (const el of $("draft-choices").querySelectorAll(".cand"))
-    el.addEventListener("click", () =>
-      draftPick(parseInt(el.dataset.i, 10)));
+    el.addEventListener("click", ev => {
+      if (ev.target.closest(".ckw")) return; // chip taps open the glossary
+      draftPick(parseInt(el.dataset.i, 10));
+    });
   $("draft-roster").innerHTML = d.spec.map((s, i) =>
     (i + 1) + " " + s.name + " · " + s.role.replace(/-/g, " "))
     .join("<br>");
@@ -1920,6 +2054,7 @@ $("btn-clear").addEventListener("click", () => {
   S.selected.clear();
   for (const el of $("you-cards").querySelectorAll(".pcard.sel"))
     el.classList.remove("sel");
+  refreshOrderBadges();
   updateYourTotal();
 });
 $("btn-concede").addEventListener("click", () => playAnswer(true));
