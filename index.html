@@ -125,21 +125,24 @@
   .pcard .cval { font-family: "IBM Plex Mono", monospace;
                  flex: 1; display: flex; flex-direction: column;
                  align-items: center; justify-content: center;
-                 gap: 0.1rem; padding: 0.2rem 0.4rem; }
-  .pcard .cval .cvnum { font-size: 1.65rem; line-height: 1.1; }
+                 gap: 0.3rem; padding: 0.2rem 0.4rem; }
+  .pcard .cval .cvrow { display: flex; align-items: baseline;
+                        gap: 0.25rem; }
+  .pcard .cval .cvnum { font-size: 0.78rem; line-height: 1.1; }
   .pcard .cval .kwterm { font-size: 0.55rem; }
   .pcard .cval .pill { font-size: 0.58rem; }
   .pcard .cwho { font-size: 0.62rem; color: var(--muted);
                  font-family: "Bricolage Grotesque", system-ui, sans-serif;
                  padding: 0.3rem 0.5rem 0.4rem;
                  border-top: 1px dashed var(--line); }
+  .pcard .cwho b { font-weight: 700; }
   .pcard.cursecard { border-style: dashed; opacity: 0.75; }
   /* Keyword chips: a term you can hover (instant tooltip) or tap
      (glossary modal). */
   .ckw { font-family: "IBM Plex Mono", monospace; font-size: 0.58rem;
          background: var(--accent); color: #fff; border-radius: 4px;
          padding: 0.08rem 0.3rem; cursor: help; position: relative;
-         border-bottom: 1.5px dotted rgba(255,255,255,0.7);
+         border-bottom: 2px dotted rgba(255,255,255,0.7);
          white-space: nowrap; }
   .kwtip { display: none; position: absolute; z-index: 40;
            bottom: calc(100% + 7px); left: 50%;
@@ -153,6 +156,7 @@
            box-shadow: 0 8px 22px rgba(0,0,0,0.22); }
   .kwtip .kwtipname { display: block; font-family: "IBM Plex Mono", monospace;
                       font-size: 0.66rem; letter-spacing: 0.06em;
+                      font-weight: 700;
                       color: var(--accent-ink); margin-bottom: 0.25rem; }
   .ckw:hover .kwtip, .ckw:focus .kwtip,
   .kwterm:hover .kwtip, .kwterm:focus .kwtip,
@@ -161,7 +165,7 @@
      tooltip and tap-to-glossary behavior. */
   .kwterm { font-family: "IBM Plex Mono", monospace;
             color: var(--accent-ink); letter-spacing: 0.1em;
-            border-bottom: 1px dotted var(--accent-ink);
+            border-bottom: 2px dotted var(--accent-ink);
             cursor: help; position: relative; white-space: nowrap; }
   /* Floating card preview: hover or tap a play's name and the actual
      card appears next to it. */
@@ -252,6 +256,7 @@
                   font-size: 0.56rem; letter-spacing: 0.1em;
                   text-transform: uppercase; }
   .candcards { padding: 0.35rem 0.65rem 0.2rem; flex: 1; }
+  .linesrow { display: flex; gap: 0.35rem; padding: 0.05rem 0 0.15rem; }
   .playshead { font-family: "IBM Plex Mono", monospace;
                font-size: 0.56rem; letter-spacing: 0.12em;
                text-transform: uppercase; color: var(--muted);
@@ -267,9 +272,14 @@
                  border-bottom: 1px dotted var(--muted); }
   .trow .tname:hover, .trow .tname:focus-visible {
     color: var(--accent-ink); border-bottom-color: var(--accent-ink); }
+  /* The right side of a play row: push first, keyword after; when
+     the row runs long the keyword wraps below the push value,
+     lined up with its right edge. */
+  .trow .tright { margin-left: auto; display: flex; flex-wrap: wrap;
+                  justify-content: flex-end; align-items: baseline;
+                  gap: 0.1rem 0.35rem; }
   .trow .tv { font-family: "IBM Plex Mono", monospace;
-              font-size: 0.86rem; margin-left: auto;
-              white-space: nowrap; }
+              font-size: 0.86rem; white-space: nowrap; }
   .trow .tv .kwterm { font-size: 0.58rem; }
   .signhint { text-align: center; font-family: "Bricolage Grotesque",
               system-ui, sans-serif; font-size: 0.72rem; font-weight: 700;
@@ -405,7 +415,7 @@
 const ROLES = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 13, 13, "ANYWHERE", "HOOF_IT"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Line Pass", 11, 11, "ANYWHERE", "SWITCH"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Read the Game", 10, 10, "ANYWHERE", "MARK"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Cross", 8, 14, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Overlap", 14, 14, "ANYWHERE", "OVERLAP"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Late Arrival", 8, 18, "ANYWHERE", "THROUGH"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 13, 13, "ANYWHERE", "PRESS"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Long Diagonal", 6, 18, "ANYWHERE", "FEINT"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["Killer Ball", 8, 20, "ANYWHERE", "THROUGH"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Hold It Up", 14, 14, "ANYWHERE", "HOLD_UP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Cross", 9, 19, "ANYWHERE", "CORNER"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Poach", 14, 24, "THEIR_BOX", ""]]}};
 const ROLES_V3 = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 18, 18, "ANYWHERE", "HOOF_SELF"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Recycle", 7, 7, "ANYWHERE", "RECYCLE"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Skilled Distribution", 10, 10, "ANYWHERE", "INCISIVE_1"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Overlap", 22, 22, "ANYWHERE", "TIRED"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Late Arrival", 8, 18, "ANYWHERE", "INCISIVE_1"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 10, 10, "ANYWHERE", "PRESSURE_1"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Long Diagonal", 6, 18, "ANYWHERE", "PRESSURE_2"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["Through Pass", 8, 20, "ANYWHERE", "INCISIVE_1"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Hold It Up", 0, 0, "ANYWHERE", "RALLY_HOLDUP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Rainbow Flick", 0, 0, "THEIR_BOX", "RAINBOW"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Poach", 14, 24, "THEIR_BOX", "ATTACK_ONLY"]]}};
 const LINEUPS = {"classic-442": ["centre-back", "centre-back", "full-back", "full-back", "ball-winner", "box-to-box", "deep-lying-playmaker", "advanced-playmaker", "target-forward", "poacher"], "wing-play": ["centre-back", "centre-back", "wing-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "winger", "target-forward", "poacher"], "tiki-taka": ["ball-playing-defender", "centre-back", "centre-back", "full-back", "deep-lying-playmaker", "advanced-playmaker", "advanced-playmaker", "box-to-box", "inside-forward", "poacher"], "low-block-counter": ["sweeper", "centre-back", "centre-back", "centre-back", "full-back", "ball-winner", "ball-winner", "box-to-box", "inside-forward", "poacher"], "direct-target": ["centre-back", "centre-back", "full-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "advanced-playmaker", "target-forward", "target-forward"]};
-const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-49f6fa2"}};
+const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260901-b42575e"}};
 const FAMILIES = {"tactics": {"ball-winner": ["Gegenpress", 2, 2, "ANYWHERE", "GEGENPRESS"], "wing-back": ["Overlap Runs", 2, 2, "ANYWHERE", "OVERLAP_RUNS"], "advanced-playmaker": ["Drop Between Lines", 2, 2, "ANYWHERE", "DROP_DEEP"], "centre-back": ["Route One", 2, 2, "ANYWHERE", "ROUTE_ONE"]}, "pressure": {"ball-playing-defender": ["Shackle", 10, 10, "ANYWHERE", "PRESSURE_1"], "centre-back": ["Crowd Out", 8, 8, "ANYWHERE", "PRESSURE_2"], "ball-winner": ["Cut the Supply", 6, 6, "ANYWHERE", "PRESSURE_3"]}, "mentality": {"target-forward": ["All-Out Attack", 6, 6, "ANYWHERE", "ALL_OUT"], "sweeper": ["Park the Bus", 6, 6, "ANYWHERE", "PARK_BUS"], "deep-lying-playmaker": ["Steady the Ship", 6, 6, "ANYWHERE", "STEADY"]}};
 const EVENTS = [{"id": "open-training", "name": "Open training session", "shape": "pure_gift", "text": "The town turns out to watch training and the legs pump a little harder.", "options": [{"label": "Feed off it: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "Close the gates and rest (no effect)", "fx": {}}]}, {"id": "double-session", "name": "The gaffer's double session", "shape": "trade", "text": "Two sessions in one day. The patterns get sharper; the legs get heavier.", "options": [{"label": "Drill crossing: every Cross +2 next match, but your first deal is 1 card smaller", "fx": {"cardGain": [{"name": "Cross", "delta": 2}], "handExtra": -1}}, {"label": "One session is plenty (no effect)", "fx": {}}]}, {"id": "fog-morning", "name": "Fog on the training ground", "shape": "gamble", "text": "You can barely see the far goal. Some mornings like this forge a back line; some just waste everyone's time.", "options": [{"label": "Train through it: 50-50. Heads every Tackle +2 next match, tails your lane top-up is 1 smaller", "fx": {"coin": {"heads": {"cardGain": [{"name": "Tackle", "delta": 2}]}, "tails": {"laneTopup": -1}}}}, {"label": "Send them home (no effect)", "fx": {}}]}, {"id": "keeper-coach", "name": "The visiting keeper coach", "shape": "build_around", "text": "A famous old shot-stopper is in town for one day and offers a session with your keeper.", "options": [{"label": "Take the session: keeper wall +2 next match", "fx": {"wall": 2}}, {"label": "Politely decline (no effect)", "fx": {}}]}, {"id": "youth-minutes", "name": "A prospect wants minutes", "shape": "trade", "text": "The academy's best asks to travel with the squad. More bodies in the rotation, less rhythm in the first team.", "options": [{"label": "Bring him: first deal +1 card next match, but every Tackle -1", "fx": {"handExtra": 1, "cardGain": [{"name": "Tackle", "delta": -1}]}}, {"label": "Not yet, son (no effect)", "fx": {}}]}, {"id": "rondo-morning", "name": "Rondo morning", "shape": "build_around", "text": "Keep-ball in tight squares until the touch is automatic. Passing sides feast on this; direct sides shrug.", "options": [{"label": "Run the rondos: every Pass +2 next match", "fx": {"cardGain": [{"name": "Pass", "delta": 2}]}}, {"label": "Straight to shape work (no effect)", "fx": {}}]}, {"id": "set-piece-rehearsal", "name": "Set-piece rehearsal", "shape": "build_around", "text": "An hour of corners against the wall of mannequins. The poachers' eyes light up.", "options": [{"label": "Rehearse: every Strike +1 next match (and Strikes already count double at corners)", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "Save the legs (no effect)", "fx": {}}]}, {"id": "market-stall", "name": "The market stall", "shape": "shop_variant", "text": "A travelling trainer sets out his wares: one specialty per club, no refunds.", "options": [{"label": "The tackling dummy: every Tackle +1 next match", "fx": {"cardGain": [{"name": "Tackle", "delta": 1}]}}, {"label": "The shooting gallery: every Strike +1 next match", "fx": {"cardGain": [{"name": "Strike", "delta": 1}]}}, {"label": "The gloves: keeper wall +1 next match", "fx": {"wall": 1}}, {"label": "Keep walking (no effect)", "fx": {}}]}];
 const TACTICS = ["GEGENPRESS", "OVERLAP_RUNS", "DROP_DEEP", "ROUTE_ONE", "MAN_MARK"];
@@ -1204,11 +1214,13 @@ function cardHTML(c, v, selectable) {
   return '<div class="pcard' + (selectable ? "" : " static")
     + (dead && selectable ? " dead" : "") + (curse ? " cursecard" : "")
     + '" data-cid="' + c.id + '">'
-    + '<div class="cname">' + c.name + (c.kw ? ' ' + kwChip(c.kw) : "") + "</div>"
-    + '<div class="cval">' + pushTerm()
-    + '<span class="cvnum">' + val + "</span>"
-    + (curse ? ' <span class="pill">worthless</span>' : "") + "</div>"
-    + '<div class="cwho">' + c.owner.name + (c.owner.role ? " · " + c.owner.role.replace(/-/g, " ") : "") + "</div></div>";
+    + '<div class="cname">' + c.name + "</div>"
+    + '<div class="cval"><span class="cvrow">' + pushTerm()
+    + '<span class="cvnum">' + val + "</span></span>"
+    + (c.kw ? kwChip(c.kw) : "")
+    + (curse ? '<span class="pill">worthless</span>' : "") + "</div>"
+    + '<div class="cwho"><b>' + c.owner.name + "</b>"
+    + (c.owner.role ? " · " + c.owner.role.replace(/-/g, " ") : "") + "</div></div>";
 }
 // PUSH is a keyword too: the label rides every card value, hoverable
 // and tappable like any chip.
@@ -1231,7 +1243,7 @@ function chipLabel(kw) {
   return kw.replace(/_(\d+)$/, " $1").replace("PRESSURE_", "PRESSURE ");
 }
 const KW_HELP = {
-  PUSH: "The game's one number. Every card you play adds its PUSH to your side's total this duel; the bigger total shoves the ball one line toward the other goal. Win the duel in THEIR box and it is a goal. A tie holds the ball where it stands.",
+  PUSH: "PUSH adds to your side's total this duel; the team with the bigger total moves the ball one zone up toward the opposing goal. Win the duel in THEIR box and it is a goal. A tie holds the ball where it stands.",
   FORM: "A temporary edge, rolled when a player joins your run: every play he owns counts this much higher (or lower) for the whole cup run. It is already priced into the numbers shown on his card.",
   BOOST_1: "The next card you play THIS turn counts 120 percent. Selection order is play order, so pick this before the card you want boosted.",
   INCISIVE_1: "Your first card NEXT turn counts 120 percent. The killer ball that sets up the next move.",
@@ -1285,11 +1297,11 @@ function showCardPop(el) {
   const d = el.dataset;
   const pop = $("cardpop");
   pop.innerHTML = '<div class="pcard static">'
-    + '<div class="cname">' + d.n + (d.kw ? " " + kwChip(d.kw) : "")
-    + "</div>"
-    + '<div class="cval">' + pushTerm()
-    + '<span class="cvnum">' + d.val + "</span></div>"
-    + '<div class="cwho">' + d.owner
+    + '<div class="cname">' + d.n + "</div>"
+    + '<div class="cval"><span class="cvrow">' + pushTerm()
+    + '<span class="cvnum">' + d.val + "</span></span>"
+    + (d.kw ? kwChip(d.kw) : "") + "</div>"
+    + '<div class="cwho"><b>' + d.owner + "</b>"
     + (d.role ? " · " + d.role : "") + "</div></div>";
   pop.hidden = false;
   const r = el.getBoundingClientRect();
@@ -2050,29 +2062,32 @@ function candidateHTML(c, i) {
     if (last && last.key === key) last.count += 1;
     else grouped.push({ key, n, val, kw, count: 1 });
   }
-  // Each play: count, the card's name (hover or tap it and the real
-  // card floats up), its keyword chip, its push. Rules text lives in
-  // the chips, not on the player card.
+  // Each play, in Eduardo's order: count, the card's name (hover or
+  // tap it and the real card floats up), its push, then its keyword
+  // chip; a long row wraps the chip below the push, right-aligned.
+  // Rules text lives in the chips, not on the player card.
   const rows = grouped.map(g =>
     '<div class="trow"><span class="tmono">' + g.count + "x</span>"
     + '<span class="tname" tabindex="0" data-n="' + g.n
     + '" data-val="' + g.val + '" data-kw="' + (g.kw || "")
     + '" data-owner="' + c.name + '" data-role="'
     + c.role.replace(/-/g, " ") + '">' + g.n + "</span>"
-    + (g.kw ? " " + kwChip(g.kw) : "")
+    + '<span class="tright">'
     + '<span class="tv"><span class="kwterm" data-kw="PUSH">PUSH</span> '
-    + g.val + "</span></div>"
+    + g.val + "</span>"
+    + (g.kw ? kwChip(g.kw) : "") + "</span></div>"
   ).join("");
   const q = c.quality > 0 ? "+" + c.quality : String(c.quality);
   return '<div class="cand" tabindex="0" data-i="' + i + '">'
     + '<div class="candname">' + c.name + '</div>'
     + '<div class="candportrait">portrait not available</div>'
-    + '<div class="candmeta">' + c.role.replace(/-/g, " ") + lines
+    + '<div class="candmeta">' + c.role.replace(/-/g, " ")
     + '<span class="formbadge' + (c.quality > 0 ? " up" : "")
     + '" data-kw="FORM" tabindex="0">form ' + q
     + '<span class="kwtip"><span class="kwtipname">FORM ' + q
     + "</span>" + KW_HELP.FORM + "</span></span></div>"
-    + '<div class="candcards"><div class="playshead">Plays</div>'
+    + '<div class="candcards"><div class="linesrow">' + lines + "</div>"
+    + '<div class="playshead">Plays</div>'
     + rows + "</div>"
     + '<div class="signhint">Sign him</div></div>';
 }
