@@ -190,6 +190,11 @@
   .pcard.static { cursor: default; }
   .pcard.sel { border: 2px solid var(--accent); background:
                linear-gradient(var(--sel), var(--ground)); }
+  .pcard[data-rb]::before { content: attr(data-rb);
+    position: absolute; left: 0.3rem; bottom: 0.3rem; z-index: 5;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.02em;
+    padding: 0.05rem 0.35rem; border-radius: 0.6rem;
+    background: var(--accent); color: #fff; }
   .pcard[data-order]::after { content: attr(data-order);
     position: absolute; top: -0.55rem; right: -0.55rem;
     width: 1.35rem; height: 1.35rem; border-radius: 50%;
@@ -257,6 +262,71 @@
          border: 1px solid var(--accent-ink); background: transparent; }
   .pip.on { background: var(--accent-ink); }
   .pipwrap:hover .kwtip, .pipwrap:focus .kwtip { display: block; }
+  /* The match effects shelf (Eduardo, 2026-09-02): every rule in force
+     this match, whatever wrote it, as a chip with an icon and a hover. */
+  .fxshelf { display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center;
+             margin: -0.3rem 0 0.55rem; }
+  .fxchip { position: relative; display: inline-flex; align-items: center; gap: 0.3rem;
+            font-family: "IBM Plex Mono", monospace; font-size: 0.64rem; letter-spacing: 0.04em;
+            padding: 0.18rem 0.5rem 0.18rem 0.4rem; border-radius: 999px;
+            border: 1px solid var(--line); background: var(--chip); color: var(--ink-2);
+            cursor: help; }
+  .fxchip.you { border-color: var(--accent); color: var(--accent-ink); }
+  .fxchip.them { border-color: var(--bad); color: var(--bad); }
+  .fxchip.match, .fxchip.run { border-style: dashed; }
+  .fxicon { font-size: 0.85rem; line-height: 1; }
+  .fxchip:hover .kwtip, .fxchip:focus .kwtip { display: block; }
+  /* Half-time and full-time reports: three pages, dots, one button. */
+  #rp-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex;
+              align-items: center; justify-content: center; z-index: 30; padding: 1rem; }
+  .rpbox { max-width: min(38rem, 94vw); width: 100%; }
+  .rphead { display: flex; align-items: baseline; justify-content: space-between;
+            gap: 0.6rem; flex-wrap: wrap; }
+  .rptitle { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-weight: 800;
+             font-size: 1.6rem; letter-spacing: -0.01em; margin: 0; }
+  .rpscore { font-family: "IBM Plex Mono", monospace; font-size: 0.95rem; color: var(--ink-2); }
+  .rppage { display: none; min-height: 15rem; } .rppage.on { display: block; }
+  .rpeyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.1em;
+               text-transform: uppercase; color: var(--muted); margin: 0.7rem 0 0.3rem; }
+  .rprow { display: grid; grid-template-columns: 2.6rem 1fr 2.6rem; align-items: center;
+           gap: 0.5rem; margin: 0.35rem 0 0.5rem; font-family: "IBM Plex Mono", monospace;
+           font-size: 0.8rem; }
+  .rprow .l { text-align: right; } .rprow .r { text-align: left; }
+  .rpbar { display: flex; height: 0.6rem; border-radius: 999px; overflow: hidden;
+           background: var(--chip); }
+  .rpbar span { display: block; height: 100%; }
+  .rpbar .y { background: var(--accent); } .rpbar .h { background: var(--line); }
+  .rpbar .o { background: var(--bad); }
+  .rplabel { grid-column: 1 / -1; text-align: center; font-size: 0.6rem; letter-spacing: 0.08em;
+             text-transform: uppercase; color: var(--muted); margin-top: -0.2rem; }
+  .rptiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0.5rem; }
+  .rptile { border: 1px solid var(--line); border-radius: 10px; padding: 0.55rem 0.7rem;
+            background: var(--ground); }
+  .rptile .k { font-family: "IBM Plex Mono", monospace; font-size: 0.6rem; letter-spacing: 0.1em;
+               text-transform: uppercase; color: var(--muted); }
+  .rptile .n { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-weight: 800;
+               font-size: 1.1rem; margin: 0.15rem 0 0; line-height: 1.15; }
+  .rptile .s, .rpsub { font-size: 0.8rem; color: var(--ink-2); }
+  .rpgoals { font-size: 0.85rem; margin: 0; } .rpgoals div { display: flex; gap: 0.5rem; }
+  .rpgoals .m { font-family: "IBM Plex Mono", monospace; color: var(--muted); min-width: 2.6rem; }
+  .rpheat { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; background: var(--pitch);
+            border-radius: 12px; padding: 8px; border: 1px solid var(--line); }
+  .rpzone { border: 1.5px dashed var(--pitch-line); border-radius: 8px; min-height: 5.2rem;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--pitch-ink); font-family: "IBM Plex Mono", monospace; gap: 0.15rem; }
+  .rpzone .pct { font-size: 1.35rem; font-weight: 700; }
+  .rpzone .zn { font-size: 0.56rem; letter-spacing: 0.09em; text-transform: uppercase; opacity: 0.85; }
+  .rpstrip { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 0.2rem; }
+  .rpstrip span { width: 0.95rem; height: 0.95rem; border-radius: 3px; background: var(--line);
+                  font-size: 0.6rem; line-height: 0.95rem; text-align: center; color: #fff; }
+  .rpstrip .y { background: var(--accent); } .rpstrip .o { background: var(--bad); }
+  .rpstrip .v { background: transparent; border: 1px dashed var(--line); }
+  .rpstrip .g::after { content: "\25CF"; }
+  .rpnav { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; }
+  .rpnav .primary { margin-left: auto; }
+  .rpdots { display: flex; gap: 6px; }
+  .rpdots span { width: 8px; height: 8px; border-radius: 50%; background: var(--line); cursor: pointer; }
+  .rpdots span.on { background: var(--accent); }
   #rb-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.45);
               display: flex; align-items: center; justify-content: center;
               z-index: 25; padding: 1rem; }
@@ -488,6 +558,7 @@
       <span class="pill" data-str="match.morale">morale</span>
       <span class="moralewrap"><span class="moralebar"><span class="moralefill" id="mor-opp"></span></span><span class="mono moralelabel" id="mor-opp-n"></span></span>
     </div>
+    <div class="fxshelf" id="fx-row" hidden></div>
     <div class="pitch" id="pitch"></div>
 
     <div class="panel" id="opp-panel">
@@ -533,6 +604,18 @@
     </div>
   </div>
 </div>
+<div id="rp-modal" hidden>
+  <div class="mbox rpbox" role="dialog" aria-modal="true">
+    <div class="rphead"><h2 class="rptitle" id="rp-title"></h2><span class="rpscore" id="rp-score"></span></div>
+    <div id="rp-pages"></div>
+    <div class="rpnav">
+      <button class="quiet" id="rp-prev" aria-label="previous page">&#8249;</button>
+      <div class="rpdots" id="rp-dots"></div>
+      <button class="quiet" id="rp-next" aria-label="next page">&#8250;</button>
+      <button class="primary" id="rp-close"></button>
+    </div>
+  </div>
+</div>
 <div id="cardpop" hidden></div>
 <script>
 "use strict";
@@ -540,7 +623,7 @@
 // file per locale, some day); the build injects it here. T fills the
 // {slots}. A missing key renders AS the key, loudly, so a broken
 // string is visible in play, never silent.
-const STR = {"app.title": "Cantera Dugout", "app.eyebrow": "Project Cantera", "app.h1": "Cantera Dugout", "setup.title": "Take the touchline", "setup.squad.label": "Your squad", "setup.squad.preset": "Pre-made team", "setup.squad.draft": "Draft a team", "setup.lineup.label": "Lineup", "setup.btn.quick": "Quick match", "setup.btn.cup": "Tournament (roguelike run)", "setup.dev.summary": "Dev options", "setup.dev.opp.label": "Opponent lineup (quick match only)", "setup.dev.cardset.label": "Card set", "setup.dev.cardset.v3": "v3: 2026-08-31", "setup.dev.cardset.v1": "v1: old", "setup.dev.family.label": "Keyword family overlay (applies to the v1 set only; v3 carries its own keywords)", "setup.dev.family.current": "current grammar only", "setup.dev.family.pressure": "+ PRESSURE (the one percentage status, applied in stacks)", "setup.dev.family.tactics": "+ tactics (SHELVED: future coach abilities)", "setup.dev.family.mentality": "+ mentality (SHELVED: a future class)", "setup.dev.moments.label": "Keeper moments (ruling 2026-08-31: beat their score in their box and it is ALWAYS a goal; a tie or a miss by up to 4 becomes a save, spill or corner, and corners are real 5-a-side set-piece duels from all your current hands)", "setup.dev.moments.on": "on (current direction)", "setup.dev.moments.off": "off (no moments: near misses just fail)", "setup.dev.walkover.label": "Walkover rule (experimental: conceding while you still hold cards lets them carry the ball two lines)", "setup.dev.opt.on": "on", "setup.dev.opt.off": "off", "setup.dev.morale.label": "Morale (experimental: every duel lost takes the margin from your morale; every full step lost is one fewer card per duel)", "setup.dev.morale.raw": "raw (full margin, step 20)", "setup.dev.morale.rawfloor": "raw with a floor (full margin, but never worse than -3 plays)", "setup.dev.morale.tamed": "tamed (loss capped at 8, winning lifts heads, step 25)", "setup.dev.seed.label": "Match seed (same seed replays the same match if you make the same choices; randomized each visit)", "setup.note": "You can see what the opponent is going to play, every duel. You can play up to as many cards as you have players in the ball's zone, or concede the duel and keep your legs. Cards spend until half-time. You draw an initial hand in each zone. Then draw 3 more cards at the start of every duel. Each card can be played only once per half.", "setup.consent": "The game records anonymous gameplay events (which cards you play and what happens); NO PERSONAL OR DEVICE DATA IS COLLECTED.", "draft.title": "Draft your squad", "draft.progress": "{band}: pick {n} of {count} \u00b7 squad {have}/10", "draft.portrait": "PORTRAITS NOT AVAILABLE", "draft.plays": "Plays", "draft.form": "form {q}", "draft.formtip.title": "FORM {q}", "draft.sign": "Sign him", "draft.band.defense": "Defense", "draft.band.midfield": "Midfield", "draft.band.attack": "Attack", "draft.line.def": "DEF", "draft.line.mid": "MID", "draft.line.att": "ATT", "team.you": "Ironhoof (you)", "team.friendly.opp": "Brackwater", "squad.drafted": "drafted XI", "names.first": "Korr, Vex, Bramble, Tido, Ashka, Rumen, Piek, Olo, Ferren, Skarn, Mott, Juba, Ilex, Dunno, Cava, Rasp, Nyx, Tarn, Ember, Quill, Sorrel, Vane, Hollo, Grieg", "names.last": "Longclaw, Brightmane, Thornhoof, Websson, Mudwhistle, Copperfell, Nightbark, Swiftwing, Stonepelt, Reedwalker, Frostwhisker, Emberback, Palefang, Deepburrow, Galehorn, Moorcroft, Silverquill, Blackbriar, Hazeltuft, Kilnsnout", "names.clubs": "Brackwater, Thornfield Rovers, Gloomharbour, Peakspur, Milldown Athletic, Vexford Wanderers, Saltmarsh Utd", "bracket.title": "The draw", "cup.round.quarters": "Quarter-finals", "cup.round.semis": "Semi-finals", "cup.round.final": "The final", "cup.over.title": "Cup run over", "cup.drawheader": "{round} draw", "cup.vs": "{a} v {b}", "cup.yourtie": "\u2190 your tie", "cup.run.summary": "Your run: {played} played, {gf} scored, {ga} conceded.", "cup.event.before": "Before the next round: {name}", "cup.decision": "Decision made: {label}.{coin}", "cup.coin.heads": " The coin lands heads.", "cup.coin.tails": " The coin lands tails.", "cup.btn.play": "Play your tie", "cup.btn.back": "Back to the touchline", "cup.msg.out": "Knocked out. The cup goes to {club}.", "cup.msg.champions": "CHAMPIONS! {team} lift the cup.", "cup.msg.through": "Through to the {round}.", "cup.note.aet": "aet", "cup.note.aetpens": "{score} aet, {pens} pens", "match.sb": "{team} \u00b7 {lineup}", "match.phase.first": "first half", "match.phase.second": "second half", "match.phase.stoppage": "stoppage time", "match.phase.et": "extra time", "match.duelcount": "duel {n} / {m}", "match.teamcalls": "team calls", "match.morale": "morale", "match.calls.you": "you: {calls}", "match.calls.opp": "them: {calls}", "match.calls.none": "no call", "match.calls.pressured": "PRESSURED x{n}", "match.morale.plays": " (-{n} plays)", "match.commit.initial": "They commit", "match.commit.title": "{team} commit", "match.commit.none": "nothing committed", "match.wall.prefix": "keeper wall +{w} \u00b7 ", "match.their.total": "their total: <strong>{t}</strong>", "match.answer.initial": "Your answer", "match.answer.title": "Your answer \u00b7 play up to {cap} ({n} players in this line)", "match.answer.none": "no more cards available", "match.your.total": "your total if played: <strong>{range}</strong> vs theirs {theirs}", "match.pressure.theirs": "<s>{t}</s> {t75} under pressure", "match.btn.play": "Play selected", "match.btn.clear": "Deselect all", "match.btn.concede": "Concede the duel", "match.btn.next": "Next duel", "match.btn.again": "New match", "match.commentary": "Commentary", "match.fulltime.title": "Full time", "match.final": "Final: <strong>{score}</strong>", "card.worthless": "worthless", "kw.term.push": "PUSH", "pitch.band0.name": "your defensive line", "pitch.band0.who": "your DEF + keeper vs their ATT", "pitch.band1.name": "MID", "pitch.band1.who": "both MIDs", "pitch.band2.name": "their DEF", "pitch.band2.who": "your ATT vs their DEF + keeper", "pitch.players": "players: you {y} \u00b7 them {o}", "pitch.hand": "your hand {n} \u00b7 SEE CARD PILES", "pitch.theirs": "their cards: {n}", "corner.setpiece": "Set piece: both teams play from ALL their current hands, up to {cap} cards each.", "corner.organize": "{team} organize the box, face up", "corner.nobodyback": "nobody back: an open goal beckons", "corner.defense.total": "their defense: <strong>{t}</strong>", "corner.delivery.title": "CORNER! Your delivery \u00b7 play up to {cap} from all your hands", "corner.load": "{team} load the box...", "corner.after": "their delivery is chosen after you set your defense", "corner.against.title": "CORNER against you! Set your defense \u00b7 up to {cap} from all your hands", "corner.nothingleft": "nothing left in your hands", "corner.yourdelivery": "Your delivery: {a} against their {d}.", "corner.theirdelivery.total": "their delivery: <strong>{t}</strong>", "corner.youset": "You set {d} against their delivery of {a}.", "corner.goal": "GOAL from the corner! {team} score. {score}.", "corner.cleared": "Cleared! The box holds and the ball comes out.", "corner.settotal": "your set-piece total: <strong>{range}</strong>{vs}", "corner.vsdef": " vs their defense of {d}", "corner.deliveryafter": " \u00b7 their delivery comes after", "comm.kickoff": "Kick off. {round}{you} against {opp}, stoppage will add {n} duels.", "comm.fx": "The training-ground decision travels with you: it applies to this match.", "comm.suspended": "{player} is suspended: the paperwork stands and he watches from the seats.", "comm.passenger": "{player} is in the starting XI. The chairman smiles from the box.", "comm.frozen": "The pitch is a sheet of ice: every range plays at its minimum and every flat card counts +1, for both teams.", "comm.concede": "You concede the duel.", "comm.answer": "You answer {cards} for {t}.", "comm.committed": " They committed {t}.", "comm.void": "The duel is void; the ball stays where it is.", "comm.even": "Honours even.", "comm.stays": "The ball stays put.", "comm.goal": "GOAL! {team} win it by {margin}. {score}.", "comm.scorer.solo": "{player} scores it.", "comm.scorer.assist": "{player} scores it; {assist} with the assist.", "comm.keypass": "The move began with {player}'s ball into the attack.", "comm.walkover": "WALKOVER: {loser} gave it up without a fight; {winner} carry it two lines.", "comm.routeone": "ROUTE ONE: {team} launch it straight over the top into the final third.", "comm.pushon": "{team} win the duel by {margin} and push on.", "comm.half.numbers": "The half in numbers: you spent {y} cards to their {o}; corners {c}.", "comm.ht": "HT {score}. The dressing rooms refresh every card.", "comm.ht.morale": " and the team talk lifts heads", "comm.et": "Level at the whistle. EXTRA TIME: {n} more duels, no refresh. What is spent stays spent.", "comm.ft": "FT {you} {score} {opp}.", "comm.match.numbers": "The match in numbers: cards spent {y} to {o}, corners {c}.", "comm.heads.drop": "Heads drop at {team}: they can now play {n} fewer per duel.", "comm.keeper.corner": "The keeper turns it behind. CORNER to {team}!", "comm.keeper.spill": "The keeper gets a hand to it but cannot hold! The ball stays alive and the keeper is down.", "comm.keeper.claim": "Claimed. The keeper gathers and rolls it out.", "comm.holdup": "HOLD_UP: {team} hold it in the final third; their midfield pushes up to join the attack.", "comm.recycle.return": "RECYCLE: {card} returns to your hand in this line.", "comm.recycle.leave": "RECYCLE: you leave the discard pile untouched.", "comm.recycle.none": "RECYCLE: nothing in this line's discard pile to bring back.", "pen.start": "Still level after extra time. PENALTIES: best of {k}, pure range duels: shot {slo}-{shi} against save {vlo}-{vhi}.", "pen.kick": "{team}, kick {n}: shot {shot} against save {save}", "pen.scores": ". Scores.", "pen.saved": ". SAVED!", "pen.coin": "The referee has seen enough; the coin decides.", "pen.result": "Shoot-out {p}.", "note.feint": "FEINT: their commit counted {n} lower.", "note.through": "THROUGH: {team} count {n} higher on the riposte.", "note.mark": "MARK: their {big} counts as {cap}.", "note.dribble": "DRIBBLE: {who} best card loses {n}.", "note.who.their": "their", "note.who.your": "your", "note.hoofit": "HOOF_IT: a worthless clearance is shuffled into {team}'s pool.", "note.overlap": "OVERLAP: {player} will sit out the next duel.", "note.pressure.applied": "PRESSURE {n} applied: {team}'s totals count 75 percent, starting right now.", "note.teamcall.half": "TEAM CALL {team}: {call}, for the rest of the half.", "note.steady": "TEAM CALL {team}: steady the ship; the mentality resets.", "note.mentality": "TEAM CALL {team}: {call}!", "note.pressure.counts1": "PRESSURE: {team}'s total counts 75 percent ({n} duel including this one).", "note.pressure.countsN": "PRESSURE: {team}'s total counts 75 percent ({n} duels including this one).", "note.manmark": "MAN MARK: their {big} counts {n} lower.", "note.incisive": "INCISIVE: {team}'s opening play counts 120 percent.", "note.boost": "BOOST: {card} counts 120 percent.", "note.incisive.queued": "INCISIVE queued: {team}'s first card next turn counts 120 percent.", "note.gain": "GAIN {step}: every {card} grows to {v} for the match.", "note.demotivate": "DEMOTIVATE {n}: heads drop at {team}.", "note.tired": "TIRED: {team} play one fewer card in this line next turn.", "note.hoofself": "The clearance lands with {team}'s own attack: a worthless ball to deal with up front.", "note.recycle": "RECYCLE: {team} pull {card} back into hand.", "note.holdup.mid": "HOLD IT UP: the move is smothered dead, and {player} pushes up for the next play.", "note.holdup": "HOLD IT UP: the move is smothered dead.", "note.rainbow.heads": "RAINBOW FLICK! It comes off: +20.", "note.rainbow.tails": "The rainbow flick is hacked behind: corner to {team}.", "note.rainbow.pick.push": "RAINBOW FLICK, chosen: +20.", "note.rainbow.pick.corner": "RAINBOW FLICK, chosen: corner to {team}.", "rainbow.modal.title": "Rainbow Flick", "rainbow.modal.body": "Flick number {n} this match: you choose the outcome.", "rainbow.modal.push": "PUSH +20", "rainbow.modal.corner": "Win a corner", "rainbow.pips.title": "Rainbow pips", "rainbow.pips.charging": "{n} of {need} flicks played this match. From the third flick on, you pick PUSH +20 or a corner instead of the coin.", "rainbow.pips.full": "Charged. Your next Rainbow Flick is your call: PUSH +20 or a corner.", "preview.you": "You", "preview.them": "Them", "preview.pick": "Pick your cards", "preview.nocards": "No cards left: they take it", "preview.win": "You win by {d}", "preview.goal": "GOAL: you win by {d}", "preview.lose": "They win by {d}", "preview.theyscore": "THEY SCORE: they win by {d}", "preview.level": "Level: the ball holds", "preview.open": "Open: {lo}\u2013{hi} against {t}", "preview.void": "Duel voided", "preview.rawsub": "cards {raw}", "preview.cardsub": "{n} played", "preview.themsub": "{n} committed", "preview.themnone": "nothing played", "preview.corner.yoursub": "set-piece total", "preview.corner.def": "their defense", "preview.corner.after": "their delivery comes after", "preview.corner.goal": "GOAL", "preview.corner.cleared": "Cleared", "preview.corner.set": "Wall set: their delivery next", "preview.wall.card": "Keeper wall", "preview.wall.who": "goalkeeper \u00b7 auto-played", "preview.mod.wall.you": "keeper wall {d}", "preview.mod.wall": "keeper wall {d}", "preview.mod.pressure.you": "their PRESSURE on you {d}", "preview.mod.pressure.them": "your PRESSURE on them {d}", "preview.mod.dribble.you": "their DRIBBLE {d}", "preview.mod.dribble.them": "your DRIBBLE on their best card {d}", "preview.mod.incisive.you": "INCISIVE {d}", "preview.mod.incisive.them": "their INCISIVE {d}", "preview.mod.boost.you": "BOOST {d}", "preview.mod.boost.them": "their BOOST {d}", "preview.mod.through.you": "THROUGH {d}", "preview.mod.through.them": "their THROUGH {d}", "preview.mod.mark.you": "their MARK {d}", "preview.mod.mark.them": "your MARK {d}", "preview.mod.manmark.you": "their MAN MARK {d}", "preview.mod.manmark.them": "your MAN MARK {d}", "preview.mod.feint.them": "FEINT {d}", "preview.mod.feint.you": "their FEINT {d}", "preview.mod.mentality.you": "team call {d}", "preview.mod.mentality.them": "their team call {d}", "preview.mod.rainbow.coin.you": "Rainbow Flick: coin, +20 or a corner", "preview.mod.rainbow.coin.them": "their Rainbow Flick: coin, +20 or a corner", "preview.mod.rainbow.call.you": "Rainbow Flick: your call, +20 or a corner", "preview.mod.rainbow.call.them": "their Rainbow Flick: their call, +20 or a corner", "preview.mod.holdup.you": "Hold It Up: the duel is voided", "preview.mod.holdup.them": "their Hold It Up: the duel is voided", "preview.mod.hoofself.you": "a Hoofed Clearance lands in your attack hand", "preview.mod.hoofself.them": "a Hoofed Clearance lands in their attack hand", "corner.banner": "CORNER KICK!", "piles.btn.draw": "Draw pile", "piles.btn.discard": "Discard pile", "match.answer.dealt": " \u00b7 dealt {n}, {p} fewer than usual", "cup.title.won": "You won the {round}", "cup.title.out": "Knocked out in the {round}", "cup.title.champions": "Champions!", "draft.roster.title": "Your squad so far ({n} signed)", "note.rainbow.tails.goal": "The rainbow flick fails. The move scores anyway.", "metro.pips.title": "Metronome pips", "metro.pips.charging": "{n} of {need} plays this match. The card comes back after the first and second play. After the third it is gone for the match.", "metro.pips.full": "Last play: after this one the card is gone for the match.", "comm.oppform": "{team} arrive in form: every card +{n} this round.", "version.label": "v{v}", "version.notes.title": "Patch notes", "version.notes.release": "{v} \u00b7 {date}", "note.press": "PRESS: {team}'s next hand is dealt {n} smaller.", "note.gegenpress": "GEGENPRESS: won back high; {team}'s next hand is dealt 1 smaller.", "note.switch": "SWITCH: {player}'s {card} is refreshed.", "piles.title": "{zone}: your piles", "piles.inhand": "In hand", "piles.draw": "Draw pile", "piles.discards": "Discard pile", "piles.empty": "empty", "recycle.title": "RECYCLE: pick a card to return to your hand", "kwmodal.close": "Got it", "kwmodal.nodesc": "No description.", "onboard.title": "How to read a duel", "onboard.body": "<strong>The opponent has picked their play.</strong> You answer knowing the number to beat.<br><br><strong>Pick your cards.</strong> Play up to as many cards as you have players in the ball's zone. The bigger total PUSH moves the ball one zone closer to the goal. Cards you play are gone until half-time.<br><br><strong>The keeper.</strong> In a side's own line, their wall value is added to their teams DEF total. Beat their score in THEIR box and it is a GOAL; a tie or a near miss becomes a save, a spill, or a corner kick.<br><br><strong>PRESSURE.</strong> Shrinks the opponents PUSH total to 75 percent. Stacks tick down one per duel.<br><br><strong>Conceding a duel.</strong> Give up a duel you cannot win and keep your cards for one you can. Tap any keyword chip for its definition.", "kw.label.RALLY_HOLDUP": "HOLD UP", "kw.label.HOOF_SELF": "HOOF", "kw.label.ATTACK_ONLY": "ATTACK ONLY", "kw.label.CORNER_X2": "POACHER'S INSTINCT", "kw.help.PUSH": "PUSH adds to your side's total this duel; the team with the bigger total moves the ball one zone up toward the opposing goal. Win the duel in THEIR box and it is a goal. A tie holds the ball where it stands.", "kw.help.FORM": "A temporary edge, rolled when a player joins your run: every play he owns counts this much higher (or lower) for the whole cup run. It is already priced into the numbers shown on his card.", "kw.help.BOOST_1": "The next card you play THIS turn counts 120 percent. Selection order is play order, so pick this before the card you want boosted.", "kw.help.INCISIVE_1": "Your first card NEXT turn counts 120 percent. The killer ball that sets up the next move.", "kw.help.METRONOME": "When played, this card returns to the draw pile. Three pips: after the third play in a match it is gone.", "kw.help.GAIN_1": "On play, every card named like this one in your squad permanently grows +1 push for the rest of the match, this copy included.", "kw.help.CORNER_X2": "Poacher's Instinct: DOUBLE value during attacking corners.", "kw.help.TIRED": "The price of the burst: next turn in this line you play one fewer card than players available.", "kw.help.RECYCLE": "Pick any card you have already played in this line and put it back into your hand.", "kw.help.RALLY_HOLDUP": "The duel is skipped, the ball stays in this zone. One random midfielder joins your ATT for one turn.", "kw.help.RAINBOW": "PUSH 20 or win a CORNER. The first two flicks each match are a coin. From the third flick on, you choose. (ATT zone only)", "kw.help.HOOF_SELF": "A worthless Hoofed Clearance lands in YOUR ATT hand.", "kw.help.ATTACK_ONLY": "This card can only be played in the attacking line.", "kw.help.BREAK": "Win the duel by 6 or more with this card played: the ball moves up to two lines instead of one.", "kw.help.THROUGH": "Counts 5 higher if your side lost the previous duel.", "kw.help.CORNER": "Inactive since the 2026-08-31 box ruling: corners now come from any tie or near miss in the box, and play out as a real set-piece duel. This card is a plain range until its replacement is ruled on.", "kw.help.DRIBBLE": "Takes up to 5 off the opponent's single biggest played card, once per duel.", "kw.help.HOLD_UP": "Lose the attacking-line duel by 10 or less with this played: the ball does not come out. Your striker holds it and your midfielders push up to join the attack, leaving your midfield empty until the ball leaves the line.", "kw.help.OVERLAP": "A big value now; the price is that this player sits out the next duel entirely.", "kw.help.SWITCH": "After this duel, one already-spent card of a teammate in this line refreshes and can be used again before half-time.", "kw.help.FEINT": "The opponent's next committed total counts 3 lower. The number you saw was a lie.", "kw.help.MARK": "The opponent's single biggest played card counts at most 18 in this duel.", "kw.help.PRESS": "Win the duel with this played: the opponent's next hand is dealt 2 cards smaller.", "kw.help.HOLD": "Counts 4 higher while your side is leading and the duel is in your own half.", "kw.help.HOOF_IT": "Shuffles a worthless Hoofed Clearance (value 0) into the opponent's pool. Sooner or later it clogs one of their hands.", "kw.help.PRESSURE_1": "Applies 1 PRESSURE to the opponent: their totals count 75 percent for 1 duel, starting with THIS one, so it shrinks the commit already on the table. PRESSURE is the game's one percentage effect; stacks from different cards add up, and half-time clears them.", "kw.help.PRESSURE_2": "Applies 2 PRESSURE to the opponent: their totals count 75 percent for 2 duels, this one included. Stacks add; half-time clears them.", "kw.help.PRESSURE_3": "Applies 3 PRESSURE to the opponent: their totals count 75 percent for 3 duels, this one included. Stacks add; half-time clears them.", "kw.help.GEGENPRESS": "SHELVED team call, for the rest of the half: every duel your side wins deals the opponent one fewer card next duel. A new team call replaces it.", "kw.help.OVERLAP_RUNS": "SHELVED team call, for the rest of the half: your full-backs and wing-backs also count as present in the attacking line. More plays up there; their cards burn faster.", "kw.help.DROP_DEEP": "SHELVED team call, for the rest of the half: your forwards also count as present in midfield.", "kw.help.ROUTE_ONE": "SHELVED team call, for the rest of the half: win a duel in your own defensive line and the ball launches straight to the attacking line. Never a direct goal; the finish is still a duel.", "kw.help.MAN_MARK": "SHELVED team call, for the rest of the half: the opponent's single biggest played card counts at 75 percent every duel.", "kw.help.ALL_OUT": "Team call until changed: your totals count 120 percent in their defensive line, but their totals count 120 percent in yours. The comeback lever, priced in exposure.", "kw.help.PARK_BUS": "Team call until changed: your totals count 120 percent in your own defensive line and 80 percent in theirs.", "kw.help.STEADY": "Team call: ends any mentality, yours included, and the exposure that came with it."};
+const STR = {"app.title": "Cantera Dugout", "app.eyebrow": "Project Cantera", "app.h1": "Cantera Dugout", "setup.title": "Take the touchline", "setup.squad.label": "Your squad", "setup.squad.preset": "Pre-made team", "setup.squad.draft": "Draft a team", "setup.lineup.label": "Lineup", "setup.btn.quick": "Quick match", "setup.btn.cup": "Tournament (roguelike run)", "setup.dev.summary": "Dev options", "setup.dev.opp.label": "Opponent lineup (quick match only)", "setup.dev.cardset.label": "Card set", "setup.dev.cardset.v3": "v3: 2026-08-31", "setup.dev.cardset.v1": "v1: old", "setup.dev.family.label": "Keyword family overlay (applies to the v1 set only; v3 carries its own keywords)", "setup.dev.family.current": "current grammar only", "setup.dev.family.pressure": "+ PRESSURE (the one percentage status, applied in stacks)", "setup.dev.family.tactics": "+ tactics (SHELVED: future coach abilities)", "setup.dev.family.mentality": "+ mentality (SHELVED: a future class)", "setup.dev.moments.label": "Keeper moments (ruling 2026-08-31: beat their score in their box and it is ALWAYS a goal; a tie or a miss by up to 4 becomes a save, spill or corner, and corners are real 5-a-side set-piece duels from all your current hands)", "setup.dev.moments.on": "on (current direction)", "setup.dev.moments.off": "off (no moments: near misses just fail)", "setup.dev.walkover.label": "Walkover rule (experimental: conceding while you still hold cards lets them carry the ball two lines)", "setup.dev.opt.on": "on", "setup.dev.opt.off": "off", "setup.dev.morale.label": "Morale (experimental: every duel lost takes the margin from your morale; every full step lost is one fewer card per duel)", "setup.dev.morale.raw": "raw (full margin, step 20)", "setup.dev.morale.rawfloor": "raw with a floor (full margin, but never worse than -3 plays)", "setup.dev.morale.tamed": "tamed (loss capped at 8, winning lifts heads, step 25)", "setup.dev.seed.label": "Match seed (same seed replays the same match if you make the same choices; randomized each visit)", "setup.note": "You can see what the opponent is going to play, every duel. You can play up to as many cards as you have players in the ball's zone, or concede the duel and keep your legs. Cards spend until half-time. You draw an initial hand in each zone. Then draw 3 more cards at the start of every duel. Each card can be played only once per half.", "setup.consent": "The game records anonymous gameplay events (which cards you play and what happens); NO PERSONAL OR DEVICE DATA IS COLLECTED.", "draft.title": "Draft your squad", "draft.progress": "{band}: pick {n} of {count} \u00b7 squad {have}/10", "draft.portrait": "PORTRAITS NOT AVAILABLE", "draft.plays": "Plays", "draft.form": "form {q}", "draft.formtip.title": "FORM {q}", "draft.sign": "Sign him", "draft.band.defense": "Defense", "draft.band.midfield": "Midfield", "draft.band.attack": "Attack", "draft.line.def": "DEF", "draft.line.mid": "MID", "draft.line.att": "ATT", "team.you": "Ironhoof (you)", "team.friendly.opp": "Brackwater", "squad.drafted": "drafted XI", "names.first": "Korr, Vex, Bramble, Tido, Ashka, Rumen, Piek, Olo, Ferren, Skarn, Mott, Juba, Ilex, Dunno, Cava, Rasp, Nyx, Tarn, Ember, Quill, Sorrel, Vane, Hollo, Grieg", "names.last": "Longclaw, Brightmane, Thornhoof, Websson, Mudwhistle, Copperfell, Nightbark, Swiftwing, Stonepelt, Reedwalker, Frostwhisker, Emberback, Palefang, Deepburrow, Galehorn, Moorcroft, Silverquill, Blackbriar, Hazeltuft, Kilnsnout", "names.clubs": "Brackwater, Thornfield Rovers, Gloomharbour, Peakspur, Milldown Athletic, Vexford Wanderers, Saltmarsh Utd", "bracket.title": "The draw", "cup.round.quarters": "Quarter-finals", "cup.round.semis": "Semi-finals", "cup.round.final": "The final", "cup.over.title": "Cup run over", "cup.drawheader": "{round} draw", "cup.vs": "{a} v {b}", "cup.yourtie": "\u2190 your tie", "cup.run.summary": "Your run: {played} played, {gf} scored, {ga} conceded.", "cup.event.before": "Before the next round: {name}", "cup.decision": "Decision made: {label}.{coin}", "cup.coin.heads": " The coin lands heads.", "cup.coin.tails": " The coin lands tails.", "cup.btn.play": "Play your tie", "cup.btn.back": "Back to the touchline", "cup.msg.out": "Knocked out. The cup goes to {club}.", "cup.msg.champions": "CHAMPIONS! {team} lift the cup.", "cup.msg.through": "Through to the {round}.", "cup.note.aet": "aet", "cup.note.aetpens": "{score} aet, {pens} pens", "match.sb": "{team} \u00b7 {lineup}", "match.phase.first": "first half", "match.phase.second": "second half", "match.phase.stoppage": "stoppage time", "match.phase.et": "extra time", "match.duelcount": "duel {n} / {m}", "match.teamcalls": "team calls", "match.morale": "morale", "match.calls.you": "you: {calls}", "match.calls.opp": "them: {calls}", "match.calls.none": "no call", "match.calls.pressured": "PRESSURED x{n}", "match.morale.plays": " (-{n} plays)", "match.commit.initial": "They commit", "match.commit.title": "{team} commit", "match.commit.none": "nothing committed", "match.wall.prefix": "keeper wall +{w} \u00b7 ", "match.their.total": "their total: <strong>{t}</strong>", "match.answer.initial": "Your answer", "match.answer.title": "Your answer \u00b7 play up to {cap} ({n} players in this line)", "match.answer.none": "no more cards available", "match.your.total": "your total if played: <strong>{range}</strong> vs theirs {theirs}", "match.pressure.theirs": "<s>{t}</s> {t75} under pressure", "match.btn.play": "Play selected", "match.btn.clear": "Deselect all", "match.btn.concede": "Concede the duel", "match.btn.next": "Next duel", "match.btn.again": "New match", "match.commentary": "Commentary", "match.fulltime.title": "Full time", "match.final": "Final: <strong>{score}</strong>", "card.worthless": "worthless", "kw.term.push": "PUSH", "pitch.band0.name": "your defensive line", "pitch.band0.who": "your DEF + keeper vs their ATT", "pitch.band1.name": "MID", "pitch.band1.who": "both MIDs", "pitch.band2.name": "their DEF", "pitch.band2.who": "your ATT vs their DEF + keeper", "pitch.players": "players: you {y} \u00b7 them {o}", "pitch.hand": "your hand {n} \u00b7 SEE CARD PILES", "pitch.theirs": "their cards: {n}", "corner.setpiece": "Set piece: both teams play from ALL their current hands, up to {cap} cards each.", "corner.organize": "{team} organize the box, face up", "corner.nobodyback": "nobody back: an open goal beckons", "corner.defense.total": "their defense: <strong>{t}</strong>", "corner.delivery.title": "CORNER! Your delivery \u00b7 play up to {cap} from all your hands", "corner.load": "{team} load the box...", "corner.after": "their delivery is chosen after you set your defense", "corner.against.title": "CORNER against you! Set your defense \u00b7 up to {cap} from all your hands", "corner.nothingleft": "nothing left in your hands", "corner.yourdelivery": "Your delivery: {a} against their {d}.", "corner.theirdelivery.total": "their delivery: <strong>{t}</strong>", "corner.youset": "You set {d} against their delivery of {a}.", "corner.goal": "GOAL from the corner! {team} score. {score}.", "corner.cleared": "Cleared! The box holds and the ball comes out.", "corner.settotal": "your set-piece total: <strong>{range}</strong>{vs}", "corner.vsdef": " vs their defense of {d}", "corner.deliveryafter": " \u00b7 their delivery comes after", "comm.kickoff": "Kick off. {round}{you} against {opp}, stoppage will add {n} duels.", "comm.fx": "The training-ground decision travels with you: it applies to this match.", "comm.suspended": "{player} is suspended: the paperwork stands and he watches from the seats.", "comm.passenger": "{player} is in the starting XI. The chairman smiles from the box.", "comm.frozen": "The pitch is a sheet of ice: every range plays at its minimum and every flat card counts +1, for both teams.", "comm.concede": "You concede the duel.", "comm.answer": "You answer {cards} for {t}.", "comm.committed": " They committed {t}.", "comm.void": "The duel is void; the ball stays where it is.", "comm.even": "Honours even.", "comm.stays": "The ball stays put.", "comm.goal": "GOAL! {team} win it by {margin}. {score}.", "comm.scorer.solo": "{player} scores it.", "comm.scorer.assist": "{player} scores it; {assist} with the assist.", "comm.keypass": "The move began with {player}'s ball into the attack.", "comm.walkover": "WALKOVER: {loser} gave it up without a fight; {winner} carry it two lines.", "comm.routeone": "ROUTE ONE: {team} launch it straight over the top into the final third.", "comm.pushon": "{team} win the duel by {margin} and push on.", "comm.half.numbers": "The half in numbers: you spent {y} cards to their {o}; corners {c}.", "comm.ht": "HT {score}. The dressing rooms refresh every card.", "comm.ht.morale": " and the team talk lifts heads", "comm.et": "Level at the whistle. EXTRA TIME: {n} more duels, no refresh. What is spent stays spent.", "comm.ft": "FT {you} {score} {opp}.", "comm.match.numbers": "The match in numbers: cards spent {y} to {o}, corners {c}.", "comm.heads.drop": "Heads drop at {team}: they can now play {n} fewer per duel.", "comm.keeper.corner": "The keeper turns it behind. CORNER to {team}!", "comm.keeper.spill": "The keeper gets a hand to it but cannot hold! The ball stays alive and the keeper is down.", "comm.keeper.claim": "Claimed. The keeper gathers and rolls it out.", "comm.holdup": "HOLD_UP: {team} hold it in the final third; their midfield pushes up to join the attack.", "comm.recycle.return": "RECYCLE: {card} returns to your hand in this line.", "comm.recycle.leave": "RECYCLE: you leave the discard pile untouched.", "comm.recycle.none": "RECYCLE: nothing in this line's discard pile to bring back.", "pen.start": "Still level after extra time. PENALTIES: best of {k}, pure range duels: shot {slo}-{shi} against save {vlo}-{vhi}.", "pen.kick": "{team}, kick {n}: shot {shot} against save {save}", "pen.scores": ". Scores.", "pen.saved": ". SAVED!", "pen.coin": "The referee has seen enough; the coin decides.", "pen.result": "Shoot-out {p}.", "note.feint": "FEINT: their commit counted {n} lower.", "note.through": "THROUGH: {team} count {n} higher on the riposte.", "note.mark": "MARK: their {big} counts as {cap}.", "note.dribble": "DRIBBLE: {who} best card loses {n}.", "note.who.their": "their", "note.who.your": "your", "note.hoofit": "HOOF_IT: a worthless clearance is shuffled into {team}'s pool.", "note.overlap": "OVERLAP: {player} will sit out the next duel.", "note.pressure.applied": "PRESSURE {n} applied: {team}'s totals count 75 percent, starting right now.", "note.teamcall.half": "TEAM CALL {team}: {call}, for the rest of the half.", "note.steady": "TEAM CALL {team}: steady the ship; the mentality resets.", "note.mentality": "TEAM CALL {team}: {call}!", "note.pressure.counts1": "PRESSURE: {team}'s total counts 75 percent ({n} duel including this one).", "note.pressure.countsN": "PRESSURE: {team}'s total counts 75 percent ({n} duels including this one).", "note.manmark": "MAN MARK: their {big} counts {n} lower.", "note.incisive": "INCISIVE: {team}'s opening play counts 120 percent.", "note.boost": "BOOST: {card} counts 120 percent.", "note.incisive.queued": "INCISIVE queued: {team}'s first card next turn counts 120 percent.", "note.gain": "GAIN {step}: every {card} grows to {v} for the match.", "note.demotivate": "DEMOTIVATE {n}: heads drop at {team}.", "note.tired": "TIRED: {team} play one fewer card in this line next turn.", "note.hoofself": "The clearance lands with {team}'s own attack: a worthless ball to deal with up front.", "note.recycle": "RECYCLE: {team} pull {card} back into hand.", "note.holdup.mid": "HOLD IT UP: the move is smothered dead, and {player} pushes up for the next play.", "note.holdup": "HOLD IT UP: the move is smothered dead.", "note.rainbow.heads": "RAINBOW FLICK! It comes off: +20.", "note.rainbow.tails": "The rainbow flick is hacked behind: corner to {team}.", "note.rainbow.pick.push": "RAINBOW FLICK, chosen: +20.", "note.rainbow.pick.corner": "RAINBOW FLICK, chosen: corner to {team}.", "rainbow.modal.title": "Rainbow Flick", "rainbow.modal.body": "Flick number {n} this match: you choose the outcome.", "rainbow.modal.push": "PUSH +20", "rainbow.modal.corner": "Win a corner", "rainbow.pips.title": "Rainbow pips", "rainbow.pips.charging": "{n} of {need} flicks played this match. From the third flick on, you pick PUSH +20 or a corner instead of the coin.", "rainbow.pips.full": "Charged. Your next Rainbow Flick is your call: PUSH +20 or a corner.", "preview.you": "You", "preview.them": "Them", "preview.pick": "Pick your cards", "preview.nocards": "No cards left: they take it", "preview.win": "You win by {d}", "preview.goal": "GOAL: you win by {d}", "preview.lose": "They win by {d}", "preview.theyscore": "THEY SCORE: they win by {d}", "preview.level": "Level: the ball holds", "preview.open": "Open: {lo}\u2013{hi} against {t}", "preview.void": "Duel voided", "preview.rawsub": "cards {raw}", "preview.cardsub": "{n} played", "preview.themsub": "{n} committed", "preview.themnone": "nothing played", "preview.corner.yoursub": "set-piece total", "preview.corner.def": "their defense", "preview.corner.after": "their delivery comes after", "preview.corner.goal": "GOAL", "preview.corner.cleared": "Cleared", "preview.corner.set": "Wall set: their delivery next", "preview.wall.card": "Keeper wall", "preview.wall.who": "goalkeeper \u00b7 auto-played", "preview.mod.wall.you": "keeper wall {d}", "preview.mod.wall": "keeper wall {d}", "preview.mod.pressure.you": "their PRESSURE on you {d}", "preview.mod.pressure.them": "your PRESSURE on them {d}", "preview.mod.dribble.you": "their DRIBBLE {d}", "preview.mod.dribble.them": "your DRIBBLE on their best card {d}", "preview.mod.incisive.you": "INCISIVE {d}", "preview.mod.incisive.them": "their INCISIVE {d}", "preview.mod.boost.you": "BOOST {d}", "preview.mod.boost.them": "their BOOST {d}", "preview.mod.through.you": "THROUGH {d}", "preview.mod.through.them": "their THROUGH {d}", "preview.mod.mark.you": "their MARK {d}", "preview.mod.mark.them": "your MARK {d}", "preview.mod.manmark.you": "their MAN MARK {d}", "preview.mod.manmark.them": "your MAN MARK {d}", "preview.mod.feint.them": "FEINT {d}", "preview.mod.feint.you": "their FEINT {d}", "preview.mod.mentality.you": "team call {d}", "preview.mod.mentality.them": "their team call {d}", "preview.mod.rainbow.coin.you": "Rainbow Flick: coin, +20 or a corner", "preview.mod.rainbow.coin.them": "their Rainbow Flick: coin, +20 or a corner", "preview.mod.rainbow.call.you": "Rainbow Flick: your call, +20 or a corner", "preview.mod.rainbow.call.them": "their Rainbow Flick: their call, +20 or a corner", "preview.mod.holdup.you": "Hold It Up: the duel is voided", "preview.mod.holdup.them": "their Hold It Up: the duel is voided", "preview.mod.hoofself.you": "a Hoofed Clearance lands in your attack hand", "preview.mod.hoofself.them": "a Hoofed Clearance lands in their attack hand", "corner.banner": "CORNER KICK!", "piles.btn.draw": "Draw pile", "piles.btn.discard": "Discard pile", "match.answer.dealt": " \u00b7 dealt {n}, {p} fewer than usual", "cup.title.won": "You won the {round}", "cup.title.out": "Knocked out in the {round}", "cup.title.champions": "Champions!", "draft.roster.title": "Your squad so far ({n} signed)", "note.rainbow.tails.goal": "The rainbow flick fails. The move scores anyway.", "metro.pips.title": "Metronome pips", "metro.pips.charging": "{n} of {need} plays this match. The card comes back after the first and second play. After the third it is gone for the match.", "metro.pips.full": "Last play: after this one the card is gone for the match.", "comm.oppform": "{team} arrive in form: every card +{n} this round.", "version.label": "v{v}", "version.notes.title": "Patch notes", "version.notes.release": "{v} \u00b7 {date}", "note.press": "PRESS: {team}'s next hand is dealt {n} smaller.", "note.gegenpress": "GEGENPRESS: won back high; {team}'s next hand is dealt 1 smaller.", "note.switch": "SWITCH: {player}'s {card} is refreshed.", "piles.title": "{zone}: your piles", "piles.inhand": "In hand", "piles.draw": "Draw pile", "piles.discards": "Discard pile", "piles.empty": "empty", "recycle.title": "RECYCLE: pick a card to return to your hand", "kwmodal.close": "Got it", "kwmodal.nodesc": "No description.", "onboard.title": "How to read a duel", "onboard.body": "<strong>The opponent has picked their play.</strong> You answer knowing the number to beat.<br><br><strong>Pick your cards.</strong> Play up to as many cards as you have players in the ball's zone. The bigger total PUSH moves the ball one zone closer to the goal. Cards you play are gone until half-time.<br><br><strong>The keeper.</strong> In a side's own line, their wall value is added to their teams DEF total. Beat their score in THEIR box and it is a GOAL; a tie or a near miss becomes a save, a spill, or a corner kick.<br><br><strong>PRESSURE.</strong> Shrinks the opponents PUSH total to 75 percent. Stacks tick down one per duel.<br><br><strong>Conceding a duel.</strong> Give up a duel you cannot win and keep your cards for one you can. Tap any keyword chip for its definition.", "kw.label.RALLY_HOLDUP": "HOLD UP", "kw.label.HOOF_SELF": "HOOF", "kw.label.ATTACK_ONLY": "ATTACK ONLY", "kw.label.CORNER_X2": "POACHER'S INSTINCT", "kw.help.PUSH": "PUSH adds to your side's total this duel; the team with the bigger total moves the ball one zone up toward the opposing goal. Win the duel in THEIR box and it is a goal. A tie holds the ball where it stands.", "kw.help.FORM": "A temporary edge, rolled when a player joins your run: every play he owns counts this much higher (or lower) for the whole cup run. It is already priced into the numbers shown on his card.", "kw.help.BOOST_1": "The next card you play THIS turn counts 120 percent. Selection order is play order, so pick this before the card you want boosted.", "kw.help.INCISIVE_1": "Your first card NEXT turn counts 120 percent. The killer ball that sets up the next move.", "kw.help.METRONOME": "When played, this card returns to the draw pile. Three pips: after the third play in a match it is gone.", "kw.help.GAIN_1": "On play, every card named like this one in your squad permanently grows +1 push for the rest of the match, this copy included.", "kw.help.CORNER_X2": "Poacher's Instinct: DOUBLE value during attacking corners.", "kw.help.TIRED": "The price of the burst: next turn in this line you play one fewer card than players available.", "kw.help.RECYCLE": "Pick any card you have already played in this line and put it back into your hand.", "kw.help.RALLY_HOLDUP": "The duel is skipped, the ball stays in this zone. One random midfielder joins your ATT for one turn.", "kw.help.RAINBOW": "PUSH 20 or win a CORNER. The first two flicks each match are a coin. From the third flick on, you choose. (ATT zone only)", "kw.help.HOOF_SELF": "A worthless Hoofed Clearance lands in YOUR ATT hand.", "kw.help.ATTACK_ONLY": "This card can only be played in the attacking line.", "kw.help.BREAK": "Win the duel by 6 or more with this card played: the ball moves up to two lines instead of one.", "kw.help.THROUGH": "Counts 5 higher if your side lost the previous duel.", "kw.help.CORNER": "Inactive since the 2026-08-31 box ruling: corners now come from any tie or near miss in the box, and play out as a real set-piece duel. This card is a plain range until its replacement is ruled on.", "kw.help.DRIBBLE": "Takes up to 5 off the opponent's single biggest played card, once per duel.", "kw.help.HOLD_UP": "Lose the attacking-line duel by 10 or less with this played: the ball does not come out. Your striker holds it and your midfielders push up to join the attack, leaving your midfield empty until the ball leaves the line.", "kw.help.OVERLAP": "A big value now; the price is that this player sits out the next duel entirely.", "kw.help.SWITCH": "After this duel, one already-spent card of a teammate in this line refreshes and can be used again before half-time.", "kw.help.FEINT": "The opponent's next committed total counts 3 lower. The number you saw was a lie.", "kw.help.MARK": "The opponent's single biggest played card counts at most 18 in this duel.", "kw.help.PRESS": "Win the duel with this played: the opponent's next hand is dealt 2 cards smaller.", "kw.help.HOLD": "Counts 4 higher while your side is leading and the duel is in your own half.", "kw.help.HOOF_IT": "Shuffles a worthless Hoofed Clearance (value 0) into the opponent's pool. Sooner or later it clogs one of their hands.", "kw.help.PRESSURE_1": "Applies 1 PRESSURE to the opponent: their totals count 75 percent for 1 duel, starting with THIS one, so it shrinks the commit already on the table. PRESSURE is the game's one percentage effect; stacks from different cards add up, and half-time clears them.", "kw.help.PRESSURE_2": "Applies 2 PRESSURE to the opponent: their totals count 75 percent for 2 duels, this one included. Stacks add; half-time clears them.", "kw.help.PRESSURE_3": "Applies 3 PRESSURE to the opponent: their totals count 75 percent for 3 duels, this one included. Stacks add; half-time clears them.", "kw.help.GEGENPRESS": "SHELVED team call, for the rest of the half: every duel your side wins deals the opponent one fewer card next duel. A new team call replaces it.", "kw.help.OVERLAP_RUNS": "SHELVED team call, for the rest of the half: your full-backs and wing-backs also count as present in the attacking line. More plays up there; their cards burn faster.", "kw.help.DROP_DEEP": "SHELVED team call, for the rest of the half: your forwards also count as present in midfield.", "kw.help.ROUTE_ONE": "SHELVED team call, for the rest of the half: win a duel in your own defensive line and the ball launches straight to the attacking line. Never a direct goal; the finish is still a duel.", "kw.help.MAN_MARK": "SHELVED team call, for the rest of the half: the opponent's single biggest played card counts at 75 percent every duel.", "kw.help.ALL_OUT": "Team call until changed: your totals count 120 percent in their defensive line, but their totals count 120 percent in yours. The comeback lever, priced in exposure.", "kw.help.PARK_BUS": "Team call until changed: your totals count 120 percent in your own defensive line and 80 percent in theirs.", "kw.help.STEADY": "Team call: ends any mentality, yours included, and the exposure that came with it.", "preview.mod.frozen.you": "frozen pitch on you {d}", "preview.mod.frozen.them": "frozen pitch on them {d}", "preview.mod.rainbow.push.you": "Rainbow Flick: your call, PUSH {d}", "preview.mod.rainbow.corner.you": "Rainbow Flick: your call, a corner (counts 0)", "rb.tag.push": "PUSH +20", "rb.tag.corner": "CORNER", "fx.frozen.title": "Frozen pitch", "fx.frozen.label": "frozen pitch", "fx.frozen.you": "Every range plays at its minimum and every flat card counts +1. Both teams, this match.", "fx.frozen.them": "Every range plays at its minimum and every flat card counts +1. Both teams, this match.", "fx.handExtra.title": "Hand size", "fx.handExtra.label": "first deal {n}", "fx.handExtra.you": "Your first deal in every lane draws {n} cards compared with the usual, this match.", "fx.handExtra.them": "Your first deal in every lane draws {n} cards compared with the usual, this match.", "fx.laneTopup.title": "Lane top-up", "fx.laneTopup.label": "top-up {n}", "fx.laneTopup.you": "Every return deal draws {n} cards compared with the usual, this match.", "fx.laneTopup.them": "Every return deal draws {n} cards compared with the usual, this match.", "fx.wall.title": "Keeper wall", "fx.wall.label": "wall {n}", "fx.wall.you": "Your keeper wall counts {n} this match.", "fx.wall.them": "Your keeper wall counts {n} this match.", "fx.wall.run": "Your keeper wall counts {n} for the rest of the run.", "fx.oppWall.title": "Their keeper wall", "fx.oppWall.label": "their wall {n}", "fx.oppWall.you": "Their keeper wall counts {n} this match.", "fx.oppWall.them": "Their keeper wall counts {n} this match.", "fx.cardGain.title": "Card gain", "fx.cardGain.label": "{name} {n}", "fx.cardGain.you": "Every {name} in your squad counts {n} this match.", "fx.cardGain.them": "Every {name} in your squad counts {n} this match.", "fx.cardGain.run": "Every {name} in your squad counts {n} for the rest of the run.", "fx.allGain.title": "Squad gain", "fx.allGain.label": "all cards {n}", "fx.allGain.you": "Every card in your squad counts {n} for the rest of the run.", "fx.allGain.them": "Every card in your squad counts {n} for the rest of the run.", "fx.playerGain.title": "Blessed player", "fx.playerGain.label": "{pos} {n}", "fx.playerGain.you": "One {pos} counts {n} on every card for the rest of the run.", "fx.playerGain.them": "One {pos} counts {n} on every card for the rest of the run.", "fx.transform.title": "Transformed card", "fx.transform.label": "{from} is {to}", "fx.transform.you": "Your {from} cards are {to} for the rest of the run.", "fx.transform.them": "Your {from} cards are {to} for the rest of the run.", "fx.sacrifice.title": "Sacrificed card", "fx.sacrifice.label": "no {name}", "fx.sacrifice.you": "Your {name} cards are gone for the rest of the run.", "fx.sacrifice.them": "Your {name} cards are gone for the rest of the run.", "fx.suspend.title": "Suspension", "fx.suspend.label": "{pos} suspended", "fx.suspend.you": "One of your {pos} misses this match.", "fx.suspend.them": "One of your {pos} misses this match.", "fx.passenger.title": "Passenger", "fx.passenger.label": "{name}", "fx.passenger.you": "{name} plays every card at {v} this match.", "fx.passenger.them": "{name} plays every card at {v} this match.", "fx.oppForm.title": "Opponent form", "fx.oppForm.label": "form {n}", "fx.oppForm.you": "{team} count {n} on every card this match.", "fx.oppForm.them": "{team} count {n} on every card this match.", "fx.pressure.title": "PRESSURE", "fx.pressure.label": "pressured {n}", "fx.pressure.you": "Your totals count 75 percent for {n} more duels.", "fx.pressure.them": "{team}'s totals count 75 percent for {n} more duels.", "fx.incisive.title": "INCISIVE", "fx.incisive.label": "incisive {n}", "fx.incisive.you": "Your first {n} cards this turn count 120 percent.", "fx.incisive.them": "{team}'s first {n} cards this turn count 120 percent.", "fx.incisiveNext.title": "INCISIVE queued", "fx.incisiveNext.label": "incisive next {n}", "fx.incisiveNext.you": "Your first {n} cards next turn count 120 percent.", "fx.incisiveNext.them": "{team}'s first {n} cards next turn count 120 percent.", "fx.holdup.title": "Hold it up", "fx.holdup.label": "midfield up {n}", "fx.holdup.you": "Your midfielders stand in the attack for {n} more turns.", "fx.holdup.them": "{team}'s midfielders stand in their attack for {n} more turns.", "fx.rally.title": "Rally", "fx.rally.label": "{name} up", "fx.rally.you": "{name} joins your attack this turn.", "fx.rally.them": "{name} joins {team}'s attack this turn.", "fx.tired.title": "TIRED", "fx.tired.label": "tired: {zone}", "fx.tired.you": "Next duel in {zone} you play one fewer card.", "fx.tired.them": "Next duel in {zone} {team} play one fewer card.", "fx.dealPenalty.title": "Short deal", "fx.dealPenalty.label": "deal -{n}", "fx.dealPenalty.you": "Your next hand is dealt {n} cards smaller.", "fx.dealPenalty.them": "{team}'s next hand is dealt {n} cards smaller.", "fx.keeperDown.title": "Keeper down", "fx.keeperDown.label": "keeper down", "fx.keeperDown.you": "Your keeper wall counts 0 this duel.", "fx.keeperDown.them": "{team}'s keeper wall counts 0 this duel.", "fx.feint.title": "FEINT", "fx.feint.label": "feint -{n}", "fx.feint.you": "Your next commit counts {n} lower.", "fx.feint.them": "{team}'s next commit counts {n} lower.", "fx.exhausted.title": "Exhausted", "fx.exhausted.label": "{n} gone", "fx.exhausted.you": "{n} of your cards are gone for the match.", "fx.exhausted.them": "{n} of {team}'s cards are gone for the match.", "fx.curses.title": "Hoofed Clearance", "fx.curses.label": "{n} garbage", "fx.curses.you": "{n} Hoofed Clearances sit in your pool and clog your hands.", "fx.curses.them": "{n} Hoofed Clearances sit in {team}'s pool and clog their hands.", "fx.tactic.title": "Team call", "fx.tactic.label": "{name}", "fx.tactic.you": "Your team call: {name}.", "fx.tactic.them": "{team}'s team call: {name}.", "fx.mentality.title": "Team call", "fx.mentality.label": "{name}", "fx.mentality.you": "Your team call: {name}.", "fx.mentality.them": "{team}'s team call: {name}.", "report.ht.title": "Half time", "report.ft.win": "{you} win", "report.ft.lose": "{you} lose", "report.ft.draw": "Level at full time", "report.btn.second": "Second half", "report.btn.continue": "Continue", "report.numbers": "The numbers", "report.duels": "duels won: you, held, them", "report.territory": "where the ball went: their half, midfield, your half", "report.cards": "cards played", "report.corners": "corners", "report.goals": "Goals", "report.players": "Your players", "report.tile.mvp.ht": "Player of the half", "report.tile.mvp.ft": "Player of the match", "report.tile.mvp.sub": "{w} duels won, {g} goals, {a} assists", "report.tile.push": "Most push", "report.tile.push.sub": "{n} PUSH from {c} cards", "report.tile.passes": "Most passes", "report.tile.passes.sub": "{n} passes played", "report.tile.card": "Best card", "report.tile.card.sub": "{owner}: {w} wins from {p} plays", "report.none": "nothing yet", "report.theirs": "Their danger", "report.danger": "{name} ({role}): {n} PUSH, {w} duels won", "report.where": "Where the duels were fought", "report.every": "Every duel, in order", "report.legend": "green: you won. red: they won. grey: held. dashed: voided. dot: a goal."};
 function T(key, vars) {
   let s = STR[key];
   if (s === undefined) return key;
@@ -552,11 +635,11 @@ function T(key, vars) {
 const ROLES = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 13, 13, "ANYWHERE", "HOOF_IT"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Tackle", 11, 11, "ANYWHERE", ""], ["Line Pass", 11, 11, "ANYWHERE", "SWITCH"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Sweep Up", 11, 11, "ANYWHERE", ""], ["Read the Game", 10, 10, "ANYWHERE", "MARK"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Tackle", 10, 10, "ANYWHERE", ""], ["Cross", 8, 14, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Up and Down", 10, 10, "ANYWHERE", ""], ["Overlap", 14, 14, "ANYWHERE", "OVERLAP"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Engine Run", 10, 10, "ANYWHERE", ""], ["Late Arrival", 8, 18, "ANYWHERE", "THROUGH"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 13, 13, "ANYWHERE", "PRESS"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Pass", 10, 10, "ANYWHERE", ""], ["Long Diagonal", 6, 18, "ANYWHERE", "FEINT"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["One-Two", 10, 10, "ANYWHERE", ""], ["Killer Ball", 8, 20, "ANYWHERE", "THROUGH"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Strike", 11, 11, "ANYWHERE", ""], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Towering Header", 13, 13, "ANYWHERE", ""], ["Hold It Up", 14, 14, "ANYWHERE", "HOLD_UP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Byline Run", 10, 10, "ANYWHERE", ""], ["Cross", 9, 19, "ANYWHERE", "CORNER"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Finish", 12, 12, "ANYWHERE", ""], ["Poach", 14, 24, "THEIR_BOX", ""]]}};
 const ROLES_V3 = {"centre-back": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Clearance", 18, 18, "ANYWHERE", "HOOF_SELF"]]}, "ball-playing-defender": {"position": "DF", "base": 0, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Recycle", 7, 7, "ANYWHERE", "RECYCLE"]]}, "sweeper": {"position": "DF", "base": 0, "extra": [], "wall_bonus": 4, "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Skilled Distribution", 10, 10, "ANYWHERE", "INCISIVE_1"]]}, "full-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""]]}, "wing-back": {"position": "DF", "base": 0, "extra": [1], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Overlap", 22, 22, "ANYWHERE", "TIRED"]]}, "box-to-box": {"position": "MF", "base": 1, "extra": [0, 2], "cards": [["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Push Up", 8, 8, "ANYWHERE", "GAIN_1"], ["Late Arrival", 8, 18, "ANYWHERE", "INCISIVE_1"]]}, "ball-winner": {"position": "MF", "base": 1, "extra": [], "cards": [["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Tackle", 12, 12, "ANYWHERE", ""], ["Crunch Tackle", 10, 10, "ANYWHERE", "PRESSURE_1"]]}, "deep-lying-playmaker": {"position": "MF", "base": 1, "extra": [0], "cards": [["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Pass", 8, 8, "ANYWHERE", "METRONOME"], ["Long Diagonal", 6, 18, "ANYWHERE", "PRESSURE_2"]]}, "advanced-playmaker": {"position": "MF", "base": 1, "extra": [2], "cards": [["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["One-Two", 10, 10, "ANYWHERE", "BOOST_1"], ["Through Pass", 8, 20, "ANYWHERE", "INCISIVE_1"]]}, "inside-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Slalom Dribble", 12, 12, "ANYWHERE", "DRIBBLE"]]}, "target-forward": {"position": "FW", "base": 2, "extra": [], "cards": [["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Towering Header", 11, 11, "ANYWHERE", "PRESSURE_1"], ["Hold It Up", 0, 0, "ANYWHERE", "RALLY_HOLDUP"]]}, "winger": {"position": "FW", "base": 2, "extra": [1], "cards": [["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Cross", 10, 16, "ANYWHERE", ""], ["Rainbow Flick", 0, 0, "THEIR_BOX", "RAINBOW"]]}, "poacher": {"position": "FW", "base": 2, "extra": [], "cards": [["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Strike", 11, 11, "ANYWHERE", "CORNER_X2"], ["Poach", 14, 24, "THEIR_BOX", "ATTACK_ONLY"]]}};
 const LINEUPS = {"classic-442": ["centre-back", "centre-back", "full-back", "full-back", "ball-winner", "box-to-box", "deep-lying-playmaker", "advanced-playmaker", "target-forward", "poacher"], "wing-play": ["centre-back", "centre-back", "wing-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "winger", "target-forward", "poacher"], "tiki-taka": ["ball-playing-defender", "centre-back", "centre-back", "full-back", "deep-lying-playmaker", "advanced-playmaker", "advanced-playmaker", "box-to-box", "inside-forward", "poacher"], "low-block-counter": ["sweeper", "centre-back", "centre-back", "centre-back", "full-back", "ball-winner", "ball-winner", "box-to-box", "inside-forward", "poacher"], "direct-target": ["centre-back", "centre-back", "full-back", "wing-back", "ball-winner", "deep-lying-playmaker", "winger", "advanced-playmaker", "target-forward", "target-forward"]};
-const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "cornerWall": true, "cupFormStep": 0, "ai": {"samples": 48, "percentile": 0.5, "probe": 2}, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3, "rainbowChoiceFrom": 3, "metronomePlays": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260902-9736b88"}, "version": "0.0.4"};
+const CFG = {"turns": 26, "halfAt": 13, "stoppageMin": 1, "stoppageMax": 3, "keeper": 8, "handExtra": 2, "laneTopup": 3, "keeperMoments": true, "family": "current", "cleanFinish": 4, "nearMiss": 3, "cornerCap": 5, "momentWeights": [3, 2, 1], "cornerDelivery": [8, 26], "saveRange": [10, 28], "extraTimeTurns": 6, "penKicks": 5, "penRange": [12, 30], "penSuddenDeathCap": 20, "cornerWall": true, "cupFormStep": 0, "ai": {"samples": 48, "percentile": 0.5, "probe": 2}, "relocateCarriesHand": true, "kw": {"feint": 3, "pressSteal": 2, "throughBonus": 5, "markCap": 18, "dribbleLimit": 1, "dribbleCap": 5, "cornerWindow": 3, "holdUpWindow": 10, "holdUpTurns": 3, "rainbowChoiceFrom": 3, "metronomePlays": 3}, "tel": {"url": "https://zirfwbjwvnjuzrqmfsbs.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcmZ3Ymp3dm5qdXpycW1mc2JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNTU2MTQsImV4cCI6MjEwMzgzMTYxNH0.htae7NLTMV7NF7dsJHrSxK2b0Eem-eQ5tS_43iCgLRA", "build": "20260902-b067636"}, "version": "0.0.5"};
 const FAMILIES = {"tactics": {"ball-winner": ["Gegenpress", 2, 2, "ANYWHERE", "GEGENPRESS"], "wing-back": ["Overlap Runs", 2, 2, "ANYWHERE", "OVERLAP_RUNS"], "advanced-playmaker": ["Drop Between Lines", 2, 2, "ANYWHERE", "DROP_DEEP"], "centre-back": ["Route One", 2, 2, "ANYWHERE", "ROUTE_ONE"]}, "pressure": {"ball-playing-defender": ["Shackle", 10, 10, "ANYWHERE", "PRESSURE_1"], "centre-back": ["Crowd Out", 8, 8, "ANYWHERE", "PRESSURE_2"], "ball-winner": ["Cut the Supply", 6, 6, "ANYWHERE", "PRESSURE_3"]}, "mentality": {"target-forward": ["All-Out Attack", 6, 6, "ANYWHERE", "ALL_OUT"], "sweeper": ["Park the Bus", 6, 6, "ANYWHERE", "PARK_BUS"], "deep-lying-playmaker": ["Steady the Ship", 6, 6, "ANYWHERE", "STEADY"]}};
 const EVENTS = [{"id": "ghost-of-the-cup", "name": "The ghost of the cup", "shape": "transform", "text": "A gaunt old man stands at the fence through the whole passing drill and says nothing. The kit man swears he lifted this cup twice, long ago. He offers your midfielders one afternoon, and he does not repeat himself.", "options": [{"label": "Give him the afternoon: every Pass becomes The Legend's Pass (push 6-20, INCISIVE) for the rest of the run. The metronome is gone.", "fx": {"runTransform": [{"from": "Pass", "to": {"name": "The Legend's Pass", "lo": 6, "hi": 20, "kw": "INCISIVE_1"}}]}}, {"label": "Your patterns are your own. Walk away (nothing happens)", "fx": {}}]}, {"id": "kit-mans-bonfire", "name": "The kit man's bonfire", "shape": "sacrifice", "text": "End of the week, the kit man burns the broken gear behind the shed. He holds the sack open: anything else, gaffer? The squad has gone quiet. Whatever goes in the fire stays in the fire.", "options": [{"label": "Burn every Tackle: gone for the rest of the run, and every card you still own gains +1 for the run", "fx": {"runSacrifice": ["Tackle"], "runAllGain": {"delta": 1}}}, {"label": "Burn every Strike: gone for the rest of the run, and every card you still own gains +1 for the run", "fx": {"runSacrifice": ["Strike"], "runAllGain": {"delta": 1}}}, {"label": "Nothing burns tonight (nothing happens)", "fx": {}}]}, {"id": "crooked-scout", "name": "The crooked scout", "shape": "gamble", "text": "He finds you in the car park with a folder of keeper habits: where they dive, what they drop, which nights they drink. Half his tips are gold. The other half he made up in the bus on the way over, and he does not remember which half is which.", "options": [{"label": "Buy the folder: a keeper starts the next match with a wall of 0. Heads it is theirs. Tails it is yours.", "fx": {"coin": {"heads": {"oppWall": -99}, "tails": {"wall": -99}}}}, {"label": "Show him the gate (nothing happens)", "fx": {}}]}, {"id": "dog-on-the-pitch", "name": "A dog on the pitch", "shape": "gift", "text": "A stray dog gets through the fence mid-session, beats three defenders, and will not leave one of your forwards alone. The forward has already named him. The whole squad is watching you.", "options": [{"label": "He stays: that forward plays +2 on every card for the rest of the run", "fx": {"runPlayerGain": [{"pos": "FW", "delta": 2}]}}, {"label": "Call the council to collect him (nothing happens, and the dressing room remembers)", "fx": {}}]}, {"id": "chairmans-nephew", "name": "The chairman's nephew", "shape": "curse_trade", "text": "The chairman's nephew has boots, a fresh haircut, and no discernible first touch. The chairman has a chequebook, and he has made the connection between these facts extremely clear.", "options": [{"label": "Start him: a random starter is replaced next match by the nephew (every play a flat 6), and the chairman's money buys every card +1 for the rest of the run", "fx": {"passenger": {"name": "The chairman's nephew", "value": 6}, "runAllGain": {"delta": 1}}}, {"label": "Bench him and take the phone call (nothing happens)", "fx": {}}]}, {"id": "cup-tied", "name": "Cup-tied", "shape": "pick_your_poison", "text": "An hour before the registration deadline, the federation flags your paperwork. Someone signed the wrong line in the wrong ink, and the someone was you.", "options": [{"label": "Accept the ban: a random midfielder misses the next match", "fx": {"suspend": {"pos": "MF"}}}, {"label": "Send the lawyers: it costs you the preparation week (first deal next match is 2 cards smaller)", "fx": {"handExtra": -2}}, {"label": "Ignore the letter: 50-50 the case is dropped (nothing) or the ban lands anyway", "fx": {"coin": {"heads": {}, "tails": {"suspend": {"pos": "MF"}}}}}]}, {"id": "frozen-pitch", "name": "The frozen pitch", "shape": "rules_warp", "text": "A cold snap in the night and the next ground is a sheet of white. The council will not close it: cup football, they say, builds character.", "options": [{"label": "Embrace the ice: next match, BOTH teams play every range at its minimum and every flat card counts +1", "fx": {"frozen": true}}, {"label": "Demand a pitch inspection: it is played anyway, and the hour in the cold ruins your warm-up (first deal -1 next match)", "fx": {"handExtra": -1}}, {"label": "Say nothing and trust the ground staff (nothing happens)", "fx": {}}]}, {"id": "testimonial", "name": "The testimonial", "shape": "trade", "text": "An old captain's testimonial, the night before your tie. Ninety minutes of walking football, a full house, and every drill he ever ran available one more time.", "options": [{"label": "Play it and drill the back line: every Tackle +2 for the rest of the run, but the XI comes back weary (first deal -1 next match)", "fx": {"runCardGain": [{"name": "Tackle", "delta": 2}], "handExtra": -1}}, {"label": "Play it and feed the forwards: every Strike +2 for the rest of the run, same weary first deal", "fx": {"runCardGain": [{"name": "Strike", "delta": 2}], "handExtra": -1}}, {"label": "Send flowers instead (nothing happens)", "fx": {}}]}];
 // Version and patch notes (content/changelog.json, newest first).
-const CHANGELOG = [{"version": "0.0.4", "date": "2026-09-02", "notes": ["The AI counts your cards. It knows your squad, what you have played and how many cards you hold, and sizes its commit against what you can probably answer, not the most you could conceivably play. It contests the midfield now. Which cards you hold stays hidden from it.", "Cup opponents no longer gain form by round."]}, {"version": "0.0.3", "date": "2026-09-02", "notes": ["Modified numbers show on the cards: a raised number is green with a triangle up, a lowered one red with a triangle down, the printed value struck through beside it. Applies to your selected cards and to their committed cards.", "Draft: the players you have signed show as full player cards under the candidates, grouped by line. Hover or tap their cards and keywords as on candidates."]}, {"version": "0.0.2", "date": "2026-09-02", "notes": ["METRONOME cards carry three pips. The card comes back after its first and second play of a match. After the third play it is gone for the match.", "The defender's keeper wall counts in corner duels.", "Cup opponents arrive in form: every card +1 in the semi-final, +2 in the final.", "A failed Rainbow Flick on a move that scores anyway says so, without promising a corner."]}, {"version": "0.0.1", "date": "2026-09-02", "notes": ["Rainbow Flick: the first two flicks in a match are a coin. From the third flick on you choose PUSH +20 or a corner. Pips on the card show the count.", "The answer panel now shows your resolved total against theirs, the outcome, and every modifier applied: their pressure on you, your pressure on them, dribble, incisive, boost, mark, the keeper wall, the rainbow.", "The keeper wall is shown as an auto-played card at the front of the defensive line.", "Corner kick banner. Keywords that do not work in a corner are struck through.", "Draw pile and discard pile buttons in the answer box.", "Draft: three candidates per row on wide screens.", "The bracket screen opens with the result of your match.", "When a deal is smaller than usual, the answer title says by how much.", "Hold It Up plays at 0, as printed.", "Poacher's Instinct only doubles when you attack a corner.", "Corners are taken from the attacker's box.", "Goals, assists and key plays are credited in the commentary.", "Cards cannot be selected after playing and before the next duel.", "Playtest logs record dealt hands and hand sizes.", "Version number and patch notes on the menu screen."]}];
+const CHANGELOG = [{"version": "0.0.5", "date": "2026-09-02", "notes": ["The order you select cards is the order they play, in the preview and in the play. A One-Two boosts whichever card you select after it, wherever it sits in your hand.", "The AI plays its One-Two before the card it boosts.", "Every rule in force this match shows on a shelf under the scoreboard, with an icon and a hover text: a frozen pitch, a run effect, a standing effect from a card. Cards under a frozen pitch show the number they will count.", "Half-time is a report: the score, who won the duels, the pitch, and the players who did the most. Click to start the second half.", "Full time is a report too, with the same pages and the result.", "The third Rainbow Flick asks for your call the moment you select the card, and the preview counts it.", "A player pushed into another line by Hold It Up brings the cards he holds with him, and the deal there adds one card for each player who is new to the line."]}, {"version": "0.0.4", "date": "2026-09-02", "notes": ["The AI counts your cards. It knows your squad, what you have played and how many cards you hold, and sizes its commit against what you can probably answer, not the most you could conceivably play. It contests the midfield now. Which cards you hold stays hidden from it.", "Cup opponents no longer gain form by round."]}, {"version": "0.0.3", "date": "2026-09-02", "notes": ["Modified numbers show on the cards: a raised number is green with a triangle up, a lowered one red with a triangle down, the printed value struck through beside it. Applies to your selected cards and to their committed cards.", "Draft: the players you have signed show as full player cards under the candidates, grouped by line. Hover or tap their cards and keywords as on candidates."]}, {"version": "0.0.2", "date": "2026-09-02", "notes": ["METRONOME cards carry three pips. The card comes back after its first and second play of a match. After the third play it is gone for the match.", "The defender's keeper wall counts in corner duels.", "Cup opponents arrive in form: every card +1 in the semi-final, +2 in the final.", "A failed Rainbow Flick on a move that scores anyway says so, without promising a corner."]}, {"version": "0.0.1", "date": "2026-09-02", "notes": ["Rainbow Flick: the first two flicks in a match are a coin. From the third flick on you choose PUSH +20 or a corner. Pips on the card show the count.", "The answer panel now shows your resolved total against theirs, the outcome, and every modifier applied: their pressure on you, your pressure on them, dribble, incisive, boost, mark, the keeper wall, the rainbow.", "The keeper wall is shown as an auto-played card at the front of the defensive line.", "Corner kick banner. Keywords that do not work in a corner are struck through.", "Draw pile and discard pile buttons in the answer box.", "Draft: three candidates per row on wide screens.", "The bracket screen opens with the result of your match.", "When a deal is smaller than usual, the answer title says by how much.", "Hold It Up plays at 0, as printed.", "Poacher's Instinct only doubles when you attack a corner.", "Corners are taken from the attacker's box.", "Goals, assists and key plays are credited in the commentary.", "Cards cannot be selected after playing and before the next duel.", "Playtest logs record dealt hands and hand sizes.", "Version number and patch notes on the menu screen."]}];
 document.addEventListener("DOMContentLoaded", () => {
   $("version-link").textContent = T("version.label", { v: CFG.version });
   $("version-link").addEventListener("click", e => {
@@ -782,36 +865,91 @@ function fx(side, key) {
   // Between-round event effects apply to YOUR next match only.
   return (side === S.you && S.matchFx) ? (S.matchFx[key] || 0) : 0;
 }
+// Relocation (2026-09-02, awaiting Eduardo's ruling; on by default,
+// the old rule kept as the measured control): a player an effect moved
+// into another line (HOLD_UP, RALLY_HOLDUP) carries the cards he holds
+// in his old lane hand with him, and a return deal adds one card per
+// newly present player.
+function presentPlayersAt(side, zone) {
+  const b = S.ball; S.ball = zone;
+  try { return presentPlayers(side); } finally { S.ball = b; }
+}
+function relocatedIds(side) {
+  const out = new Set();
+  const r = side.effects.rally;
+  for (const p of side.players) {
+    if ((side.effects.mfUpUntil ?? -1) >= S.turn && p.pos === "MF") out.add(p.id);
+    if (r && p.id === r.pid && S.turn <= r.until) out.add(p.id);
+  }
+  return out;
+}
+function laneLocked(side) {
+  // Card ids held in another lane that cannot be drawn here. Under the
+  // relocation rule a card follows its player: it stays locked only
+  // while its owner is neither relocated nor absent from the lane
+  // that holds it. Ownerless cards (curses) always stay put.
+  const carry = !!CFG.relocateCarriesHand;
+  const relocated = carry ? relocatedIds(side) : null;
+  const owner = new Map();
+  for (const p of side.players) for (const c of p.cards) owner.set(c.id, p.id);
+  const locked = new Set();
+  for (const [lane, cards] of Object.entries(side.laneHands)) {
+    const z = Number(lane);
+    if (z === S.ball) continue;
+    let there = null;
+    for (const c of cards) {
+      if (side.spent.has(c.id)) continue;
+      const pid = owner.get(c.id);
+      if (carry && pid !== undefined) {
+        if (relocated.has(pid)) continue;
+        if (there === null) there = new Set(presentPlayersAt(side, z).map(p => p.id));
+        if (!there.has(pid)) continue;
+      }
+      locked.add(c.id);
+    }
+  }
+  return locked;
+}
+function returnExtra(side) {
+  if (!CFG.relocateCarriesHand) return 0;
+  const now = presentPlayers(side).length;
+  const lp = side.lanePresence || {};
+  const before = lp[S.ball] !== undefined ? lp[S.ball] : now;
+  return Math.max(0, now - before);
+}
 function deal(side) {
   // The lane-hand rule (Eduardo, 2026-08-30): you are never re-dealt.
   // What you draw in a lane you keep for the next time the ball is
   // there; each return draws 2 new cards on top. Cards held in another
-  // lane are allocated there and cannot be drawn here.
+  // lane are allocated there and cannot be drawn here (unless their
+  // player was relocated: see laneLocked).
   const z = S.ball;
   const pool = livePool(side);
   const poolIds = new Set(pool.map(c => c.id));
   const firstVisit = !(z in side.laneHands);
   const held = (side.laneHands[z] || [])
     .filter(c => !side.spent.has(c.id) && poolIds.has(c.id));
-  const elsewhere = new Set();
-  for (const [lane, cards] of Object.entries(side.laneHands)) {
-    if (Number(lane) === z) continue;
-    for (const c of cards) if (!side.spent.has(c.id)) elsewhere.add(c.id);
-  }
+  const locked = laneLocked(side);
   const heldIds = new Set(held.map(c => c.id));
-  const drawable = pool.filter(c => !heldIds.has(c.id) && !elsewhere.has(c.id));
+  const drawable = pool.filter(c => !heldIds.has(c.id) && !locked.has(c.id));
   const base = firstVisit
     ? presentPlayers(side).length + CFG.handExtra + fx(side, "handExtra")
-    : Math.max(1, CFG.laneTopup + fx(side, "laneTopup"));
+    : Math.max(1, CFG.laneTopup + fx(side, "laneTopup") + returnExtra(side));
   const draw = Math.max(firstVisit ? 1 : 0,
                         base - (side.effects.dealPenalty || 0));
   const usual = firstVisit ? presentPlayers(side).length + CFG.handExtra
-                           : CFG.laneTopup;
+                           : CFG.laneTopup + returnExtra(side);
   side.lastDeal = { drew: draw, usual, firstVisit, penalty: usual - draw };
   side.effects.dealPenalty = 0;
   shuffle(drawable);
-  const hand = held.concat(drawable.slice(0, draw));
+  const drawn = drawable.slice(0, draw);
+  // A card that followed its player leaves the hand it came from.
+  const drawnIds = new Set(drawn.map(c => c.id));
+  for (const [lane, cards] of Object.entries(side.laneHands))
+    if (Number(lane) !== z) side.laneHands[lane] = cards.filter(c => !drawnIds.has(c.id));
+  const hand = held.concat(drawn);
   side.laneHands[z] = hand.slice();
+  (side.lanePresence = side.lanePresence || {})[z] = presentPlayers(side).length;
   return hand;
 }
 function wallActive(side) { return offsetFor(side, S.ball) === 0; }
@@ -899,15 +1037,32 @@ function aiCommit(hand, cap) {
     picks.push(i); s += hand[i].lo;
     if (s > need) { guaranteed = [...picks]; break; }
   }
-  if (guaranteed && guaranteed.length <= 3) return guaranteed;
+  if (guaranteed && guaranteed.length <= 3) return aiOrder(hand, guaranteed);
   // No cheap guaranteed win: spend the probe on the cards whose
   // effects buy the most (pressure on, engines built, bursts priced).
+  // A BOOST is worth a fifth of the best card it could boost, not a
+  // flat number (Eduardo, 2026-09-02: Tackle then One-Two boosted nothing).
+  const bestLo = Math.max(0, ...hand.filter(c => !(c.kw || "").startsWith("BOOST_"))
+                                   .map(c => c.lo));
+  const eff = c => (c.kw || "").startsWith("BOOST_")
+    ? Math.round(bestLo * 0.2) * parseInt(c.kw.slice(6), 10)
+    : aiEffectValue(c);
   const aware = [...hand.keys()].sort((a, b) =>
-    (hand[b].lo + aiEffectValue(hand[b]))
-    - (hand[a].lo + aiEffectValue(hand[a])));
+    (hand[b].lo + eff(hand[b])) - (hand[a].lo + eff(hand[a])));
   // No affordable win at the median: a real probe, sized to make the
   // answer cost something.
-  return aware.slice(0, Math.min(cap, CFG.ai.probe));
+  return aiOrder(hand, aware.slice(0, Math.min(cap, CFG.ai.probe)));
+}
+// Play order for the AI's picks: BOOST before the card it boosts,
+// biggest cards next, INCISIVE last (it reads next turn, its place
+// this turn does not matter). A BOOST is never the last card played
+// while another card is on the table.
+function aiOrder(hand, picks) {
+  const rank = i => {
+    const kw = hand[i].kw || "";
+    return kw.startsWith("BOOST_") ? 0 : (kw.startsWith("INCISIVE_") ? 2 : 1);
+  };
+  return picks.slice().sort((a, b) => rank(a) - rank(b) || hand[b].lo - hand[a].lo);
 }
 // The hand size the deal rule gives you in the ball's zone, computed
 // the way deal() computes it, without dealing. Public knowledge.
@@ -920,9 +1075,12 @@ function yourHandSizeEstimate() {
     .filter(c => !side.spent.has(c.id) && poolIds.has(c.id)).length;
   const base = firstVisit
     ? presentPlayers(side).length + CFG.handExtra + fx(side, "handExtra")
-    : Math.max(1, CFG.laneTopup + fx(side, "laneTopup"));
+    : Math.max(1, CFG.laneTopup + fx(side, "laneTopup") + returnExtra(side));
   const draw = Math.max(firstVisit ? 1 : 0, base - (side.effects.dealPenalty || 0));
-  return Math.min(pool.length, held + draw);
+  const locked = laneLocked(side);
+  const heldIds = new Set((side.laneHands[z] || []).map(c => c.id));
+  const drawable = pool.filter(c => !heldIds.has(c.id) && !locked.has(c.id)).length;
+  return held + Math.min(drawable, draw);
 }
 
 // ---- duel resolution (ports Match.play_turn + KeywordGrammar) -------
@@ -931,13 +1089,15 @@ function resolveCards(side, hand, indices) {
   let total = 0;
   for (const i of indices) {
     const c = hand[i];
-    let v;
+    let v, raw;
     if (!cardLive(side, c)) v = 0;
     else if (S.dry) v = S.dryHi ? c.hi : c.lo;  // preview: both ends of the range
     else v = c.lo === c.hi ? c.lo : rint(c.lo, c.hi);
-    if (v > 0 && S.matchFx && S.matchFx.frozen)
+    if (v > 0 && S.matchFx && S.matchFx.frozen) {
+      raw = v;  // the printed value, so the face can show the change
       v = c.lo === c.hi ? v + 1 : c.lo;
-    played.push({ card: c, v });
+    }
+    played.push({ card: c, v, raw });
     total += v;
     if (!S.dry) side.spent.add(c.id);
   }
@@ -1177,10 +1337,22 @@ function adjustTotals(committer, cP, cT, responder, rP, rT, notes) {
             notes.push("HOLD IT UP: the move is smothered dead.");
           }
         } else if (kw === "RAINBOW" && S.dry) {
-          // preview: the flick is a coin or a call, never a number yet
+          // preview: your call counts once made (push 20, or a corner
+          // and the card counts 0); a coin shows as the range, +20 at
+          // the top end; their flick is already resolved, chip only.
           const n = ((S.rainbowN && S.rainbowN[side === S.you ? "you" : "opp"]) || 0) + 1;
-          mod(n >= CFG.kw.rainbowChoiceFrom ? "rainbow.call" : "rainbow.coin", 20,
-              side === S.you ? "you" : "them");
+          const who = side === S.you ? "you" : "them";
+          const call = n >= CFG.kw.rainbowChoiceFrom;
+          if (side === S.you && call && S.rainbowChoice === "push") {
+            delta += 20; mod("rainbow.push", 20, who);
+          } else if (side === S.you && call && S.rainbowChoice === "corner") {
+            mod("rainbow.corner", 0, who);
+          } else if (call) {
+            mod("rainbow.call", 20, who);
+          } else {
+            if (side === S.you && S.dryHi) delta += 20;
+            mod("rainbow.coin", 20, who);
+          }
         } else if (kw === "RAINBOW") {
           const key = side === S.you ? "you" : "opp";
           S.rainbowN = S.rainbowN || { you: 0, opp: 0 };
@@ -1359,7 +1531,7 @@ function startCorner(attacker) {
 function resolveCornerPlay() {
   S.duelLocked = true;
   $("btn-play").disabled = true; $("btn-clear").hidden = true;
-  const indices = S.youHand.map((c, i) => S.selected.has(c.id) ? i : -1).filter(i => i >= 0);
+  const indices = selectedIndices();
   const mine = resolveCornerSide(S.you, S.youHand, indices);
   const att = S.corner.attacker;
   let attTotal, defTotal;
@@ -1378,6 +1550,7 @@ function resolveCornerPlay() {
   }
   const attPlayed = att === S.you ? mine.played : S.lastCornerAttPlayed || [];
   const credit = attTotal > defTotal ? creditGoal(att, attPlayed) : null;
+  recordPlays(att, attPlayed, attTotal > defTotal);
   TEL.log("corner_duel", {
     turn: S.turn, attacker: att === S.you ? "you" : "opp",
     att: attTotal, def: defTotal,
@@ -1491,6 +1664,235 @@ function lastPusher(played) {
   }
   return null;
 }
+// ---- the match effects shelf (Eduardo, 2026-09-02) --------------------
+// Every rule in force this match, whatever wrote it (an event, a run
+// effect, a standing effect a card left behind), as a chip with an
+// icon and a hover text. A registry: a new effect gets a slot by
+// adding one row here and four strings (fx.<key>.title/label/you/them).
+// A scan with one argument is match or run scope; with three it runs
+// once per side.
+const FX_REGISTRY = [
+  ["frozen", "\u2744", add => { if (S.matchFx && S.matchFx.frozen) add("match"); }],
+  ["handExtra", "\u270B", add => { const n = S.matchFx && S.matchFx.handExtra; if (n) add("match", { n: fmtDelta(n) }); }],
+  ["laneTopup", "\u270B", add => { const n = S.matchFx && S.matchFx.laneTopup; if (n) add("match", { n: fmtDelta(n) }); }],
+  ["wall", "\uD83E\uDDF1", add => {
+    const m = (S.matchFx && S.matchFx.wall) || 0;
+    const r = (S.cup && S.cup.runFx && S.cup.runFx.wall) || 0;
+    if (m) add("match", { n: fmtDelta(m) });
+    if (r) add("run", { n: fmtDelta(r) });
+  }],
+  ["oppWall", "\uD83E\uDDF1", add => { const n = S.matchFx && S.matchFx.oppWall; if (n) add("match", { n: fmtDelta(n) }); }],
+  ["cardGain", "\uD83C\uDCCF", add => {
+    for (const g of (S.matchFx && S.matchFx.cardGain) || []) add("match", { name: g.name, n: fmtDelta(g.delta) });
+    for (const g of (S.cup && S.cup.runFx && S.cup.runFx.cardGain) || []) add("run", { name: g.name, n: fmtDelta(g.delta) });
+  }],
+  ["allGain", "\uD83C\uDCCF", add => { for (const g of (S.cup && S.cup.runFx && S.cup.runFx.allGain) || []) add("run", { n: fmtDelta(g.delta) }); }],
+  ["playerGain", "\u2B50", add => { for (const g of (S.cup && S.cup.runFx && S.cup.runFx.playerGain) || []) add("run", { pos: g.pos || "player", n: fmtDelta(g.delta) }); }],
+  ["transform", "\u2728", add => { for (const t of (S.cup && S.cup.runFx && S.cup.runFx.transform) || []) add("run", { from: t.from, to: t.to.name }); }],
+  ["sacrifice", "\u2702", add => { for (const n of (S.cup && S.cup.runFx && S.cup.runFx.sacrifice) || []) add("run", { name: n }); }],
+  ["suspend", "\uD83D\uDEAB", add => { if (S.matchFx && S.matchFx.suspend) add("match", { pos: S.matchFx.suspend.pos }); }],
+  ["passenger", "\uD83D\uDC64", add => { if (S.matchFx && S.matchFx.passenger) add("match", { name: S.matchFx.passenger.name, v: S.matchFx.passenger.value }); }],
+  ["oppForm", "\uD83D\uDCC8", add => { if (S.oppForm > 0) add("them", { n: "+" + S.oppForm }); }],
+  ["pressure", "\u2696", (add, side, who) => { const n = side.effects.pressureActive || 0; if (n > 0) add(who, { n }); }],
+  ["incisive", "\uD83C\uDFAF", (add, side, who) => { if (side.effects.incisive) add(who, { n: side.effects.incisive }); }],
+  ["incisiveNext", "\uD83C\uDFAF", (add, side, who) => { if (side.effects.incisiveNext) add(who, { n: side.effects.incisiveNext }); }],
+  ["holdup", "\u2B06", (add, side, who) => { if ((side.effects.mfUpUntil ?? -1) >= S.turn) add(who, { n: side.effects.mfUpUntil - S.turn + 1 }); }],
+  ["rally", "\u2B06", (add, side, who) => {
+    const r = side.effects.rally;
+    if (r && S.turn <= r.until) { const p = side.players.find(x => x.id === r.pid); add(who, { name: p ? p.name : "?" }); }
+  }],
+  ["tired", "\uD83D\uDCA4", (add, side, who) => { const t = side.effects.tired; if (t && t.until >= S.turn) add(who, { zone: zoneName(t.zone) }); }],
+  ["dealPenalty", "\u2702", (add, side, who) => { const n = side.effects.dealPenalty || 0; if (n > 0) add(who, { n }); }],
+  ["keeperDown", "\uD83E\uDDE4", (add, side, who) => { if ((side.effects.keeperDownUntil ?? -1) >= S.turn) add(who); }],
+  ["feint", "\uD83C\uDFAD", (add, side, who) => { if (side.effects.pendingFeint) add(who, { n: side.effects.pendingFeint }); }],
+  ["exhausted", "\uD83D\uDD25", (add, side, who) => { const e = side.effects.exhausted; if (e && e.size) add(who, { n: e.size }); }],
+  ["curses", "\uD83D\uDDD1", (add, side, who) => { const n = side.curses.filter(c => !side.spent.has(c.id)).length; if (n) add(who, { n }); }],
+  ["tactic", "\uD83D\uDCE3", (add, side, who) => { if (side.effects.tactic) add(who, { name: side.effects.tactic.replace(/_/g, " ").toLowerCase() }); }],
+  ["mentality", "\uD83D\uDCE3", (add, side, who) => { if (side.effects.mentality) add(who, { name: side.effects.mentality.replace(/_/g, " ").toLowerCase() }); }],
+];
+function zoneName(z) {
+  return [T("pitch.band0.name"), T("pitch.band1.name"), T("pitch.band2.name")][z] || "";
+}
+function activeEffects() {
+  const out = [];
+  for (const [key, icon, scan] of FX_REGISTRY) {
+    const add = (who, vars) => out.push({ key, icon, who, vars: vars || {} });
+    if (scan.length > 1) { scan(add, S.you, "you"); scan(add, S.opp, "them"); }
+    else scan(add);
+  }
+  return out;
+}
+function rpEsc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+function renderShelf() {
+  const row = $("fx-row");
+  if (!row || !S.you) return;
+  const fx = activeEffects();
+  row.hidden = fx.length === 0;
+  row.innerHTML = fx.map(e => {
+    const vars = Object.assign({ team: teamName(e.who === "them" ? S.opp : S.you) }, e.vars);
+    const suffix = e.who === "run" && STR["fx." + e.key + ".run"] !== undefined ? ".run"
+      : (e.who === "them" ? ".them" : ".you");
+    return '<span class="fxchip ' + e.who + '" tabindex="0"><span class="fxicon">' + e.icon
+      + '</span><span class="fxlabel">' + rpEsc(T("fx." + e.key + ".label", vars))
+      + '</span><span class="kwtip"><span class="kwtipname">' + rpEsc(T("fx." + e.key + ".title"))
+      + "</span>" + rpEsc(T("fx." + e.key + suffix, vars)) + "</span></span>";
+  }).join("");
+}
+
+// ---- per-player match stats and the half-time and full-time reports ----
+function newStats() {
+  return { players: {}, turns: [], goals: [],
+           duels: { you: 0, opp: 0, held: 0, void: 0 } };
+}
+function statFor(side, owner) {
+  const key = (side === S.you ? "Y:" : "O:") + owner.id;
+  return S.stats.players[key] || (S.stats.players[key] = {
+    side: side === S.you ? "you" : "opp", name: owner.name, role: owner.role,
+    cards: 0, push: 0, wins: 0, passes: 0, byCard: {} });
+}
+const PASS_WORDS = ["Pass", "One-Two", "Cross", "Diagonal"];
+function recordPlays(side, played, won) {
+  if (!S.stats || S.dry) return;
+  for (const p of played) {
+    const o = p.card.owner;
+    if (!o || !o.stats) continue;
+    const st = statFor(side, o);
+    st.cards += 1; st.push += p.v; if (won) st.wins += 1;
+    if (PASS_WORDS.some(w => p.card.name.includes(w))) st.passes += 1;
+    const bc = st.byCard[p.card.name] || (st.byCard[p.card.name] = { plays: 0, push: 0, wins: 0 });
+    bc.plays += 1; bc.push += p.v; if (won) bc.wins += 1;
+  }
+}
+function recordDuel(youPlayed, winner, outcome, goalSide) {
+  if (!S.stats) return;
+  recordPlays(S.you, youPlayed, winner === S.you);
+  recordPlays(S.opp, S.oppPlayed, winner === S.opp);
+  const w = outcome === "void" ? "void" : (!winner ? "held" : (winner === S.you ? "you" : "opp"));
+  S.stats.duels[w] += 1;
+  S.stats.turns.push({ turn: S.turn, ball: S.duelBall, after: S.ball, w, goal: goalSide });
+}
+function minuteAt(turn) {
+  const reg = CFG.turns;
+  if (turn >= reg) return (90 + Math.max(1, Math.round((turn + 1 - reg) * 4))) + "'";
+  return Math.max(1, Math.round((turn + 1) * 90 / reg)) + "'";
+}
+function pct(a, n) { return (n ? Math.round(100 * a / n) : 0) + "%"; }
+function rpBar(y, h, o) {
+  const t = Math.max(1, y + h + o);
+  return '<span class="rpbar"><span class="y" style="width:' + (100 * y / t) + '%"></span>'
+    + '<span class="h" style="width:' + (100 * h / t) + '%"></span>'
+    + '<span class="o" style="width:' + (100 * o / t) + '%"></span></span>';
+}
+function rpRow(label, l, bar, r) {
+  return '<div class="rprow"><span class="l">' + l + "</span>" + bar
+    + '<span class="r">' + r + '</span><span class="rplabel">' + label + "</span></div>";
+}
+function reportNumbers() {
+  const st = S.stats, d = st.duels, turns = st.turns;
+  const zone = [0, 0, 0];
+  for (const t of turns) zone[t.after] += 1;
+  const cards = side => Object.values(st.players).filter(p => p.side === side)
+    .reduce((a, p) => a + p.cards, 0);
+  let h = '<p class="rpeyebrow">' + T("report.numbers") + "</p>";
+  h += rpRow(T("report.duels"), d.you, rpBar(d.you, d.held, d.opp), d.opp);
+  h += rpRow(T("report.territory"), pct(zone[2], turns.length),
+             rpBar(zone[2], zone[1], zone[0]), pct(zone[0], turns.length));
+  h += rpRow(T("report.cards"), cards("you"), rpBar(cards("you"), 0, cards("opp")), cards("opp"));
+  const c = S.cornerCount || { you: 0, opp: 0 };
+  h += rpRow(T("report.corners"), c.you, rpBar(c.you, 0, c.opp), c.opp);
+  if (st.goals.length) {
+    h += '<p class="rpeyebrow">' + T("report.goals") + '</p><div class="rpgoals">'
+      + st.goals.map(g => '<div><span class="m">' + g.minute + "</span><span>"
+        + (g.side === "you" ? "" : rpEsc(teamName(S.opp)) + ": ") + rpEsc(g.scorer)
+        + (g.assist ? " (" + rpEsc(g.assist) + ")" : "") + "</span></div>").join("")
+      + "</div>";
+  }
+  return h;
+}
+function reportPlayers(kind) {
+  const all = Object.values(S.stats.players);
+  const mine = all.filter(p => p.side === "you"), theirs = all.filter(p => p.side === "opp");
+  const top = (arr, f) => arr.reduce((b, p) => (!b || f(p) > f(b)) ? p : b, null);
+  const goals = {}, assists = {};
+  for (const g of S.stats.goals) if (g.side === "you") {
+    goals[g.scorer] = (goals[g.scorer] || 0) + 1;
+    if (g.assist) assists[g.assist] = (assists[g.assist] || 0) + 1;
+  }
+  const tiles = [];
+  const tile = (k, name, sub) => tiles.push('<div class="rptile"><div class="k">' + k
+    + '</div><div class="n">' + (name ? rpEsc(name) : "\u2013") + '</div><div class="s">' + sub + "</div></div>");
+  const impact = p => p.wins + 2 * (goals[p.name] || 0) + (assists[p.name] || 0);
+  const mvp = top(mine.filter(p => p.cards), impact);
+  tile(T(kind === "ht" ? "report.tile.mvp.ht" : "report.tile.mvp.ft"), mvp && mvp.name,
+       mvp ? T("report.tile.mvp.sub", { w: mvp.wins, g: goals[mvp.name] || 0, a: assists[mvp.name] || 0 }) : T("report.none"));
+  const pusher = top(mine.filter(p => p.push), p => p.push);
+  tile(T("report.tile.push"), pusher && pusher.name,
+       pusher ? T("report.tile.push.sub", { n: pusher.push, c: pusher.cards }) : T("report.none"));
+  const passer = top(mine.filter(p => p.passes), p => p.passes);
+  tile(T("report.tile.passes"), passer && passer.name,
+       passer ? T("report.tile.passes.sub", { n: passer.passes }) : T("report.none"));
+  let best = null;
+  for (const p of mine) for (const [name, bc] of Object.entries(p.byCard)) {
+    if (bc.plays < 2) continue;
+    const rate = bc.wins / bc.plays;
+    if (!best || rate > best.rate || (rate === best.rate && bc.push > best.push))
+      best = { name, owner: p.name, rate, wins: bc.wins, plays: bc.plays, push: bc.push };
+  }
+  tile(T("report.tile.card"), best && best.name,
+       best ? T("report.tile.card.sub", { owner: rpEsc(best.owner), w: best.wins, p: best.plays }) : T("report.none"));
+  let h = '<p class="rpeyebrow">' + T("report.players") + '</p><div class="rptiles">' + tiles.join("") + "</div>";
+  const danger = top(theirs.filter(p => p.push), p => p.push);
+  if (danger)
+    h += '<p class="rpeyebrow">' + T("report.theirs") + '</p><div class="rpsub">'
+      + T("report.danger", { name: rpEsc(danger.name), role: rpEsc(danger.role), n: danger.push, w: danger.wins }) + "</div>";
+  return h;
+}
+function reportPitch() {
+  const turns = S.stats.turns, n = Math.max(1, turns.length);
+  const zone = [0, 0, 0];
+  for (const t of turns) zone[t.ball] += 1;
+  const zones = [0, 1, 2].map(z => {
+    const sh = zone[z] / n;
+    return '<div class="rpzone" style="background:rgba(255,255,255,' + (0.05 + 0.5 * sh).toFixed(2)
+      + ')"><span class="pct">' + Math.round(100 * sh) + '%</span><span class="zn">' + rpEsc(zoneName(z)) + "</span></div>";
+  });
+  const strip = turns.map(t => '<span class="' + (t.w === "you" ? "y" : t.w === "opp" ? "o" : t.w === "void" ? "v" : "h")
+    + (t.goal ? " g" : "") + '" title="' + minuteAt(t.turn) + '"></span>').join("");
+  return '<p class="rpeyebrow">' + T("report.where") + '</p><div class="rpheat">' + zones.join("")
+    + '</div><p class="rpeyebrow">' + T("report.every") + '</p><div class="rpstrip">' + strip
+    + '</div><p class="rpsub" style="font-size:0.72rem;color:var(--muted);margin:0.35rem 0 0">' + T("report.legend") + "</p>";
+}
+const RP = { pages: [], i: 0, timer: null, openedAt: 0, kind: null };
+function showReport(kind, youWon) {
+  if (!S.stats) return;
+  RP.kind = kind; RP.i = 0; RP.openedAt = Date.now();
+  const you = teamName(S.you), opp = teamName(S.opp);
+  const yS = S.you.score, oS = S.opp.score;
+  const won = youWon !== undefined ? youWon : (yS > oS ? true : (yS < oS ? false : null));
+  $("rp-title").textContent = kind === "ht" ? T("report.ht.title")
+    : (won === true ? T("report.ft.win", { you }) : won === false ? T("report.ft.lose", { you }) : T("report.ft.draw"));
+  $("rp-score").textContent = you + " " + yS + " - " + oS + " " + opp;
+  RP.pages = [reportNumbers(), reportPlayers(kind), reportPitch()];
+  $("rp-pages").innerHTML = RP.pages.map((h, i) => '<div class="rppage' + (i === 0 ? " on" : "") + '">' + h + "</div>").join("");
+  $("rp-dots").innerHTML = RP.pages.map((_, i) => '<span data-i="' + i + '"' + (i === 0 ? ' class="on"' : "") + "></span>").join("");
+  $("rp-close").textContent = kind === "ht" ? T("report.btn.second") : T("report.btn.continue");
+  $("rp-modal").hidden = false;
+  rpArm();
+  TEL.log("report_open", { kind });
+}
+function rpShow(i) {
+  RP.i = (i + RP.pages.length) % RP.pages.length;
+  document.querySelectorAll("#rp-pages .rppage").forEach((el, k) => el.classList.toggle("on", k === RP.i));
+  document.querySelectorAll("#rp-dots span").forEach((el, k) => el.classList.toggle("on", k === RP.i));
+}
+function rpArm() { clearInterval(RP.timer); RP.timer = setInterval(() => rpShow(RP.i + 1), 7000); }
+function rpClose() {
+  clearInterval(RP.timer); RP.timer = null;
+  if ($("rp-modal").hidden) return;
+  $("rp-modal").hidden = true;
+  TEL.log("report_close", { kind: RP.kind, ms: Date.now() - RP.openedAt, page: RP.i });
+}
+
 function creditGoal(side, played) {
   const pushers = played.filter(p => p.v > 0 && p.card.owner && p.card.owner.stats);
   const scorer = pushers.length
@@ -1504,6 +1906,9 @@ function creditGoal(side, played) {
   for (let i = pushers.length - 2; i >= 0; i--)
     if (pushers[i].card.owner !== scorer) { assist = pushers[i].card.owner; break; }
   if (assist) assist.stats.assists += 1;
+  if (S.stats && !S.dry)
+    S.stats.goals.push({ minute: minuteStr(), side: side === S.you ? "you" : "opp",
+                         scorer: scorer.name, assist: assist ? assist.name : null });
   const kp = (S.keyPlay || {})[side.label];
   let key = null;
   if (kp && kp.turn < S.turn && kp.player !== scorer && kp.player !== assist) {
@@ -1828,6 +2233,7 @@ function renderPitch() {
       + '<div class="who mono">' + T("pitch.theirs", { n: oppCards }) + "</div></div>";
   }).join("");
   $("sb-score").textContent = S.you.score + " - " + S.opp.score;
+  renderShelf();
   $("calls-row").hidden = CFG.family === "current";
   if (CFG.family !== "current") {
     const callStr = side => {
@@ -1862,7 +2268,7 @@ function startTurn() {
       delete side.effects.mentality;
       delete side.effects.presenceRules;
       side.effects.pressureActive = 0;
-      side.laneHands = {};  // fresh hands for a fresh half
+      side.laneHands = {}; side.lanePresence = {};  // fresh hands for a fresh half
     }
     S.halftimeDone = true;
     const m = MORALE_MODES[CFG.morale];
@@ -1874,6 +2280,7 @@ function startTurn() {
     tick(T("comm.ht", { score: S.you.score + "-" + S.opp.score,
                         morale: m ? T("comm.ht.morale") : "" }), "big");
     TEL.log("halftime", { score: [S.you.score, S.opp.score] });
+    showReport("ht");
   }
   if (S.turn >= S.totalTurns) return fullTime();
   S.duelBall = S.ball;
@@ -1923,16 +2330,30 @@ function startTurn() {
   $("btn-play").disabled = false; $("btn-concede").disabled = false;
   maybeOnboard();
 }
+function selectedIndices() {
+  // Selection order IS play order (BOOST chains care), in the preview,
+  // the play and the corner alike (Eduardo, 2026-09-02: the preview
+  // must equal the resolution).
+  return [...S.selected].map(id => S.youHand.findIndex(c => c.id === id))
+    .filter(i => i >= 0);
+}
 function toggleCard(el) {
   // The duel is settled once you play or concede; the leftovers in
   // your hand stay put until the next deal.
   if (S.duelLocked) return;
   const cid = el.dataset.cid;
   if (el.classList.contains("dead")) return;
-  if (S.selected.has(cid)) { S.selected.delete(cid); el.classList.remove("sel"); }
+  if (S.selected.has(cid)) {
+    S.selected.delete(cid); el.classList.remove("sel");
+    const c = S.youHand.find(x => x.id === cid);
+    if (c && c.kw === "RAINBOW") S.rainbowChoice = undefined;
+  }
   else if (S.selected.size < S.youCap) { S.selected.add(cid); el.classList.add("sel"); }
   refreshOrderBadges();
   updateYourTotal();
+  // The third flick on is your call, asked the moment you pick the
+  // card, so the verdict shows the resolved number (Eduardo, 2026-09-02).
+  if (rainbowChoiceDue(false)) { S.rbThenPlay = false; askRainbow(); }
 }
 function refreshOrderBadges() {
   // Selection order IS play order (BOOST chains care); wear it.
@@ -1941,6 +2362,10 @@ function refreshOrderBadges() {
     const i = order.indexOf(el.dataset.cid);
     if (i >= 0) el.setAttribute("data-order", i + 1);
     else el.removeAttribute("data-order");
+    const c = S.youHand.find(x => x.id === el.dataset.cid);
+    if (i >= 0 && c && c.kw === "RAINBOW" && S.rainbowChoice)
+      el.setAttribute("data-rb", T("rb.tag." + S.rainbowChoice));
+    else el.removeAttribute("data-rb");
   }
 }
 // ---- the verdict panel -----------------------------------------------
@@ -1985,9 +2410,16 @@ function previewAnswer(indices, hi) {
     const faces = {};
     for (const p of res.played.concat(S.oppPlayed)) {
       const m = S.dryCardMods[p.card.id];
-      faces[p.card.id] = { v: p.v, eff: m ? Math.round((p.v + m.d) * m.ratio) : p.v };
+      faces[p.card.id] = { v: p.raw !== undefined ? p.raw : p.v,
+                           eff: m ? Math.round((p.v + m.d) * m.ratio) : p.v };
     }
-    return { you, them, raw: res.total, wall, mods: S.dryMods.slice(),
+    const mods = S.dryMods.slice();
+    if (S.matchFx && S.matchFx.frozen) {
+      const frozenSum = arr => arr.reduce((a, p) => a + (p.raw !== undefined ? p.v - p.raw : 0), 0);
+      mods.push({ k: "frozen", d: frozenSum(res.played), who: "you" });
+      mods.push({ k: "frozen", d: frozenSum(S.oppPlayed), who: "them" });
+    }
+    return { you, them, raw: res.total, wall, mods,
              cancel: S.cancelDuel, faces };
   });
 }
@@ -2031,8 +2463,7 @@ function verdictHTML(youText, youSub, pill, pillCls, themText, themSub, chips) {
     + (chips ? '<div class="vmods">' + chips + "</div>" : "");
 }
 function updateYourTotal() {
-  const indices = S.youHand.map((c, i) => S.selected.has(c.id) ? i : -1)
-    .filter(i => i >= 0);
+  const indices = selectedIndices();
   const picked = S.selected.size > 0;
   if (S.corner) {
     // No wall, no effects at the set piece, except the attacker's
@@ -2110,23 +2541,29 @@ function askRainbow() {
   $("rb-body").textContent = T("rainbow.modal.body", { n: S.rainbowN.you + 1 });
   $("rb-modal").hidden = false;
 }
-$("rb-push").addEventListener("click", () => {
-  S.rainbowChoice = "push"; $("rb-modal").hidden = true; playAnswer(false);
+function rainbowPicked(choice) {
+  S.rainbowChoice = choice; $("rb-modal").hidden = true;
+  if (S.rbThenPlay) { S.rbThenPlay = false; playAnswer(false); return; }
+  refreshOrderBadges(); updateYourTotal();
+}
+$("rb-push").addEventListener("click", () => rainbowPicked("push"));
+$("rb-corner").addEventListener("click", () => rainbowPicked("corner"));
+$("rp-prev").addEventListener("click", () => { rpShow(RP.i - 1); rpArm(); });
+$("rp-next").addEventListener("click", () => { rpShow(RP.i + 1); rpArm(); });
+$("rp-dots").addEventListener("click", e => {
+  const d = e.target.closest("span[data-i]");
+  if (d) { rpShow(parseInt(d.dataset.i, 10)); rpArm(); }
 });
-$("rb-corner").addEventListener("click", () => {
-  S.rainbowChoice = "corner"; $("rb-modal").hidden = true; playAnswer(false);
-});
+$("rp-close").addEventListener("click", rpClose);
 function playAnswer(concede) {
   if (S.corner) return resolveCornerPlay();
-  if (rainbowChoiceDue(concede)) return askRainbow();
+  if (rainbowChoiceDue(concede)) { S.rbThenPlay = true; return askRainbow(); }
   S.duelLocked = true;
   $("btn-play").disabled = true; $("btn-concede").disabled = true;
   $("btn-clear").hidden = true;
   const scoreBefore = { you: S.you.score, opp: S.opp.score };
   // Selection order IS play order (BOOST chains care about it).
-  const indices = concede ? []
-    : [...S.selected].map(id => S.youHand.findIndex(c => c.id === id))
-        .filter(i => i >= 0);
+  const indices = concede ? [] : selectedIndices();
   const res = resolveCards(S.you, S.youHand, indices);
   let youT = res.total + (wallActive(S.you) ? wallValue(S.you) : 0);
   const notes = [];
@@ -2269,6 +2706,9 @@ function playAnswer(concede) {
       if (p.card.owner && p.card.owner.name !== "nobody" && !pile.includes(p.card))
         pile.push(p.card);
   }
+  recordDuel(res.played, winner, telOutcome,
+             S.you.score > scoreBefore.you ? "you"
+               : (S.opp.score > scoreBefore.opp ? "opp" : null));
   renderPitch();
   S.turn += 1;
   $("btn-play").hidden = true; $("btn-concede").hidden = true;
@@ -2329,6 +2769,7 @@ function fullTime() {
   $("you-total").innerHTML = T("match.final", { score: S.you.score + " - " + S.opp.score });
   $("btn-play").hidden = true; $("btn-concede").hidden = true;
   $("btn-next").hidden = true;
+  showReport("ft");
   if (S.cup) return finishCupTie(S.you.score > S.opp.score,
                                  S.inExtraTime ? T("cup.note.aet") : "");
   $("btn-again").hidden = false;
@@ -2543,6 +2984,7 @@ function shootout() {
   });
   $("btn-play").hidden = true; $("btn-concede").hidden = true;
   $("btn-next").hidden = true;
+  showReport("ft", pens.you > pens.opp);
   finishCupTie(pens.you > pens.opp,
                T("cup.note.aetpens", { score: S.you.score + "-" + S.opp.score,
                                        pens: pens.you + "-" + pens.opp }));
@@ -2654,6 +3096,7 @@ function startMatch(oppLineup, oppName) {
   S.cornerCount = { you: 0, opp: 0 };
   S.rainbowN = { you: 0, opp: 0 }; S.rainbowChoice = undefined;
   S.oppCeiling = undefined; S.metroPlays = {}; S.rainbowTails = null;
+  S.stats = newStats(); rpClose();
   // Cup opponents arrive in form: +cupFormStep on every card per round
   // played (ruling 2026-09-02). The friendly is untouched.
   S.oppForm = S.cup ? S.cup.round * CFG.cupFormStep : 0;
