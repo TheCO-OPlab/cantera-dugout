@@ -1,0 +1,193 @@
+/* art2 look 4 (the wildcard): DUGOUT CHALKBOARD.
+ * The manager's board in the dressing room. Dark: a slate in a wooden
+ * frame, everything written in chalk (hand lettering for the headings, the
+ * verdict and the commentator's line; plain sans for the reading), the
+ * options as chalk boxes you ring when you point at them, dice drawn in
+ * chalk, and art1's Tactics board as the pitch. Light: the same board as a
+ * whiteboard, marker pens, and the options as sticky notes.
+ * Restyles m2's classes and tokens only; no markup, no layout. The kit
+ * colours (--kit-*) are never touched. */
+:root[data-look=chalk]{
+  --f-hand:"Ink Free","Segoe Print","Chalkboard SE","Bradley Hand","Comic Sans MS",cursive;
+  --f-display:var(--f-hand);
+  --f-body:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --f-ui:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --f-num:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  /* light: the whiteboard */
+  --board:#f5f6f3; --frame:#b9bec4;
+  --ground:var(--board); --surface:#ffffff; --surface-2:#eef0ec; --ink:#16223d; --ink-2:#34425f;
+  --muted:#58647a; --line:#c9ced6; --accent:#15703a; --accent-2:#0d5129;
+  --warn:#bf2f1d; --gold:#8a5a00; --pitch:#2f6b4f;
+  --bubble:#ffffff; --bubble-line:#16223d; --bubble-ink:#16223d;
+  --die:#ffffff; --die-pip:#16223d;
+  --note:#fff3a6; --note-2:#ffe86b; --note-ink:#2a2410; --note-ink-2:#4d4424;
+  --chalk-line:rgba(22,34,61,.55);
+  color-scheme:light;
+}
+:root[data-look=chalk][data-mode=dark]{
+  --board:#1f2b25; --frame:#6b4f33;
+  --ground:var(--board); --surface:#233029; --surface-2:#2a3830; --ink:#eef3ea; --ink-2:#cdd8cb;
+  --muted:#a7b6a8; --line:#46574d; --accent:#97e8ae; --accent-2:#c2f3cf;
+  --warn:#ffa293; --gold:#f5da7c; --pitch:#1f2d25;
+  --bubble:#233029; --bubble-line:rgba(238,243,234,.8); --bubble-ink:#f4f8f1;
+  --die:transparent; --die-pip:#f4f8f1;
+  --chalk-line:rgba(238,243,234,.6);
+  color-scheme:dark;
+}
+
+/* ---------------------------------------------------------------- the board and its frame */
+:root[data-look=chalk] body{
+  background-color:var(--board);
+  background-image:
+    radial-gradient(40% 30% at 20% 30%,rgba(22,34,61,.035),transparent 70%),
+    radial-gradient(35% 25% at 75% 70%,rgba(22,34,61,.03),transparent 70%),
+    linear-gradient(180deg,rgba(255,255,255,.7),transparent 30%);
+  box-shadow:inset 0 0 0 7px var(--frame),inset 0 0 0 8px rgba(0,0,0,.18);
+  min-height:100vh;
+}
+:root[data-look=chalk][data-mode=dark] body{
+  background-image:
+    radial-gradient(45% 35% at 22% 28%,rgba(255,255,255,.05),transparent 70%),
+    radial-gradient(40% 30% at 78% 72%,rgba(255,255,255,.04),transparent 70%),
+    radial-gradient(30% 22% at 55% 15%,rgba(255,255,255,.035),transparent 70%);
+  box-shadow:inset 0 0 0 7px var(--frame),inset 0 0 0 9px #3f2c1b,inset 0 0 40px rgba(0,0,0,.45);
+}
+
+/* the chalk box: a rough outline, corners never quite round */
+:root[data-look=chalk] :is(.result,.bubble,.carry,.opt,.sp,.waitcard,.intro,.endcard){
+  border-radius:14px 9px 16px 8px / 9px 15px 8px 14px}
+
+/* ---------------------------------------------------------------- header */
+:root[data-look=chalk] .bar{border-bottom:2px dashed var(--chalk-line)}
+:root[data-look=chalk] .bar h1,:root[data-look=chalk] .inmatch .bar h1{font-family:var(--f-hand);font-size:26px;letter-spacing:.01em;font-weight:700}
+:root[data-look=chalk] .score{--ff:var(--f-hand);font-weight:700}
+:root[data-look=chalk] .clock{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- buttons: magnets */
+:root[data-look=chalk] button.ghost{background:var(--surface);border:2px solid var(--chalk-line);border-radius:9px 12px 8px 13px;color:var(--ink);font-weight:600}
+:root[data-look=chalk] button.ghost:hover{border-color:var(--ink)}
+:root[data-look=chalk] .pctl .spd button.on{background:var(--ink);color:var(--board);border-color:var(--ink)}
+:root[data-look=chalk] button.go{font-family:var(--f-hand);font-weight:700;background:var(--accent);border:2px solid var(--accent-2);border-radius:12px 9px 13px 8px;color:#fff}
+:root[data-look=chalk][data-mode=dark] button.go{color:#0f2317}
+:root[data-look=chalk] #sndbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+
+/* ---------------------------------------------------------------- the pitch */
+:root[data-look=chalk] .field.cv .pbox{border-radius:4px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+:root[data-look=chalk] .field.cv svg.pfield .glab{fill:rgba(22,34,61,.55)}
+:root[data-look=chalk][data-mode=dark] .field.cv svg.pfield .glab{fill:rgba(238,243,234,.6)}
+:root[data-look=chalk] .field .ends{color:var(--ink-2)}
+:root[data-look=chalk] .field .car{--ff:var(--f-hand);font-size:16px}
+:root[data-look=chalk] .teamkey,:root[data-look=chalk] .cardshead{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- the result */
+:root[data-look=chalk] .result{border:2px solid var(--chalk-line);background-color:var(--surface)}
+:root[data-look=chalk] .result.won{border-color:var(--accent)}
+:root[data-look=chalk] .result.lost{border-color:var(--warn)}
+:root[data-look=chalk] .result.goal{border-color:var(--accent);background-color:color-mix(in srgb,var(--accent) 14%,var(--surface))}
+:root[data-look=chalk] .result.conceded{border-color:var(--warn);background-color:color-mix(in srgb,var(--warn) 12%,var(--surface))}
+:root[data-look=chalk] .result .verdict{--ff:var(--f-hand);font-size:24px;letter-spacing:0}
+:root[data-look=chalk] .result .side small{color:var(--ink-2)}
+/* dice: drawn in marker (light) or chalk (dark) */
+:root[data-look=chalk] .die,:root[data-look=chalk] .jz-die{border:2px solid var(--die-pip);border-radius:8px 5px 9px 6px;box-shadow:2px 2px 0 color-mix(in srgb,var(--die-pip) 30%,transparent)}
+:root[data-look=chalk][data-mode=dark] .die,:root[data-look=chalk][data-mode=dark] .jz-die{background:rgba(255,255,255,.04)}
+
+/* ---------------------------------------------------------------- the commentator */
+:root[data-look=chalk] .comm-who{--ff:var(--f-hand);text-transform:none;letter-spacing:.01em;font-size:16px;color:var(--ink)}
+:root[data-look=chalk] .comm-who svg{background:none;color:var(--ink);border:2px solid var(--chalk-line)}
+:root[data-look=chalk] .bubble{border:2px solid var(--bubble-line);box-shadow:none}
+:root[data-look=chalk] .bubble .scene{font-family:var(--f-hand);font-weight:700;font-size:22px;line-height:1.3;letter-spacing:0}
+/* a laptop: the text column is narrow and must never scroll (edgecheck), so the hand lettering is sized like m2's scene there */
+@media (min-width:900px) and (max-width:1500px){ :root[data-look=chalk] .inmatch .tcol .bubble .scene{font-size:16.5px;line-height:1.22} :root[data-look=chalk] .inmatch .tcol .result .verdict{font-size:18px;line-height:1.15} :root[data-look=chalk] .inmatch .tcol .comm-who{font-size:14px;line-height:1.15} }
+:root[data-look=chalk] .who.you{background:none;color:var(--accent);border:2px solid var(--accent);font-size:11px}
+:root[data-look=chalk] .who.them{background:none;color:var(--warn);border:2px solid var(--warn);font-size:11px}
+:root[data-look=chalk] .chip .cmin{background:none;border:2px solid var(--chalk-line);color:var(--ink)}
+:root[data-look=chalk] .carry{border:2px dashed var(--gold);background-color:transparent}
+:root[data-look=chalk] .carry .carry-head{color:var(--gold)}
+
+/* ---------------------------------------------------------------- the options */
+/* light: sticky notes, each a touch crooked */
+:root[data-look=chalk] .opt{border:0;background:linear-gradient(180deg,var(--note-2) 0 14px,var(--note) 14px);color:var(--note-ink);
+  border-radius:2px;box-shadow:0 1px 1px rgba(0,0,0,.15),0 10px 14px -6px rgba(0,0,0,.28);
+  transform:rotate(-.25deg);transition:transform .15s,box-shadow .15s}
+:root[data-look=chalk] .optw:nth-child(even) .opt{transform:rotate(.3deg)}
+:root[data-look=chalk] .opt :is(.desc,.out,.souts,.outc-head,.why,.parts){color:var(--note-ink-2)}
+:root[data-look=chalk] .opt :is(.p,b){color:var(--note-ink)}
+:root[data-look=chalk] .opt b,:root[data-look=chalk] .opt.lean .lact{font-family:var(--f-hand);font-size:18px;font-weight:700;letter-spacing:0}
+:root[data-look=chalk] .opt .desc{font-size:14px}
+:root[data-look=chalk] .opt .then,:root[data-look=chalk] .opt .uses{color:#6b4700}
+:root[data-look=chalk] .opt .then.them{color:#a02818}
+:root[data-look=chalk] .opt .oi.g{color:#0f6a34} :root[data-look=chalk] .opt .oi.r{color:#b02a17}
+:root[data-look=chalk] :is(.opt:hover,.opt.art2-hov):not(.dead){transform:rotate(0) translateY(-3px) scale(1.01);
+  box-shadow:0 0 0 3px var(--accent),0 16px 22px -6px rgba(0,0,0,.35)}
+:root[data-look=chalk] .opt.kw{background:linear-gradient(180deg,#ffc9e0 0 14px,#ffe1ee 14px)}
+:root[data-look=chalk] .opt.dead{opacity:.6;background:linear-gradient(180deg,#e2e4e0 0 14px,#eff0ed 14px);transform:none}
+:root[data-look=chalk] .optw.chosen .opt{box-shadow:0 0 0 3px var(--accent),0 10px 14px -6px rgba(0,0,0,.28)}
+:root[data-look=chalk] .opt .unl{background:rgba(255,255,255,.55);border:1.5px solid #8a5a00;color:#3d2a00}
+:root[data-look=chalk] .opt .unl .pl,:root[data-look=chalk] .opt .thr .pl{font-weight:700}
+:root[data-look=chalk] .optw .det{background:rgba(255,255,255,.6);border-color:rgba(42,36,16,.35);color:var(--note-ink)}
+/* dark: chalk boxes, ringed in chalk when you point at them */
+:root[data-look=chalk][data-mode=dark] .opt{background:rgba(255,255,255,.035);color:var(--ink);border:2px solid var(--chalk-line);box-shadow:none;transform:none}
+:root[data-look=chalk][data-mode=dark] .opt :is(.desc,.out,.souts,.outc-head,.why,.parts){color:var(--ink-2)}
+:root[data-look=chalk][data-mode=dark] .opt :is(.p,b){color:var(--ink)}
+:root[data-look=chalk][data-mode=dark] .opt .then,:root[data-look=chalk][data-mode=dark] .opt .uses{color:var(--gold)}
+:root[data-look=chalk][data-mode=dark] .opt .then.them{color:var(--warn)}
+:root[data-look=chalk][data-mode=dark] .opt .oi.g{color:var(--accent)} :root[data-look=chalk][data-mode=dark] .opt .oi.r{color:var(--warn)}
+:root[data-look=chalk][data-mode=dark] :is(.opt:hover,.opt.art2-hov):not(.dead){transform:none;background:rgba(255,255,255,.07);
+  border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 0 18px rgba(245,218,124,.18)}
+:root[data-look=chalk][data-mode=dark] .opt.kw{border-color:rgba(245,218,124,.75);background:rgba(245,218,124,.05)}
+:root[data-look=chalk][data-mode=dark] .opt.dead{background:transparent;border-style:dashed}
+:root[data-look=chalk][data-mode=dark] .optw.chosen .opt{box-shadow:0 0 0 2px var(--accent)}
+:root[data-look=chalk][data-mode=dark] .opt .unl{background:none;border:1.5px solid var(--gold);color:var(--ink)}
+:root[data-look=chalk][data-mode=dark] .optw .det{background:none;border:1.5px solid var(--chalk-line);color:var(--ink)}
+:root[data-look=chalk] .ldet,:root[data-look=chalk] .detbody.open{border-radius:0 0 10px 12px}
+
+/* ---------------------------------------------------------------- stats */
+:root[data-look=chalk] .sp{border:2px solid var(--chalk-line);background:var(--surface)}
+:root[data-look=chalk] .sp-head h2{--ff:var(--f-hand);text-transform:none;letter-spacing:0;font-size:15px}
+:root[data-look=chalk] .sp-btn{border:1.5px solid var(--chalk-line);border-radius:8px 6px 9px 5px;background:transparent;color:var(--ink)}
+
+/* ---------------------------------------------------------------- the title: the board before the match */
+:root[data-look=chalk] .obi{border:2px solid var(--chalk-line);border-radius:18px 12px 20px 10px;background:var(--surface)}
+:root[data-look=chalk][data-mode=dark] .obi{background:rgba(255,255,255,.03)}
+:root[data-look=chalk] .obi-kick{color:var(--ink-2)}
+:root[data-look=chalk] .obi-team b{--ff:var(--f-hand);font-size:42px;font-weight:700}
+:root[data-look=chalk] .obi-vs{--ff:var(--f-hand);color:var(--ink-2)}
+:root[data-look=chalk] .obi-start{font-size:22px;box-shadow:3px 4px 0 var(--accent-2)}
+:root[data-look=chalk] .obi-link{color:var(--ink-2);text-decoration-color:var(--chalk-line)}
+:root[data-look=chalk] svg.obi-pitch .t{fill:var(--board)}
+:root[data-look=chalk] svg.obi-pitch .s{opacity:0}
+:root[data-look=chalk] svg.obi-pitch .c{stroke:var(--chalk-line);stroke-width:.6;stroke-dasharray:none}
+:root[data-look=chalk] svg.obi-pitch .c .g{fill:none}
+:root[data-look=chalk] svg.obi-pitch .lab{fill:var(--ink-2)}
+:root[data-look=chalk] svg.obi-pitch .d{stroke:var(--ink)}
+:root[data-look=chalk] svg.obi-pitch .arr path{stroke:var(--warn)}
+:root[data-look=chalk][data-mode=dark] svg.obi-pitch .arr path{stroke:var(--gold)}
+
+/* ---------------------------------------------------------------- full time: the board after the match */
+:root[data-look=chalk] .obe-back{background:rgba(10,14,12,.55)}
+:root[data-look=chalk] .obe{color:var(--ink);border:8px solid var(--frame);border-radius:6px;
+  background:var(--board);box-shadow:inset 0 0 0 2px rgba(0,0,0,.15),0 30px 60px rgba(0,0,0,.5)}
+:root[data-look=chalk][data-mode=dark] .obe{background:radial-gradient(60% 50% at 30% 30%,rgba(255,255,255,.05),transparent 70%),var(--board)}
+:root[data-look=chalk] .obe .obe-kick,:root[data-look=chalk] .obe-h,:root[data-look=chalk] .obe-who,:root[data-look=chalk] .obe-min{color:var(--ink-2)}
+:root[data-look=chalk] .obe-t b,:root[data-look=chalk] .obe-n{--ff:var(--f-hand);color:var(--ink);text-shadow:none}
+:root[data-look=chalk] .obe-t .obe-sc{color:var(--ink-2)}
+:root[data-look=chalk] .obe.won .obe-verdict{color:var(--accent)} :root[data-look=chalk] .obe.lost .obe-verdict{color:var(--warn)} :root[data-look=chalk] .obe.drew .obe-verdict{color:var(--ink-2)}
+:root[data-look=chalk] .obe-verdict{--ff:var(--f-hand);font-size:20px;letter-spacing:.04em}
+:root[data-look=chalk] .obe-m{background:transparent;border:2px solid var(--chalk-line);border-radius:12px 8px 13px 7px}
+:root[data-look=chalk] .obe-m.g{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+:root[data-look=chalk] .obe-m.r{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent)}
+:root[data-look=chalk] .obe-w,:root[data-look=chalk] .obe-pn,:root[data-look=chalk] .obe-pn .pl,:root[data-look=chalk] .obe-kl,:root[data-look=chalk] .obe-kl .pl{color:var(--ink)}
+:root[data-look=chalk] .obe-pn{--ff:var(--f-hand)}
+:root[data-look=chalk] .obe-pn small,:root[data-look=chalk] .obe-pl{color:var(--ink-2)}
+:root[data-look=chalk] .obe .oi.g{color:var(--accent)} :root[data-look=chalk] .obe .oi.r{color:var(--warn)} :root[data-look=chalk] .obe .oi.n{color:var(--ink-2)}
+:root[data-look=chalk] .obe-potm,:root[data-look=chalk] .obe-key{background:transparent;border:2px solid var(--chalk-line);border-radius:12px 8px 13px 7px}
+:root[data-look=chalk] .obe-key{border-left:5px solid var(--ink-2)} :root[data-look=chalk] .obe-key.g{border-left-color:var(--accent)} :root[data-look=chalk] .obe-key.r{border-left-color:var(--warn)}
+:root[data-look=chalk] .obe-btns .ghost{background:var(--surface);color:var(--ink);border-color:var(--chalk-line)}
+:root[data-look=chalk] .obe-more{color:var(--ink-2)}
+:root[data-look=chalk] .obe-report{background:var(--surface-2)}
+:root[data-look=chalk] .obe-report .reason b{color:var(--ink)} :root[data-look=chalk] .obe-report .reason span{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- tips and panels */
+:root[data-look=chalk] .obc-bubble{border-radius:14px 9px 16px 8px}
+:root[data-look=chalk] .obc-text{--ff:var(--f-hand);font-size:19px}
+:root[data-look=chalk] .drawer{border-left:7px solid var(--frame)}

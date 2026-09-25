@@ -1,0 +1,184 @@
+/* art2 look 3: NIGHT BROADCAST.
+ * The match as television: the score bug in the top left corner in the two
+ * kits, the channel name top right, the commentator as a lower third, the
+ * result as a replay graphic, the options as glass panels, and art1's
+ * Broadcast pitch (a night match under four floodlights in dark mode, a
+ * sunny afternoon in light mode). Condensed type for every label, plain
+ * sans for every sentence.
+ * Restyles m2's classes and tokens only; no markup, no layout (the header's
+ * three blocks are reordered with CSS order, their sizes unchanged). The kit
+ * colours (--kit-*) are never touched. */
+:root[data-look=broadcast]{
+  --f-display:"Bahnschrift SemiBold Condensed","Bahnschrift Condensed","Bahnschrift","DIN Condensed","Avenir Next Condensed","Arial Narrow",sans-serif;
+  --f-body:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --f-ui:"Bahnschrift","DIN Alternate","Segoe UI",system-ui,sans-serif;
+  --f-num:"Bahnschrift","DIN Alternate","Segoe UI",system-ui,sans-serif;
+  --gfx:#0a1a36; --gfx-2:#12284f; --gfx-ink:#ffffff; --gfx-line:rgba(255,255,255,.16);
+  --ground:#dde4ec; --surface:#ffffff; --surface-2:#eef2f7; --ink:#0b1526; --ink-2:#3a4a63;
+  --muted:#58687f; --line:#c9d3df; --accent:#0a7440; --accent-2:#086234;
+  --warn:#ad2716; --gold:#8f6300; --pitch:#2f7a45;
+  --bubble:#ffffff; --bubble-line:#0a1a36; --bubble-ink:#0b1526;
+  --die:#ffffff; --die-pip:#0a1a36;
+  --hot:#12c46b;
+  color-scheme:light;
+}
+:root[data-look=broadcast][data-mode=dark]{
+  --gfx:#0b1a33; --gfx-2:#132a52;
+  --ground:#050b15; --surface:#0d1829; --surface-2:#132238; --ink:#f2f6fc; --ink-2:#b8c5d8;
+  --muted:#8e9db3; --line:#243652; --accent:#34d27f; --accent-2:#7ce6ab;
+  --warn:#ff8a78; --gold:#ffc940; --pitch:#1b4a2c;
+  --bubble:#0d1829; --bubble-line:#34d27f; --bubble-ink:#f6f9fd;
+  --die:#f2f6fc; --die-pip:#0a1a36;
+  --hot:#34d27f;
+  color-scheme:dark;
+}
+
+/* ---------------------------------------------------------------- the studio */
+:root[data-look=broadcast] body{
+  background-color:var(--ground);
+  background-image:
+    radial-gradient(80% 60% at 30% 0%,rgba(80,140,220,.16),transparent 70%),
+    linear-gradient(180deg,rgba(255,255,255,.5),transparent 40%);
+  background-attachment:fixed;
+}
+:root[data-look=broadcast][data-mode=dark] body{
+  background-image:
+    radial-gradient(70% 55% at 28% 0%,rgba(70,130,255,.18),transparent 70%),
+    radial-gradient(60% 50% at 90% 100%,rgba(52,210,127,.07),transparent 70%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 3px);
+}
+
+/* ---------------------------------------------------------------- the header: score bug, channel name */
+:root[data-look=broadcast] .bar{border-bottom:0;padding-top:0}
+:root[data-look=broadcast] .bar .scorebox{order:-1}
+:root[data-look=broadcast] .bar .brand{text-align:right}
+:root[data-look=broadcast] .bar h1{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.14em;font-size:18px;color:var(--ink-2)}
+:root[data-look=broadcast] .bar h1::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff3b30;margin-right:8px;vertical-align:2px;
+  box-shadow:0 0 8px #ff3b30}
+:root[data-look=broadcast] .bar .tag{color:var(--ink-2)}
+:root[data-look=broadcast] .clock .legs{color:var(--ink-2)}
+:root[data-look=broadcast] .result .side small .st{color:var(--ink-2)}
+:root[data-look=broadcast] .obe-who{color:rgba(255,255,255,.8)}
+:root[data-look=broadcast] .score{--ff:var(--f-display);color:var(--gfx-ink);font-weight:700;letter-spacing:.06em;
+  background:linear-gradient(90deg,var(--kit-you) 0 7px,var(--gfx) 7px calc(100% - 7px),var(--kit-them) calc(100% - 7px));
+  padding:4px 18px 5px;border-radius:3px;box-shadow:0 6px 16px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.15)}
+:root[data-look=broadcast] .clock{color:var(--ink-2);text-align:left;border-left:3px solid var(--hot);padding-left:9px}
+:root[data-look=broadcast] .inmatch .bar .scorebox{gap:12px}
+
+/* ---------------------------------------------------------------- buttons */
+:root[data-look=broadcast] button.ghost{background:var(--surface);border:1px solid var(--line);border-radius:3px;color:var(--ink);
+  font-family:var(--f-ui);text-transform:uppercase;letter-spacing:.06em;font-size:12.5px;font-weight:600}
+:root[data-look=broadcast] .optw .det{text-transform:uppercase;letter-spacing:.06em;border-radius:3px}
+:root[data-look=broadcast] button.ghost:hover{border-color:var(--hot)}
+:root[data-look=broadcast] .pctl .spd button.on{background:var(--hot);border-color:var(--hot);color:#04140b}
+:root[data-look=broadcast] button.go{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;border-radius:3px;
+  background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-look=broadcast][data-mode=dark] button.go{color:#04140b}
+:root[data-look=broadcast] #sndbtn[aria-pressed="true"]{border-color:var(--hot);color:var(--accent)}
+
+/* ---------------------------------------------------------------- the pitch */
+:root[data-look=broadcast] .field.cv .pbox{border-radius:4px;box-shadow:0 0 0 1px var(--line),0 20px 40px rgba(0,0,0,.35)}
+:root[data-look=broadcast] .field .ends{--ff:var(--f-display);letter-spacing:.12em;color:var(--ink-2)}
+:root[data-look=broadcast] .field .car{--ff:var(--f-display);text-transform:uppercase;letter-spacing:.06em;font-size:14px}
+:root[data-look=broadcast] .teamkey{color:var(--ink-2)}
+:root[data-look=broadcast] .cardshead{--ff:var(--f-display);letter-spacing:.14em;color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- the result: a replay graphic */
+:root[data-look=broadcast] .result{border:0;border-radius:3px;border-top:3px solid var(--line);
+  background-color:var(--surface);background-image:linear-gradient(180deg,rgba(255,255,255,.06),transparent 60%);
+  box-shadow:0 10px 26px rgba(0,0,0,.28)}
+:root[data-look=broadcast] .result.won{border-top-color:var(--hot)}
+:root[data-look=broadcast] .result.lost{border-top-color:var(--warn)}
+:root[data-look=broadcast] .result.goal{border-top-color:var(--hot);background-color:color-mix(in srgb,var(--accent) 16%,var(--surface))}
+:root[data-look=broadcast] .result.conceded{border-top-color:var(--warn);background-color:color-mix(in srgb,var(--warn) 14%,var(--surface))}
+:root[data-look=broadcast] .result .verdict{--ff:var(--f-display);text-transform:uppercase;letter-spacing:.04em}
+:root[data-look=broadcast] .result .side small{--ff:var(--f-display);letter-spacing:.03em;color:var(--ink-2)}
+:root[data-look=broadcast] .result .kick{color:var(--ink-2)}
+:root[data-look=broadcast] .die,:root[data-look=broadcast] .jz-die{border-radius:6px;border:0;
+  background:linear-gradient(160deg,#ffffff 0%,#dfe6f0 100%);box-shadow:0 0 0 1px rgba(10,26,54,.4),0 3px 0 #8795aa,0 6px 12px rgba(0,0,0,.3)}
+
+/* ---------------------------------------------------------------- the commentator: a lower third */
+:root[data-look=broadcast] .comm-who{--ff:var(--f-display);display:flex;align-items:center;gap:0;margin:0;padding:0 8px 0 0;
+  letter-spacing:.14em;color:#fff;background:var(--gfx);border-radius:3px 3px 0 0;width:max-content;max-width:100%}
+:root[data-look=broadcast] .comm-who>svg{border-radius:3px 0 0 0;background:var(--hot);color:#04140b;width:26px;height:26px;padding:5px;margin-right:10px}
+:root[data-look=broadcast] .comm-who .who{margin:0 0 0 10px;align-self:center;border-radius:2px}
+:root[data-look=broadcast] .comm-who .chip{align-self:center;margin-left:14px}
+:root[data-look=broadcast] .bubble{border:0;border-radius:0 3px 3px 3px;border-left:6px solid var(--hot);
+  background-image:linear-gradient(90deg,color-mix(in srgb,var(--hot) 10%,transparent),transparent 45%);
+  box-shadow:0 12px 28px rgba(0,0,0,.3)}
+:root[data-look=broadcast] .bubble::before,:root[data-look=broadcast] .bubble::after{display:none}
+:root[data-look=broadcast] .bubble .scene{font-weight:650}
+:root[data-look=broadcast] .who.you{background:var(--hot);color:#04140b}
+:root[data-look=broadcast] .who.them{background:var(--warn);color:#fff}
+:root[data-look=broadcast][data-mode=dark] .who.them{color:#1c0502}
+:root[data-look=broadcast] .chip .cmin{background:var(--gfx);color:#fff;border-color:var(--gfx);border-radius:2px}
+:root[data-look=broadcast] .comm-who .chip .ctag{color:rgba(255,255,255,.8)}
+:root[data-look=broadcast] .comm-who .chip .cmin{background:rgba(255,255,255,.14);border-color:transparent}
+:root[data-look=broadcast] .carry{border:0;border-left:4px solid var(--gold);border-radius:3px;background-color:var(--surface);box-shadow:0 8px 20px rgba(0,0,0,.22)}
+:root[data-look=broadcast] .carry .carry-head{--ff:var(--f-display);letter-spacing:.12em;color:var(--gold)}
+
+/* ---------------------------------------------------------------- the options: glass panels */
+:root[data-look=broadcast] .opt{border:1px solid var(--line);border-left:4px solid var(--line);border-radius:3px;
+  background-color:var(--surface);background-image:linear-gradient(180deg,rgba(255,255,255,.05),transparent 50%);
+  box-shadow:0 8px 20px rgba(0,0,0,.18);transition:border-color .12s,box-shadow .12s,transform .12s}
+:root[data-look=broadcast][data-mode=dark] .opt{background-image:linear-gradient(180deg,rgba(120,170,255,.07),transparent 50%)}
+:root[data-look=broadcast] .opt b{font-weight:700;font-size:16px}
+:root[data-look=broadcast] .opt .desc{font-size:14px}
+:root[data-look=broadcast] .opt .outc-head{--ff:var(--f-display);letter-spacing:.12em;color:var(--muted)}
+:root[data-look=broadcast] :is(.opt:hover,.opt.art2-hov):not(.dead){border-color:var(--hot);border-left-color:var(--hot);transform:translateX(4px);
+  box-shadow:0 0 0 1px var(--hot),0 0 26px color-mix(in srgb,var(--hot) 35%,transparent),0 10px 24px rgba(0,0,0,.3)}
+:root[data-look=broadcast] .opt.kw{border-left-color:var(--gold)}
+:root[data-look=broadcast] .opt.certain{border-left-color:var(--accent);box-shadow:0 8px 20px rgba(0,0,0,.18)}
+:root[data-look=broadcast] .opt.dead{opacity:.55}
+:root[data-look=broadcast] .optw.chosen .opt{border-color:var(--hot);box-shadow:0 0 0 2px var(--hot),0 10px 24px rgba(0,0,0,.3)}
+:root[data-look=broadcast] .opt .unl{border-radius:2px}
+:root[data-look=broadcast] .ldet,:root[data-look=broadcast] .detbody.open{border-radius:0 0 3px 3px}
+
+/* ---------------------------------------------------------------- stats */
+:root[data-look=broadcast] .sp{border-radius:3px;border-top:3px solid var(--gfx-2);box-shadow:0 8px 20px rgba(0,0,0,.2)}
+:root[data-look=broadcast][data-mode=dark] .sp{border-top-color:var(--hot)}
+:root[data-look=broadcast] .sp-head h2{--ff:var(--f-display);letter-spacing:.14em}
+:root[data-look=broadcast] .sp-btn{border-radius:2px;white-space:nowrap}
+
+/* ---------------------------------------------------------------- the title: the pre-match graphic */
+:root[data-look=broadcast] .obi{border:0;border-radius:4px;color:#fff;
+  background:
+    linear-gradient(90deg,var(--kit-you) 0 50%,var(--kit-them) 50% 100%) top/100% 8px no-repeat,
+    radial-gradient(80% 70% at 85% 10%,rgba(80,140,255,.28),transparent 70%),
+    linear-gradient(160deg,var(--gfx-2),var(--gfx) 60%);
+  box-shadow:0 30px 60px rgba(0,0,0,.45)}
+:root[data-look=broadcast] .obi-kick{--ff:var(--f-display);color:rgba(255,255,255,.8);letter-spacing:.2em}
+:root[data-look=broadcast] .obi-team b{--ff:var(--f-display);font-size:44px;text-transform:uppercase;letter-spacing:.02em;color:#fff}
+:root[data-look=broadcast] .obi-who{color:rgba(255,255,255,.85)}
+:root[data-look=broadcast] .obi-vs{--ff:var(--f-display);color:#fff;background:rgba(0,0,0,.35);border-radius:3px;padding:4px 12px}
+:root[data-look=broadcast] .obi-vs span{opacity:.7}
+:root[data-look=broadcast] .obi-line{color:rgba(255,255,255,.86)}
+:root[data-look=broadcast] .obi-line b{color:#fff}
+:root[data-look=broadcast] .obi-line b.c-you{color:#ffb0b7}
+:root[data-look=broadcast] body.you-argentina .obi-line b.c-you{color:#9fd0ff}
+:root[data-look=broadcast] .obi-start{background:var(--hot);border-color:var(--hot);color:#04140b;box-shadow:0 4px 0 #0a6b3a}
+:root[data-look=broadcast] .obi-links{color:rgba(255,255,255,.7)}
+:root[data-look=broadcast] .obi-link{color:rgba(255,255,255,.88);text-decoration-color:rgba(255,255,255,.4)}
+:root[data-look=broadcast] .obi-link:hover{color:#fff}
+:root[data-look=broadcast] svg.obi-pitch{border-radius:4px;box-shadow:0 0 0 1px rgba(255,255,255,.2),0 12px 30px rgba(0,0,0,.5)}
+:root[data-look=broadcast] svg.obi-pitch .arr path{stroke:var(--hot)}
+
+/* ---------------------------------------------------------------- full time */
+:root[data-look=broadcast] .obe-back{background:rgba(2,6,14,.7)}
+:root[data-look=broadcast] .obe{border:0;border-radius:4px;
+  background:
+    linear-gradient(90deg,var(--kit-you) 0 50%,var(--kit-them) 50% 100%) top/100% 8px no-repeat,
+    radial-gradient(80% 70% at 50% 0%,rgba(80,140,255,.25),transparent 70%),
+    linear-gradient(160deg,#132a52,#0a1a36 60%)}
+:root[data-look=broadcast] .obe .obe-kick{--ff:var(--f-display);letter-spacing:.24em;font-size:14px;color:#fff}
+:root[data-look=broadcast] .obe-t b,:root[data-look=broadcast] .obe-n{--ff:var(--f-display);text-transform:uppercase}
+:root[data-look=broadcast] .obe-n{background:rgba(0,0,0,.35);border-radius:3px;padding:4px 16px}
+:root[data-look=broadcast] .obe-m{border-radius:3px;background:rgba(255,255,255,.06)}
+:root[data-look=broadcast] .obe-potm,:root[data-look=broadcast] .obe-key{border-radius:3px}
+:root[data-look=broadcast] .obe-h{--ff:var(--f-display);letter-spacing:.16em}
+:root[data-look=broadcast] .obe-btns .go{background:var(--hot);border-color:var(--hot);color:#04140b}
+
+/* ---------------------------------------------------------------- tips and panels */
+:root[data-look=broadcast] .obc-bubble{border-radius:3px;border:0;border-left:6px solid var(--hot);box-shadow:0 18px 40px rgba(0,0,0,.5)}
+:root[data-look=broadcast] .obc-step{--ff:var(--f-display);letter-spacing:.16em;color:var(--accent)}
+:root[data-look=broadcast] .drawer{border-left:3px solid var(--hot)}
