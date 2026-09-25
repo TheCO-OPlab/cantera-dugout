@@ -400,6 +400,17 @@
       case 'ooh':
         this.reaction('ooh', t, 1);
         break;
+      case 'hover':     // ui: a very faint tick when pointing at a button or card
+        this.tone(s, { t: t, f0: 1500, f1: 1400, dur: 0.02, gain: 0.05, attack: 0.001 });
+        break;
+      case 'soundon':   // ui: sound switched on, a soft rising pair
+        this.tone(s, { t: t, f0: 660, dur: 0.06, gain: 0.14, attack: 0.003 });
+        this.tone(s, { t: t + 0.07, f0: 990, dur: 0.08, gain: 0.14, attack: 0.003 });
+        break;
+      case 'soundoff':  // ui: about to mute, a softer falling pair
+        this.tone(s, { t: t, f0: 880, dur: 0.05, gain: 0.1, attack: 0.003 });
+        this.tone(s, { t: t + 0.06, f0: 587, dur: 0.07, gain: 0.08, attack: 0.003 });
+        break;
       case 'select':
         /* a quiet tick for choosing a card */
         this.tone(s, { t: t, f0: 1250, f1: 1050, dur: 0.035, gain: 0.2, attack: 0.001 });

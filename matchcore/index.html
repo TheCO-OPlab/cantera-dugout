@@ -784,6 +784,7 @@
   .duelbox .whyodds .wor span{display:inline-flex;align-items:center;gap:2px}
   .duelbox .whyodds .wor .hit{outline:1.5px solid #fff;border-radius:6px;padding:0 3px;opacity:1}
   .duelbox .whyodds svg{width:12px;height:12px}
+  #sndbtn.sndicon{display:inline-grid;place-items:center;min-width:38px;padding-left:8px;padding-right:8px}   /* ui: mute icon */
 </style>
 <!-- onboarding (ob1): the title screen, the three tips, lean cards, full time -->
 <link rel="stylesheet" href="./onboard.css">
@@ -808,7 +809,7 @@
       <div class="clock" id="clock"></div>
     </div>
     <div class="barbtns">
-      <button class="ghost sm" id="sndbtn" aria-pressed="false" title="Sound starts with your first click. This turns it off or on.">Sound: on</button>
+      <button class="ghost sm sndicon" id="sndbtn" aria-label="Mute" title="Mute (M)"></button>
       <button class="ghost sm" id="logbtn" aria-controls="logdrawer" aria-expanded="false">What has happened</button>
       <button class="ghost sm" id="setbtn" aria-controls="setdrawer" aria-expanded="false">Settings</button>
     </div>
@@ -2874,15 +2875,42 @@
     if (!b) return;
     if (!SND) { b.style.display = 'none'; return; }
     var m = SND.isMuted();
-    b.textContent = m ? 'Sound: off' : 'Sound: on';
-    b.setAttribute('aria-pressed', m ? 'false' : 'true');
+    /* ui: the icon shows the state (waves = sound on, a cross = muted); the label says what a click does */
+    b.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/>'
+      + (m ? '<path d="M16 9l5 6M21 9l-5 6"/>' : '<path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10"/>') + '</svg>';
+    b.setAttribute('aria-label', m ? 'Unmute' : 'Mute');
+    b.title = m ? 'Unmute (M)' : 'Mute (M)';
+  }
+  function sndToggle() {   // ui: a soft pair on unmute; a softer one plays before muting
+    SND.init();
+    try { var tl = window.KMMatch && window.KMMatch.__tel; if (tl && tl.log) tl.log('setting', { key: 'sound', value: SND.isMuted() }); } catch (e) { }   // settings tracking
+    if (SND.isMuted()) { SND.toggleMute(); SND.cue('soundon'); sndButton(); }
+    else { SND.cue('soundoff'); sndButton(); setTimeout(function () { SND.toggleMute(); sndButton(); }, 160); }
   }
   if (SND) {
     /* off until the first click or key anywhere on the page (browsers
      * require it); the button mutes and unmutes, and is remembered */
     SND.unlockOn(document);
     if (param('sound') === 'on') SND.init();
-    $('sndbtn').onclick = function () { SND.init(); SND.toggleMute(); sndButton(); };
+    $('sndbtn').onclick = sndToggle;
+    /* ui: M mutes and unmutes (not while typing) */
+    document.addEventListener('keydown', function (e) {
+      if ((e.key === 'm' || e.key === 'M') && !e.ctrlKey && !e.metaKey && !e.altKey && !/INPUT|TEXTAREA|SELECT/.test((e.target && e.target.tagName) || '')) sndToggle();
+    });
+    /* ui: a very faint tick when a mouse points at a button or card, a quiet one on click (never on touch) */
+    var hovEl = null;
+    document.addEventListener('pointerover', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var el = e.target && e.target.closest && e.target.closest('button, .opt, a.btn');
+      if (!el || el === hovEl || el.disabled) return;
+      hovEl = el; SND.cue('hover');
+    });
+    document.addEventListener('pointerout', function (e) { if (hovEl && !hovEl.contains(e.relatedTarget)) hovEl = null; });
+    document.addEventListener('click', function (e) {
+      var el = e.target && e.target.closest && e.target.closest('button, .opt, a.btn, label');
+      if (el && el.id !== 'sndbtn') SND.cue('select');
+    });
     /* vo1 (m5): the Music switch is vo1's match music; snd1's own 'moment' loop stays off under it */
     if (MU && SND.musicEnabled()) SND.setMusicEnabled(false);
     if (!MU) {
@@ -2890,6 +2918,29 @@
       $('musicsw').onchange = function () { SND.setMusicEnabled(!!this.checked); };
     }
   } else if ($('musicsw') && !MU) $('musicsw').disabled = true;
+  /* settings tracking: a snapshot at match start (telemetry.js) and one event per change */
+  window.__settingsSnapshot = function () {
+    var o = {};
+    Array.prototype.slice.call(document.querySelectorAll('#setdrawer input')).forEach(function (el) {
+      if (el.type === 'radio') { if (el.checked) o[el.name || el.id] = el.value || el.id; }
+      else if (el.type === 'checkbox') o[el.id || el.name] = el.checked;
+    });
+    try { o.sound = SND ? !SND.isMuted() : null; } catch (e) { }
+    return o;
+  };
+  (function () {
+    var d = $('setdrawer');
+    if (!d) return;
+    d.addEventListener('change', function (e) {
+      var el = e.target;
+      try {
+        var tel = (window.KMMatch && window.KMMatch.__tel) || null;
+        var k = el.type === 'radio' ? (el.name || el.id) : (el.id || el.name);
+        var v = el.type === 'radio' ? (el.value || el.id) : el.type === 'checkbox' ? el.checked : el.value;
+        if (tel && tel.log) tel.log('setting', { key: k, value: v });
+      } catch (err) { }
+    });
+  })();
   voWire();  // vo1
   sndButton();
   try {

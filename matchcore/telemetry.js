@@ -174,6 +174,7 @@
         page: String(window.location && window.location.pathname || '').split('/').pop(),
         you: squad(sq), them: squad(opp)
       });
+      try { if (window.__settingsSnapshot) log('settings', window.__settingsSnapshot()); } catch (e) {}   // settings tracking
       flush();
     } catch (e) {}
     return st;
@@ -229,7 +230,8 @@
     return ev;
   };
 
-  X.__tel = { build: CFG.build, flush: flush, runId: function () { return runId; } };
+  X.__tel = { build: CFG.build, flush: flush, log: log,   /* settings tracking: log */
+    runId: function () { return runId; } };
 
   try {
     document.addEventListener('visibilitychange', function () {
