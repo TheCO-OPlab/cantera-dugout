@@ -536,7 +536,8 @@
     switch (sc) {
       case 'freekick_you': case 'freekick_them': case 'freekick_wide': case 'freekick_cross': {
         var gd = dist(ball, goalOf(T)), wide = sc === 'freekick_wide' || sc === 'freekick_cross';
-        wall(st, S, pos, fixed, wide ? 3 : gd < 24 ? 5 : 4, S.near);
+        /* the wide free kick is taken quickly, before a wall is set (model.js scene line): no wall there */
+        if (sc !== 'freekick_wide') wall(st, S, pos, fixed, wide ? 3 : gd < 24 ? 5 : 4, S.near);
         keeperOnLine(st, O, S, pos, fixed, 1.2);
         packBox(st, S, pos, fixed, wide ? 4 : 3, R.target || S.crossTo || null);
         break;

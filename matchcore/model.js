@@ -202,7 +202,7 @@
 
     { id: 'dead_ball_wide', name: 'Dead ball in a wide area', who: 'you',
       reads: ['width', 'boxThreat'],
-      line: 'You have a free kick near the touchline, level with the edge of their penalty area.',
+      line: 'You have a free kick near the touchline, level with the edge of their penalty area. You take it quickly, before they can set a wall.',
       w: function (P, S) { return 5 + (P.width / 100) * 7 + P.boxThreat * 0.10; } },
 
     { id: 'keeper_to_feet', name: 'Your keeper, pressed, has to play', who: 'them',
