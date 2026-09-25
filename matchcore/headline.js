@@ -39,7 +39,7 @@
    * RHYTHM.md's "held about 1.5 s with the pitch still" */
   /* m6: the hold scales with the headline (DECISIONS item 31): about 0.25 s
    * a word, at least 1.5 s; hold is the minimum */
-  var PACE = { hold: 1500, perWord: 250, breather: 600 };
+  var PACE = { hold: 1000, perWord: 150, breather: 300 };   /* 09-25: shorter after playtest (it read as a freeze); was 1500 / 250 / 600 */
   function holdMs(hd) { var w = hd && hd.words != null ? hd.words : wordCount(hd && hd.text); return Math.max(PACE.hold, Math.round(PACE.perWord * w)); }
   var CAP = 12, HARD = 14;
   var GOOD_BY = 4;
