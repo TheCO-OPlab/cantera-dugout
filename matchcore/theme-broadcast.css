@@ -79,7 +79,7 @@
 /* ---------------------------------------------------------------- the pitch */
 :root[data-look=broadcast] .field.cv .pbox{border-radius:4px;box-shadow:0 0 0 1px var(--line),0 20px 40px rgba(0,0,0,.35)}
 :root[data-look=broadcast] .field .ends{--ff:var(--f-display);letter-spacing:.12em;color:var(--ink-2)}
-:root[data-look=broadcast] .field .car{--ff:var(--f-display);text-transform:uppercase;letter-spacing:.06em;font-size:14px}
+:root[data-look=broadcast] .field .car{--ff:var(--f-display)}   /* no caps or spacing: the name tag box is sized for plain text */
 :root[data-look=broadcast] .teamkey{color:var(--ink-2)}
 :root[data-look=broadcast] .cardshead{--ff:var(--f-display);letter-spacing:.14em;color:var(--ink-2)}
 
