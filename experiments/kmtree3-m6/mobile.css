@@ -1,0 +1,257 @@
+/* mob1: THE PHONE (mobile.js has the plan). Everything here is under a
+ * phone media query, so a PC never sees it:
+ *   portrait: (max-width: 700px)
+ *   landscape: (orientation: landscape) and (max-height: 500px) and (max-width: 1000px)
+ * Sentences are at least 14 px; everything you tap is at least 44 px each way. */
+
+/* the one rule outside a phone query: the Menu button (mobile.js adds it to
+ * the header) is hidden unless a phone query below shows it */
+.mobmenu{display:none}
+
+/* ================================================= PORTRAIT */
+@media (max-width: 700px) {
+  html{-webkit-text-size-adjust:100%}
+  body{-webkit-tap-highlight-color:transparent}
+  /* before a match (the title, the eleven): the page as it was, clear of a notch */
+  .wrap{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+
+  /* ---------- in a match: one screen, nothing scrolls */
+  html:has(body.inmatch),body.inmatch{overflow:hidden;overscroll-behavior:none}
+  .inmatch .wrap{max-width:none;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left)}
+  .inmatch #stage{flex:1 1 auto;min-height:0;position:relative}
+  .inmatch .game{display:block;position:relative;height:100%}
+
+  /* ---------- THE HEADER: the score with the two kits, the counter, the minute, Menu */
+  .inmatch .bar{position:relative;flex:none;flex-wrap:nowrap;gap:10px;min-height:52px;padding:4px 4px 4px 12px;margin:0;border-bottom:1px solid var(--line)}
+  .inmatch .bar .brand{display:none}
+  .inmatch .bar .scorebox{order:0;flex:1 1 auto;width:auto;min-width:0;display:flex;align-items:center;justify-content:flex-start;gap:12px}
+  .inmatch .score{font-size:25px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+  .inmatch .score::before,.inmatch .score::after{content:"";width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 0 1.5px #fff,0 0 0 2.5px rgba(0,0,0,.3)}
+  .inmatch .score::before{background:var(--kit-you)} .inmatch .score::after{background:var(--kit-them)}
+  body.you-argentina.inmatch .score::before,body.them-argentina.inmatch .score::after{
+    background:linear-gradient(90deg,var(--kit-arg) 0 30%,#fff 30% 45%,var(--kit-arg) 45% 60%,#fff 60% 75%,var(--kit-arg) 75%)}
+  .inmatch .clock{display:flex;align-items:center;gap:8px;min-width:0;text-align:left;line-height:1.2}
+  .inmatch .clock .cnt{font-size:13px;min-width:0}
+  .inmatch .clock .cmn{margin-left:0;font-size:14px;padding:1px 6px;flex:none}
+  .inmatch .barbtns{order:1}
+  .inmatch .mobmenu{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:none;order:2;min-width:44px;height:44px;padding:0 10px;border-radius:10px}
+  .mobmenu .mbars{display:inline-flex;flex-direction:column;gap:3px}
+  .mobmenu .mbars i{display:block;width:16px;height:2px;border-radius:1px;background:currentColor}
+  .mobmenu .mlab{font-size:14px}
+  @media (max-width: 380px){ .mobmenu .mlab{display:none} }
+  .inmatch .mobmenu[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
+  /* the menu: the page's own three buttons, dropped down under the header */
+  .inmatch .barbtns{display:none}
+  .inmatch .bar.mob-open .barbtns{display:flex;flex-direction:column;gap:6px;position:absolute;right:6px;top:calc(100% + 6px);z-index:30;
+    width:min(260px,calc(100vw - 20px));padding:8px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:0 14px 34px rgba(0,0,0,.35)}
+  .inmatch .bar.mob-open .barbtns button{min-height:48px;font-size:15px;text-align:left;padding:0 14px}
+
+  /* ---------- THE PITCH: the space the header and the sheet leave (mobile.js sets --mob-ph) */
+  .inmatch .colL{position:static;height:var(--mob-ph,50vh);overflow:hidden}
+  .inmatch .pcol{position:static;margin:0;height:100%}
+  .inmatch .field{height:100%}
+  .inmatch .field .ends{display:none}
+  .inmatch .pwrap{height:100%;align-items:center}
+  /* crop: as wide as the phone, cut to the part round the ball (the page moves .pworld) */
+  .mob-crop.inmatch .pwrap{display:block}
+  .mob-crop.inmatch .pbox{display:block;width:100%;height:var(--mob-ph,50vh);overflow:hidden}
+  .mob-crop.inmatch .pworld{position:relative}
+  .mobmap{position:absolute;right:6px;top:6px;z-index:5;border-radius:4px;pointer-events:none;
+    box-shadow:0 2px 8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.25);opacity:.95;display:none}
+  .mob-crop.inmatch .mobmap{display:block}
+  .mob-crop.cap-top.inmatch .mobmap{top:calc(var(--mob-vis,var(--mob-ph)) - 6px);transform:translateY(-100%)}
+
+  /* ---------- THE COMMENTATOR: a caption over the pitch */
+  .inmatch .tcol{position:absolute;left:8px;right:8px;top:auto;bottom:calc(100% - var(--mob-vis,var(--mob-ph,50vh)) + 8px);z-index:8;
+    max-height:calc(var(--mob-vis,var(--mob-ph,50vh)) - 16px);overflow:hidden;pointer-events:auto}
+  .cap-top.inmatch .tcol{top:8px;bottom:auto}
+  /* after a choice the pitch is the result's: the caption steps aside until the next decision */
+  .inmatch .tcol{transition:opacity .2s}
+  .inmatch .game:has(#cards.locked) .tcol{opacity:0;pointer-events:none}
+  /* a card opened for its details takes the space of the caption: the pitch left above it is for its arrows */
+  .inmatch .game:has(#cards .lean-w.open) .tcol{opacity:0;pointer-events:none}
+  /* ... and the other cards fold to their line (a tap on one opens it instead) */
+  #cards:has(.lean-w.open) .lean-w:not(.open) .louts,#cards:has(.lean-w.open) .lean-w:not(.open) .lbar{display:none}
+  #cards:has(.lean-w.open) .lean-w:not(.open) .opt.lean{min-height:48px;padding-bottom:9px}
+  #cards:has(.lean-w.open) .lean-w:not(.open) .opt.lean.dead{display:none}
+  .mob-crop.inmatch .tcol{right:8px}
+  .mob-crop.cap-top.inmatch .tcol{right:66px}
+  .inmatch .tcol .teamkey{display:none}
+  .inmatch .tcol .intro{margin:0 0 6px;font-size:14px;padding:6px 10px;background:rgba(8,12,6,.86);color:#f2f5ee;border-radius:10px}
+  .inmatch .tcol .comm{margin:0;max-width:none;cursor:pointer;border-radius:12px;background:rgba(8,12,6,.84);
+    -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);box-shadow:0 4px 16px rgba(0,0,0,.35);padding:7px 11px 8px;color:#f4f7ef}
+  .inmatch .tcol .comm-who{font-size:0;margin:0 0 3px;gap:6px;min-height:0}
+  .inmatch .tcol .comm-who svg{display:none}
+  .inmatch .tcol .comm-who .who{margin:0;font-size:10.5px;padding:2px 8px;letter-spacing:.06em}
+  .inmatch .tcol .comm-who .who.you{background:rgba(76,179,113,.25);color:#8ff0b0}
+  .inmatch .tcol .comm-who .who.them{background:rgba(217,106,88,.28);color:#ffb3a6}
+  .inmatch .tcol .comm.live .comm-who{display:none}
+  .inmatch .tcol .bubble{background:none;border:0;box-shadow:none;padding:0;color:inherit;border-radius:0}
+  .inmatch .tcol .bubble::before,.inmatch .tcol .bubble::after{display:none}
+  .inmatch .tcol .scene{font-size:15px;line-height:1.36;font-weight:600;color:#f7faf2;
+    display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+  .inmatch .tcol .comm.live .scene.ticker{font-size:15px;-webkit-line-clamp:2;min-height:0}
+  .inmatch .tcol .scene .pl.you,.inmatch .tcol .scene .pl.them{color:inherit}
+  /* what the caption folds away: the lead-in, a new attack's line, the warning, their threat */
+  .inmatch .tcol .bubble .lead,.inmatch .tcol .bubble .newplay,.inmatch .tcol .bubble .note,.inmatch .tcol .bubble .thr{display:none}
+  .inmatch .tcol .bubble .whyt{display:none}   /* m6: on a phone "More" opens the keyword lines, as before */
+  .inmatch .field.cv .gend{display:none}   /* m6: the phone crops the pitch round the ball; its small map shows the ends */
+  /* m6: in keyboard mode the focused card no longer opens its details, which grew the sheet over most of the pitch; its arrows still show (H), and a tap opens them as before */
+  .a11y-kbd #cards:not(.locked) .lean-w:focus-within:not(.open) .ldet{display:none}
+  .inmatch .tcol .comm:has(.lead,.newplay,.note,.thr) .comm-who::after{content:"More";margin-left:auto;font:700 12px ui-sans-serif,system-ui;
+    color:#ffd84a;letter-spacing:.02em;text-transform:none}
+  /* a tap on the caption opens all of it */
+  .cap-open.inmatch .tcol{overflow-y:auto;z-index:12}
+  .cap-open.inmatch .tcol .scene{-webkit-line-clamp:unset;display:block}
+  .cap-open.inmatch .tcol .bubble .lead,.cap-open.inmatch .tcol .bubble .newplay,.cap-open.inmatch .tcol .bubble .note,.cap-open.inmatch .tcol .bubble .thr{display:block}
+  .cap-open.inmatch .tcol .bubble .lead{font-size:14px;color:#cfd6c4;margin:0 0 5px}
+  .cap-open.inmatch .tcol .bubble .newplay{font-size:14px;background:rgba(255,255,255,.08);color:#f4f7ef;border-left-color:#c9d1bb}
+  .cap-open.inmatch .tcol .bubble .note,.cap-open.inmatch .tcol .bubble .thr{font-size:14px}
+  .cap-open.inmatch .tcol .comm .comm-who::after{content:"Less"}
+  .inmatch .tcol .scene .nfl.flag{width:13px;height:9px}
+
+  /* ---------- THE SHEET: the cards at the bottom, in reach of a thumb */
+  .inmatch .colR{position:absolute;left:0;right:0;bottom:0;z-index:9;padding:6px 10px calc(8px + env(safe-area-inset-bottom));
+    min-height:var(--mob-sheet,40%);max-height:calc(100% - 44px);overflow-y:auto;overscroll-behavior:contain;
+    background:var(--ground);border-top:1px solid var(--line);border-radius:16px 16px 0 0;box-shadow:0 -8px 22px rgba(0,0,0,.28)}
+  .inmatch .cardshead{min-height:30px;margin:0 0 2px 2px;font-size:11.5px}
+  .inmatch .qbtn{width:44px;height:44px;margin:-7px 0 -7px -6px;border:0;font-size:13px;color:var(--ink-2);
+    background:radial-gradient(circle,var(--surface-2) 12px,var(--line) 12.5px,var(--line) 13.5px,transparent 14px)}
+  .inmatch .qbtn[aria-expanded="true"]{color:var(--accent);background:radial-gradient(circle,var(--surface-2) 12px,var(--accent) 12.5px,var(--accent) 13.5px,transparent 14px)}
+  .inmatch .legend{font-size:14px}
+  .inmatch .legend .ikey-list{font-size:14px}
+  /* the lean card: the action, and its results beside it when both fit on one line */
+  .inmatch .lean-w{margin-bottom:6px}
+  .inmatch .opt.lean{position:relative;display:flex;flex-wrap:wrap;align-items:center;column-gap:12px;row-gap:5px;min-height:52px;padding:9px 12px 11px}
+  .inmatch .opt.lean .lact{flex:1 1 auto;min-width:0;margin:0;font-size:15px;line-height:1.3}
+  .inmatch .opt.lean .louts{flex:0 0 auto;margin-left:auto;gap:4px 11px}
+  .inmatch .opt.lean .lo{font-size:14.5px}
+  .inmatch .opt.lean .lo .oi{width:18px;height:18px}
+  .inmatch .opt.lean .lbar{position:absolute;left:12px;right:12px;bottom:4px;height:3px;margin:0}
+  /* a greyed card is one quiet line */
+  .inmatch .opt.lean.dead{min-height:44px;padding:8px 12px}
+  .inmatch .opt.lean.dead .lact{font-size:14px;font-weight:600}
+  .inmatch .opt.lean.dead .louts,.inmatch .opt.lean.dead .lbar{display:none}
+  /* its details, opened by the first tap */
+  .inmatch .ldet{font-size:14px;line-height:1.4;padding:8px 12px 10px}
+  .inmatch .ldet .lwhy{font-size:14px}
+  #cards.lean-touch .lean-w.open .ldet::after{font-size:14px}
+  .inmatch .opt.lean .ledge{font-size:11.5px}
+  /* play goes on: Skip and the speed, big enough for a thumb */
+  .inmatch .waitcard{font-size:14px;padding:10px 12px}
+  .inmatch .waitcard .pctl{gap:8px;flex-wrap:wrap}
+  .inmatch .waitcard .pctl button{min-height:44px;min-width:48px;font-size:14px}
+  .inmatch .waitcard #pskip{flex:1 1 auto}
+
+  /* ---------- THE STATS ROW: in the sheet while play runs, gone at a decision */
+  .inmatch #statsbox{display:none}
+  .inmatch .game:has(#waiting) #statsbox{display:block;position:absolute;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:10;
+    width:auto !important;margin:0;max-height:calc(100% - 60px);overflow-y:auto}
+  .inmatch #statsbox .sp-lab{display:inline}
+  .inmatch #statsbox .sp-btn{min-height:44px;min-width:44px;padding:0 12px;font-size:13px}
+
+  /* ---------- THE DUEL BOX and GOAL, sized for a phone */
+  .inmatch .duelbox{width:min(250px,68vw) !important}
+  .inmatch .duelbox .result .verdict{font-size:17px}
+  .inmatch .duelbox .result .headline,.inmatch .duelbox.small .result .headline{font-size:14px;line-height:1.3}
+  .inmatch .duelbox .result .side small{font-size:12px}
+  .inmatch .duelbox .result .die{width:26px;height:26px}
+  /* GOAL takes the pitch: the duel box (its verdict already read) steps aside so the two never sit on each other */
+  body.inmatch:has(#goalban.on) #resultbox{opacity:0;transition:opacity .15s}
+  /* m5: the last decision's box does not linger over the pitch into the next decision (on a PC it fades for 2.3 s; on a phone it covered midfield) */
+  .inmatch .duelbox.past{display:none}
+  /* m5: during a goal replay the replay's own caption is the only one on the pitch (the commentator's sat on it) */
+  .inmatch .game:has(.rp-on) .tcol{opacity:0;pointer-events:none}
+  .inmatch .goalban{top:36%}
+  .inmatch .goalban b{font-size:54px;padding:10px 26px 12px}
+  .inmatch .goalban.them b{font-size:30px}
+  .inmatch .goalban small{font-size:15px}
+
+  /* ---------- the panels over the page, the tips, the title and full time */
+  .drawer{width:100vw;padding:calc(12px + env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(30px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+  .drawer .ghost.sm{min-height:44px;min-width:64px;font-size:14px}
+  .drawer label{min-height:44px}
+  .drawer .sw,.drawer .setgrp label,.drawer .namestyle label{font-size:14px;padding:4px 0}
+  .ev{font-size:14px}
+  .obc-btns .go.sm{min-height:44px;padding:0 18px;font-size:15px}
+  .obc-skip{min-height:44px;font-size:14px}
+  .obi-link{min-height:44px;font-size:14px}
+  .obe-btns .ghost,.obe-btns .go{min-height:44px;font-size:14px}
+  .obe-more{min-height:44px;font-size:14px}
+  .obe{max-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
+  .obe-back{padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom))}
+}
+
+/* ================================================= LANDSCAPE on a phone */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 1000px) {
+  html:has(body.inmatch),body.inmatch{overflow:hidden;overscroll-behavior:none}
+  .inmatch .wrap{max-width:none;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+    padding:0 max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left))}
+  .inmatch #stage{flex:1 1 auto;min-height:0}
+  .inmatch .bar{flex:none;flex-wrap:nowrap;min-height:44px;padding:2px 0;margin:0 0 4px;gap:10px}
+  .inmatch .bar .brand{display:none}
+  .inmatch .bar .scorebox{order:0;flex:1 1 auto;width:auto;display:flex;align-items:center;justify-content:flex-start;gap:14px}
+  .inmatch .score{font-size:22px;display:flex;align-items:center;gap:7px}
+  .inmatch .score::before,.inmatch .score::after{content:"";width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 1.5px #fff,0 0 0 2.5px rgba(0,0,0,.3)}
+  .inmatch .score::before{background:var(--kit-you)} .inmatch .score::after{background:var(--kit-them)}
+  body.you-argentina.inmatch .score::before,body.them-argentina.inmatch .score::after{
+    background:linear-gradient(90deg,var(--kit-arg) 0 30%,#fff 30% 45%,var(--kit-arg) 45% 60%,#fff 60% 75%,var(--kit-arg) 75%)}
+  .inmatch .clock{display:flex;align-items:center;gap:8px}
+  .inmatch .barbtns{order:1;gap:6px}
+  .inmatch .barbtns button{min-height:44px;font-size:13px}
+  .mobmenu{display:none !important}
+  .inmatch .game{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);column-gap:14px;height:100%}
+  .inmatch .colL{grid-column:1;grid-row:1 / 3;min-height:0;overflow:hidden}
+  .inmatch .pcol{margin:0}
+  .inmatch .field .ends{display:none}
+  .inmatch .tcol{grid-column:2;grid-row:1;min-width:0;padding-top:2px}
+  .inmatch .tcol .teamkey{display:none}
+  .inmatch .tcol .comm{margin:0 0 6px}
+  .inmatch .tcol .comm-who{margin:0 0 3px 2px}
+  .inmatch .tcol .bubble{padding:7px 12px 8px}
+  .inmatch .tcol .bubble::before,.inmatch .tcol .bubble::after{display:none}
+  .inmatch .tcol .scene{font-size:15px;line-height:1.35}
+  .inmatch .tcol .bubble .lead,.inmatch .tcol .bubble .newplay{font-size:14px}
+  .inmatch .colR{grid-column:2;grid-row:2;min-height:0;overflow-y:auto;padding:0 2px 6px}
+  .inmatch #cards > .fadein,.inmatch #cards > div:last-child:not(.legend):not(.cardshead){display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .inmatch #cards .lean-w{margin:0}
+  .inmatch .cardshead{margin:0 0 3px 2px;min-height:26px}
+  .inmatch .qbtn{width:44px;height:44px;margin:-9px 0 -9px -6px;border:0;
+    background:radial-gradient(circle,var(--surface-2) 11px,var(--line) 11.5px,var(--line) 12.5px,transparent 13px)}
+  .inmatch .opt.lean{position:relative;min-height:52px;padding:6px 10px 8px;height:100%}   /* m6: 1 px less each side (col1's chips made a four-card decision 250 px of 245) */
+  .inmatch .opt.lean .lact{font-size:14px;line-height:1.28;margin:0 0 3px}
+  .inmatch .opt.lean .ledge .lnx{display:none}   /* m6: "+2" alone on a card half a sideways phone wide (the tooltip and the details say "next"); col1's "+2 next" wrapped a long card to 235 px of 224 */   /* m5: a step smaller (a four-card decision with a long card needed 258 px of 224, once in 307) */
+  .inmatch .opt.lean .lbar{position:absolute;left:11px;right:11px;bottom:4px;height:3px;margin:0}
+  .inmatch .opt.lean.dead{min-height:44px}
+  .inmatch .opt.lean.dead .louts,.inmatch .opt.lean.dead .lbar{display:none}
+  .inmatch .ldet{font-size:14px}
+  .inmatch .waitcard .pctl button{min-height:44px;min-width:48px;font-size:14px}
+  .inmatch #statsbox .sp-btn{min-height:44px}
+  .inmatch .duelbox .result .headline,.inmatch .duelbox.small .result .headline{font-size:14px;line-height:1.3}
+  .inmatch .duelbox .result .verdict{font-size:16px}
+  /* the pitch is narrow here: the duel box is the pitch's width less a margin */
+  .inmatch .duelbox{width:calc(100% - 12px) !important;max-width:236px}
+  .inmatch .duelbox .result .dice{gap:8px}
+  .inmatch .duelbox .result .side small{max-width:88px}
+  .inmatch .duelbox .result .side{column-gap:4px;grid-template-columns:auto;justify-items:center}
+  .inmatch .duelbox .result .side small{grid-column:1}
+  .inmatch .duelbox .result .sum{font-size:10.5px;letter-spacing:-.02em}
+  .inmatch .duelbox .result{padding:6px 6px 7px}
+  /* the commentator: the scene, three lines at most; a tap shows the rest */
+  .inmatch .tcol .comm{cursor:pointer}
+  .inmatch .tcol .scene{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+  .inmatch .tcol .bubble .lead,.inmatch .tcol .bubble .newplay,.inmatch .tcol .bubble .note,.inmatch .tcol .bubble .thr{display:none}
+  .inmatch .tcol .bubble .whyt{display:none}   /* m6: on a phone "More" opens the keyword lines, as before */
+  .inmatch .field.cv .gend{display:none}   /* m6: the phone crops the pitch round the ball; its small map shows the ends */
+  /* m6: in keyboard mode the focused card no longer opens its details, which grew the sheet over most of the pitch; its arrows still show (H), and a tap opens them as before */
+  .a11y-kbd #cards:not(.locked) .lean-w:focus-within:not(.open) .ldet{display:none}
+  .inmatch .tcol .comm:has(.lead,.newplay,.note,.thr) .comm-who::after{content:"More";margin-left:8px;font:700 12px ui-sans-serif,system-ui;color:var(--accent);text-transform:none;letter-spacing:.02em}
+  .cap-open.inmatch .tcol .scene{-webkit-line-clamp:unset;display:block}
+  .cap-open.inmatch .tcol .bubble .lead,.cap-open.inmatch .tcol .bubble .newplay,.cap-open.inmatch .tcol .bubble .note,.cap-open.inmatch .tcol .bubble .thr{display:block}
+  .cap-open.inmatch .tcol .comm .comm-who::after{content:"Less"}
+  .cap-open.inmatch .tcol{position:relative;z-index:12}
+  body.inmatch:has(#goalban.on) #resultbox{opacity:0;transition:opacity .15s}
+  .inmatch .goalban b{font-size:44px}
+  .inmatch .goalban small{font-size:14px}
+}

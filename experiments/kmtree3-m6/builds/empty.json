@@ -1,0 +1,9 @@
+{
+  "id": "empty",
+  "name": "Empty build",
+  "about": "Spain as they are, with no components. A match with this build must play exactly like a match with no build at all (fxcheck.js checks it).",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": []
+}

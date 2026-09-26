@@ -1,0 +1,39 @@
+/* art2/theme-base.css: loaded under every look (looks.js), before the look itself.
+ * m2 names its fonts in about 80 places (ui-sans-serif and ui-monospace
+ * shorthands in play.html, onboard.css and panel.js). This routes them all to
+ * three variables each look sets, so a look changes the type without
+ * touching one of those rules. Generated from m2 css by art2 (the list is
+ * every selector there that names a sans or monospace family; the pitch SVG
+ * labels are left alone). --ff / --ffn let one element or block pick the
+ * display face without a fight over specificity. */
+:root[data-look] body{font-family:var(--f-body)}
+:root[data-look] :is(
+  .score, .who, .comm-who, .bubble .note, .result .side small, .result .dnote, tr.benchhead td, .pitch .ends, 
+  .pitch .z, .carry .carry-head, .kwc, .opt .unl, .ev .unl, .thr, .field .ends, .field .car, 
+  .result .verdict, .chip .ctag, .chip .carr, .bubble .newplay, .cardshead, .optw .det, .ikey, .ikey .ikh, 
+  .optw.armed .armnote, .obi-kick, .obi-team b, .obi-who, .obi-vs, .obc-step, .obc-text, .obc-sum, .obc-skip, 
+  .obc-bands, .obc-mark span, .obc-dlab, .opt.lean .lact, .opt.lean .lo, .opt.lean .ledge, .obe .obe-kick, 
+  .obe-t b, .obe-t .obe-sc, .obe-n, .obe-verdict, .obe-h, .obe-w, .obe-who, .obe-pn, .obe-pn small, .obe-num, 
+  .obe-kl, .obe-more, .sp-head h2, .sp-poss .v, .sp-nums th, .sp-nums td, .sp-nums td:first-child, 
+  .sp-more th, .sp-sum, .sp-sum b, .sp, .sp-btn, .sp-hl, .sp-cap, .sp-last, .sp-foot .lbl
+){font-family:var(--ff,var(--f-ui))}
+:root[data-look] :is(
+  .clock, .result .sum, .result .kick, .opt .chk, .ev .m, .sty .dl, .legs, .chip .cmin, .detbody .chk, 
+  .obe-min, .sp-min, .sp-tl .lb, .sp-last .m
+){font-family:var(--ffn,var(--f-num));font-variant-numeric:tabular-nums}
+/* Legibility floor: every SENTENCE the player reads is at least 14 px under
+ * a look (m2 prints card results at 12.5 to 13.5 px). Short labels (the
+ * uppercase headings, chips, buttons, the dice sums) keep their size. */
+:root[data-look] :is(.opt .desc,.opt .out,.opt .souts,.opt .parts,.opt .uses,.opt .why,.opt .sthen,.opt .stam,
+  .result .edges,.result .detail,.result .kick,.bubble .lead,.bubble .newplay,.carry .edge,.ldet,.detbody.open,
+  .obe-pl,.obe-kl,.teamkey,.waitcard,.obc-sub,.hint,.swapmsg,.opt.lean .lwhy){font-size:14px}
+:root[data-look] .inmatch .tcol :is(.bubble .lead,.bubble .newplay,.carry .edge){font-size:14px}
+/* The result box: m2's juice tints it by setting a translucent background
+ * colour inline (green, amber or red), which over a look's table, playmat or
+ * board let the ground show through the slip. A sheet of the look's surface
+ * sits under it (a pseudo-element behind the box, in the page's own
+ * stacking), so the tint lands on paper, not on wood. */
+:root[data-look] .result{position:relative}
+:root[data-look] .result::before{content:"";position:absolute;inset:-3px;z-index:-1;border-radius:inherit;background:var(--surface);pointer-events:none}
+/* the player-of-the-match number sits on his kit; in dark mode the kit red is light, so the number is dark */
+:root[data-look][data-mode=dark] .obe-num{color:#1a0d10}

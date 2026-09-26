@@ -1,0 +1,105 @@
+{
+ "id": "hunt-break-right",
+ "name": "Break down the right",
+ "engine": "Win it cleanly at the back, then break down the right: the first forward ball is free, clean wins need 3, and edges add up for the whole attack.",
+ "about": "Found by the hunt with Guessing and Invites the pass banned (the second family). A clean win on defence gives the attack it starts +1, and in that attack edges add up instead of only the biggest counting (Defence into attack, captain Rodri). If the attack starts from a ball you won, forward passes, long balls and runs need a margin of 3 for a clean win, and the first of them does not use up a decision (Break at once). Porro and Yamal on the same flank turn a half win on a run or overlap into a clean win (Same side), and Porro's overlap is free and leaves a gap worth +2 (Overlaps). With two runners in midfield (Fabián and Olmo) you can wait at the edge of their box for one to arrive late (Runners from deep), at the price of +1 to their midfield. Behind it, a tackle that loses outside your box becomes a foul and a booking instead of a way through (Takes one for the team). It keeps menus real: 50.9% of menus are real choices, against 44% with no build.",
+ "decisions": [
+  "Defend for a clean win, not a safe half win: a clean win starts the break with +1 and edges that add up.",
+  "On the break, go forward at once: the first forward ball costs no decision and needs 3, not 4.",
+  "At the edge of their box, wait for the late runner or go round with Porro: both get better with the break's stacked edges."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "D_RUNNERS",
+  "WC_BREAK",
+  "WE_ONE_FOR_TEAM"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "finisher"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "playmaker"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Cubarsí",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Porro",
+   "roles": [
+    "defender"
+   ],
+   "traits": [
+    "RO_OVERLAPPER"
+   ]
+  },
+  {
+   "name": "Laporte",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Cucurella",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Simón",
+   "roles": [
+    "keeper"
+   ]
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "WC_DEFENCE_TO_ATTACK"
+ },
+ "relationships": [
+  {
+   "component": "D_SAME_SIDE",
+   "a": "Porro",
+   "b": "Yamal"
+  }
+ ],
+ "hunt": {
+  "genes": "C:WC_DEFENCE_TO_ATTACK@Rodri | L:D_SAME_SIDE@Porro+Yamal | P:RO_OVERLAPPER@Porro | T:D_RUNNERS | T:WC_BREAK | T:WE_ONE_FOR_TEAM",
+  "found": "hunt/HUNT.md"
+ }
+}

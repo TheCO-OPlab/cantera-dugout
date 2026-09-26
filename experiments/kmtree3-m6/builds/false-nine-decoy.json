@@ -1,0 +1,44 @@
+{
+ "id": "false-nine-decoy",
+ "name": "The false nine decoy",
+ "engine": "Oyarzabal is a false nine and a decoy: two reasons for a centre-back to follow him, and midfielders arrive unmarked to shoot.",
+ "about": "The same pair as Decoy and receiver (Decoy from wave E, Nominated receiver from wave A) with wave D's No striker family. Oyarzabal plays as a false nine (link player, no striker keyword): a centre-back follows him short, so a midfielder who gets the ball at the edge of their box or in it is unmarked for the rest of the attack, and with nobody up front who only finishes, a midfielder's shot in their box is +2 and needs 3. The Decoy's marker still follows him: a move by anyone else against their defenders is +1 until he touches the ball. Cut-backs and low crosses go to Olmo, who needs 3 on his first touch of the attack (Fresh feet) and 2 when unmarked (Cool head). Two clean wins in a row give one more decision (Rhythm).",
+ "decisions": [
+  "Keep the ball away from Oyarzabal: he is there to be followed.",
+  "Get a midfielder on the ball at the edge of their box: he is unmarked from then on.",
+  "Olmo's first touch is his best shot."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "SE_RHYTHM",
+  "D_NO_STRIKER"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "link player"
+   ],
+   "kw": [],
+   "traits": [
+    "WE_DECOY",
+    "D_FALSE_NINE"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "RT_NOMINATE",
+    "SE_UNTOUCHED"
+   ],
+   "specialisations": [
+    "TR_COOL_HEAD"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "loaded-flank",
+  "name": "The loaded flank",
+  "engine": "Load the right flank so cut-backs reach Olmo unmarked, where he needs only 2 for a clean win.",
+  "about": "Porro and Yamal load the right. A clean pass to anyone on the right leaves him unmarked (Overload one flank); Porro's overlap does not use up a decision and leaves a gap when it comes off (Overlaps); when either of the two wins a duel cleanly there is space on the right (Flank partners), and that space lasts the whole attack (Loaded flank). Every cut-back and low cross goes to Olmo, not Oyarzabal (Nominated receiver), and when Olmo shoots unmarked a clean win needs only 2 (Cool head). The price: Baena, alone on the left, is -1 in every duel.",
+  "decisions": [
+    "Where to go: attacks are pulled to the right, where passes leave men unmarked, and away from Baena on the left.",
+    "Porro's overlap is a free extra step before the cross or the cut-back.",
+    "Olmo, a weaker finisher than Oyarzabal, is the man the ball goes to, because he arrives unmarked and Cool head turns that into goals."
+  ],
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "TA_OVERLOAD",
+    "LN_FLANK_STACK",
+    "EX_STACK_EDGES"
+  ],
+  "players": [
+    {
+      "name": "Porro",
+      "roles": [
+        "crosser"
+      ],
+      "traits": [
+        "RO_OVERLAPPER"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "RT_NOMINATE"
+      ],
+      "specialisations": [
+        "TR_COOL_HEAD"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "component": "LK_FLANK_PAIR",
+      "a": "Porro",
+      "b": "Yamal"
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CP_PASS_IT_ON"
+  }
+}

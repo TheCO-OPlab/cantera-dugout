@@ -1,0 +1,65 @@
+{
+ "id": "two-halves",
+ "name": "Two halves",
+ "engine": "Oyarzabal tires their defence for an hour; at 58 minutes Torres comes on and feeds on the tired men.",
+ "about": "The first hour is for wearing them down: Oyarzabal never stops running across their back line, so every attack of yours that gets to the edge of their box costs their defence stamina, and while no change has been made, an attack that ends without a shot still makes them chase. At the 58th minute (the plan) Torres comes on for him. Torres is fresh against a tired defence: the ball in behind for him is a new option, and his half wins count as clean wins; he takes over Oyarzabal's job, and Oyarzabal leaves it all out there as he goes. Their tiredness is theirs, so it stays when Oyarzabal goes off, but nothing adds to it after. The change of plan flips too: from then on the first decision of each attack is free. Only one of your men attacks their box (Fabián), so Rest defence has your men back in time when they counter: a lost duel on the first decision of their counter counts as a half win.",
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "D_CHANGE_OF_PLAN",
+  "D_LONE",
+  "D_REST_DEFENCE"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "presser"
+   ],
+   "traits": [
+    "D_WEAR_DOWN",
+    "D_EXIT_GIFT"
+   ]
+  },
+  {
+   "name": "Torres",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "D_FRESH_VS_TIRED",
+    "D_TAKES_OVER"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  }
+ ],
+ "captain": "Rodri",
+ "subs": {
+  "mode": "real",
+  "plan": [
+   {
+    "off": "Oyarzabal",
+    "on": "Torres",
+    "minute": 58
+   }
+  ]
+ }
+}
