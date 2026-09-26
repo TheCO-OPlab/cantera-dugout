@@ -1,0 +1,75 @@
+{
+ "id": "c-mix",
+ "name": "Tire them, then beat the keeper",
+ "engine": "Tire them, defend deep and break, and play the keeper's guessing game, all at once (five tactic slots).",
+ "about": "A mixture of the three engines, used for the synergy map: Oyarzabal harries and hits it hard, Yamal places it and goes when they commit, Rodri shapes to shoot, the defence sits deep and breaks at once, and your runs tire them.",
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 5,
+ "tactics": [
+  "WC_RUN_RAGGED",
+  "WC_LEGS_GOING",
+  "WC_SIT_DEEP",
+  "WC_BREAK",
+  "WC_KEEP_GUESSING"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "presser",
+    "finisher"
+   ],
+   "traits": [
+    "WC_HARRIER",
+    "WC_HITS_IT_HARD"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "runner",
+    "finisher"
+   ],
+   "traits": [
+    "WC_PLACES_IT",
+    "WC_SHAPES_TO_SHOOT",
+    "WC_CAUGHT_UPFIELD"
+   ]
+  },
+  {
+   "name": "Cubarsí",
+   "roles": [
+    "defender"
+   ],
+   "traits": [
+    "WC_OUTLET"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "runner"
+   ]
+  }
+ ],
+ "relationships": [
+  {
+   "component": "WC_HUNT_PAIRS",
+   "a": "Oyarzabal",
+   "b": "Yamal"
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "WC_DEFENCE_TO_ATTACK"
+ },
+ "bench": [
+  "Torres",
+  "Pedri",
+  "Merino",
+  "Williams",
+  "Zubimendi",
+  "García"
+ ]
+}

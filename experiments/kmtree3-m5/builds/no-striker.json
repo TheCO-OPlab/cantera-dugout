@@ -1,0 +1,69 @@
+{
+ "id": "no-striker",
+ "name": "No striker",
+ "engine": "Nobody up front who only finishes: the false nine drags a centre-back short, and midfielders arrive unmarked to shoot.",
+ "about": "Nobody up front who only finishes. Oyarzabal plays as a false nine: he comes short, the centre-back follows him, and the midfielder he passes to is unmarked. Three runners arrive from midfield (Fabián, Olmo, and Rodri, box to box), so at the edge of their box you can wait for one of them, and a half win on that late run still gets him the ball. With no striker on the pitch their defenders learn nothing from your midfielders, and a midfielder's shot in their box needs only 3 for a clean win. Put a Poacher up front and all of that switches off.",
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "D_NO_STRIKER",
+  "D_RUNNERS",
+  "D_LONE"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "link player"
+   ],
+   "kw": [],
+   "traits": [
+    "D_FALSE_NINE"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ],
+   "traits": [
+    "D_DECOY"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "D_GHOST"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "D_GHOST"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "playmaker"
+   ],
+   "traits": [
+    "D_BOX_TO_BOX"
+   ]
+  }
+ ],
+ "captain": "Rodri"
+}

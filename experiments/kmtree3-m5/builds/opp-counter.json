@@ -1,0 +1,12 @@
+{
+ "id": "opp-counter",
+ "name": "Counter-attacking side",
+ "engine": "They keep men back: lose a run or a shot at their box and they break at once, +2 in their next decision.",
+ "about": "An opponent build. When you lose a run with the ball or a shot in their half, they break at once: +1 to them in the next decision. A general test of any build that runs and shoots a lot.",
+ "base": "argentina",
+ "opponent": "spain",
+ "slots": 3,
+ "tactics": [
+  "WCO_COUNTER"
+ ]
+}

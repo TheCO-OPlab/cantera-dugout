@@ -1,0 +1,52 @@
+{
+  "id": "two-edges",
+  "name": "Two edges at once",
+  "engine": "Yamal's run and Olmo's free man both count, so play them in that order.",
+  "about": "One rule exception makes two specialists complementary. Normally only the biggest edge counts. Yamal's won run stretches their defence for the rest of the attack (+2 on every later pass or shot); Olmo finds the free man at the edge of their box (the man he finds is unmarked, +2). Apart, those two edges compete and only one counts; with Two edges at once they add up, so the order is: Yamal runs, Olmo finds the free man, then the shot. On defence Cucurella and Porro show their man wide instead of tackling (+2 to your next stop), and in your box that edge adds to any other your defence carries.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WE_TWO_EDGES"
+  ],
+  "players": [
+    {
+      "name": "Yamal",
+      "roles": [
+        "runner",
+        "carrier"
+      ],
+      "traits": [
+        "WE_TAKES_TWO"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "link player"
+      ],
+      "traits": [
+        "WE_FREE_MAN"
+      ]
+    },
+    {
+      "name": "Cucurella",
+      "roles": [
+        "defender"
+      ],
+      "traits": [
+        "WE_SHOWS_WIDE"
+      ]
+    },
+    {
+      "name": "Porro",
+      "roles": [
+        "defender"
+      ],
+      "traits": [
+        "WE_SHOWS_WIDE"
+      ]
+    }
+  ],
+  "captain": "Rodri"
+}

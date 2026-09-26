@@ -1,0 +1,12 @@
+{
+ "id": "opp-big-keeper",
+ "name": "Commanding keeper",
+ "engine": "Their keeper dominates his box: high crosses, headers and placed shots are harder; hard shots and low balls are not.",
+ "about": "An opponent build. Their keeper dominates his box: +2 to them against your high crosses and headers, +1 against your placed shots. Hard shots, low crosses and passes across the goal are untouched. It taxes The keeper's guessing game (the placed shot is its payoff).",
+ "base": "argentina",
+ "opponent": "spain",
+ "slots": 3,
+ "tactics": [
+  "WCO_BIG_KEEPER"
+ ]
+}

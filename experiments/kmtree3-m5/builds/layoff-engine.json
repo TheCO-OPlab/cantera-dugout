@@ -1,0 +1,62 @@
+{
+  "id": "layoff-engine",
+  "name": "The layoff engine",
+  "engine": "Oyarzabal lays the ball off to an unmarked Olmo; each layoff sets up a third man and costs no decision.",
+  "about": "Oyarzabal is the wall. Whoever has the ball in midfield or at the edge of their box can play it into his feet, and he lays it off first time to Olmo, who is unmarked; Oyarzabal and Olmo know each other, so that layoff costs no decision once an attack and Olmo is already running onto it (Understanding). Once a layoff has come off, Fabián, the third man, is already running: the man on the ball can slide it through for him, or square it to him in their box (Third man runs). Olmo stays out of the build-up: if he has not touched the ball in the attack, a clean win on his shot needs only 3 (Fresh feet). After the first layoff of the match, every layoff costs no decision (Rehearsed layoff).",
+  "decisions": [
+    "In midfield and at the edge of their box: the ball into Oyarzabal's feet instead of the dribble or the switch. It makes Olmo unmarked, arms the third man and counts towards the rehearsed layoff.",
+    "After the layoff: shoot with the unmarked man, or find Fabián, the third man running.",
+    "Who shoots: Olmo, who has not touched the ball (Fresh feet), rather than the man who has been carrying it."
+  ],
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "TA_THIRD_MAN",
+    "GR_REHEARSED",
+    "EX_STACK_EDGES"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "target man"
+      ],
+      "traits": [
+        "TR_WALL"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "SE_UNTOUCHED"
+      ]
+    },
+    {
+      "name": "Fabián",
+      "roles": [
+        "runner"
+      ]
+    },
+    {
+      "name": "Rodri",
+      "roles": [
+        "playmaker"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "component": "LK_WALL_PASS",
+      "a": "Oyarzabal",
+      "b": "Olmo"
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CP_PASS_IT_ON"
+  }
+}
