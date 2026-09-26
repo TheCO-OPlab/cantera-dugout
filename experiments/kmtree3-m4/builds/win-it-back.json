@@ -1,0 +1,60 @@
+{
+  "id": "win-it-back",
+  "name": "Win it straight back",
+  "engine": "Press the moment you lose the ball; a clean recovery lets you send Yamal straight through.",
+  "about": "Losing the ball in their half is the start of a chance, not the end of one. Rodri presses the moment you lose it (+3, their man has not turned); he and Laporte turn half wins on their tackles into clean ones, and every clean recovery leaves their players going forward, which is the only time Yamal can be sent straight through. Rodri's and Fabián's midfield breathes again after each clean recovery of theirs, and captain Rodri repeats that breather. Pay with legs turns the stamina into extra passes.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WB_COUNTERPRESS",
+    "EC_PAY_WITH_LEGS"
+  ],
+  "players": [
+    {
+      "name": "Rodri",
+      "roles": [
+        "presser",
+        "ball winner"
+      ],
+      "traits": [
+        "WB_CLEAN_TACKLER",
+        "WB_BREATHES"
+      ]
+    },
+    {
+      "name": "Laporte",
+      "roles": [
+        "defender",
+        "ball winner"
+      ],
+      "traits": [
+        "WB_CLEAN_TACKLER"
+      ]
+    },
+    {
+      "name": "Fabián",
+      "roles": [
+        "ball winner",
+        "runner"
+      ],
+      "traits": [
+        "WB_BREATHES"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "runner",
+        "winger"
+      ],
+      "traits": [
+        "WB_GONE"
+      ]
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CAP_LEADS"
+  }
+}

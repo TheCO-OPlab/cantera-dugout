@@ -1,0 +1,78 @@
+{
+ "id": "wear-down",
+ "name": "Wear them down",
+ "engine": "Tire their defence with every run and press, then beat tired men with less: a clean win needs 3, not 4.",
+ "about": "Oyarzabal harries their defence: while his own legs are good, every duel he takes costs the man he runs at 8 stamina, and each run with the ball costs them 6 more (Run them ragged). Rodri, as captain, repeats one of those taxes each moment. Once their defence is under 40 stamina it is fatigued: your clean wins against it need a margin of 3, not 4, and what their defenders learned against Yamal stops counting. From the 55th minute, Torres comes on for Oyarzabal: the fatigue stays with their defence, his fresh legs cost them 10 more, and he is +1 for every 20 stamina they have lost.",
+ "decisions": [
+  "Early on, run at them even when a pass has better odds: the stamina they lose is what the rest of the build spends.",
+  "Keep going at the defender who has learned Yamal's move: he is +2 against it, but each time costs his line 8 stamina, and once his line is fatigued his learning is gone.",
+  "Bring Torres on for Oyarzabal once their defence is tired: Oyarzabal's tax stops when your attack drops under 50 stamina anyway, and the fatigue he made stays."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "against": "opp-deep-block",
+ "slots": 3,
+ "tactics": [
+  "WC_RUN_RAGGED",
+  "WC_LEGS_GOING",
+  "WC_ROLLING"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "presser"
+   ],
+   "traits": [
+    "WC_HARRIER"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ],
+   "traits": [
+    "WC_KEEPS_GOING"
+   ]
+  },
+  {
+   "name": "Torres",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "WC_FRESH_FINISHER"
+   ]
+  }
+ ],
+ "relationships": [
+  {
+   "component": "WC_HUNT_PAIRS",
+   "a": "Oyarzabal",
+   "b": "Yamal"
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "WC_LEADS_CHASE"
+ },
+ "bench": [
+  "Torres",
+  "Pedri",
+  "Merino",
+  "Williams",
+  "Zubimendi",
+  "García"
+ ],
+ "subs": {
+  "mode": "real",
+  "from": 55,
+  "plan": [
+   {
+    "off": "Oyarzabal",
+    "on": "Torres"
+   }
+  ]
+ }
+}

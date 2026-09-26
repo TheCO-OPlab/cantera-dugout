@@ -1,0 +1,26 @@
+{
+  "id": "broken-play",
+  "name": "Broken play",
+  "engine": "Take the harder option: a saved shot or a half-won pass is a loose ball, and the attack goes on.",
+  "about": "A failed option opens a different continuation. A hard shot or a shot from distance that their keeper only saves is loose in their box, and a half-won ball through or cross breaks loose where it was (each once an attack), so the less accurate, harder option is often the better one. Oyarzabal is first to every loose ball in their half, and his shot straight after is +2. On defence, a tackle that loses becomes a foul: their man does not get past, but your man is booked, is never asked again and tackles at -1 from then on.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WE_SECOND_BALL",
+    "WE_BROKEN",
+    "WE_ONE_FOR_TEAM"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "WE_FIRST_TO_IT"
+      ]
+    }
+  ],
+  "captain": "Rodri"
+}

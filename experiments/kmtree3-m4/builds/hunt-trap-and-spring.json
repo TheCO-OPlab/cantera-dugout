@@ -1,0 +1,105 @@
+{
+ "id": "hunt-trap-and-spring",
+ "name": "The trap and the spring",
+ "engine": "Rodri leaves their runner free and steals the pass; your attack starts at the edge of their box, and every move there that differs from the last one is +2.",
+ "about": "Found by the hunt (beam search), not designed. On their attack Rodri can leave their runner free on purpose and step into the pass (Invites the pass). Clean tackler, also on Rodri, turns his half win into a clean win, so the trap comes off 87% of the times he tries it instead of 51%, and most successes start your attack at the edge of their box. There, Guessing gives +2 to any move a player has not just tried, Porro and Yamal together on the right turn a half win on a run, dribble or overlap into a clean win (Same side), Oyarzabal lays the ball off to an unmarked finisher (Lays it off), and every attack that reaches their box costs their defence 12 stamina (Wears them down). The steal is the supply, the other four turn it into goals: the steals alone score 0.27 goals a match, inside this build 0.58.",
+ "decisions": [
+  "On their attack in midfield or at the edge of your box, take Rodri's trap: it is picked 93% of the times it is offered.",
+  "In the attack a steal starts, change the kind of move each player makes: the same move twice is +2 to their defender.",
+  "Go down the right with Porro and Yamal: a half win there counts as a clean win."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "WE_GUESSING"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "D_WEAR_DOWN",
+    "TR_WALL"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "playmaker"
+   ],
+   "traits": [
+    "WB_CLEAN_TACKLER",
+    "WE_INVITE"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Cubarsí",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Porro",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Laporte",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Cucurella",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Simón",
+   "roles": [
+    "keeper"
+   ]
+  }
+ ],
+ "captain": "Rodri",
+ "relationships": [
+  {
+   "component": "D_SAME_SIDE",
+   "a": "Porro",
+   "b": "Yamal"
+  }
+ ],
+ "hunt": {
+  "genes": "L:D_SAME_SIDE@Porro+Yamal | P:D_WEAR_DOWN@Oyarzabal | P:TR_WALL@Oyarzabal | P:WB_CLEAN_TACKLER@Rodri | P:WE_INVITE@Rodri | T:WE_GUESSING",
+  "found": "hunt/HUNT.md"
+ }
+}

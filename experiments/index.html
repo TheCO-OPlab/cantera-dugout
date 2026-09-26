@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cantera experiments</title>
+<style>
+:root{--bg:#0e1411;--card:#151e19;--line:#2a3830;--ink:#e7eee8;--ink2:#b3c1b6;--muted:#7f9086;--pitch:#57b479}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,"Segoe UI",sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:28px;margin:0 0 4px;letter-spacing:.02em}
+.sub{color:var(--ink2);margin:0 0 24px}
+.exp{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:14px}
+.exp .meta{font:500 13px ui-monospace,Consolas,monospace;color:var(--muted)}
+.exp h2{font-size:19px;margin:4px 0 6px}
+.exp p{margin:0 0 10px;color:var(--ink2)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{display:inline-block;background:var(--pitch);color:#08130c;font-weight:600;text-decoration:none;border-radius:6px;padding:8px 14px}
+.links a.alt{background:none;color:var(--pitch);border:1px solid var(--pitch)}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Cantera experiments</h1>
+  <p class="sub">Builds from overnight runs, newest first. These are experiments, not releases: each one is frozen as it was at the end of its run.</p>
+  <div id="list"></div>
+  <footer>Anonymous play data is collected to improve the game; each build is tagged with its own label.</footer>
+</div>
+<script>
+/* Add a new night's build at the top of this list. Nothing else needs editing. */
+var EXPERIMENTS = [
+  {
+    date: '2026-09-26',
+    title: 'Builds on the key-moments match',
+    folder: 'kmtree3-m4',
+    label: 'matchcore-kmtree3-m4',
+    about: 'Spain against Argentina with 36 builds: pieces (traits, tactics, a captain, links, shared states) that combine and change what you should pick. 31 were designed and 5 emerged from simulations. Start with Defend deep, break fast.',
+    links: [
+      ['Choose a build', 'play.html?builds'],
+      ['Defend deep, break fast', 'play.html?build=deep-break'],
+      ['No build', 'play.html']
+    ]
+  }
+];
+var list = document.getElementById('list');
+EXPERIMENTS.forEach(function (e) {
+  var d = document.createElement('div'); d.className = 'exp';
+  var links = e.links.map(function (l, i) {
+    return '<a' + (i ? ' class="alt"' : '') + ' href="' + e.folder + '/' + l[1] + '">' + l[0] + '</a>';
+  }).join('');
+  d.innerHTML = '<div class="meta">' + e.date + ' · ' + e.folder + '</div><h2>' + e.title + '</h2><p>' + e.about + '</p><div class="links">' + links + '</div>';
+  list.appendChild(d);
+});
+</script>
+</body>
+</html>

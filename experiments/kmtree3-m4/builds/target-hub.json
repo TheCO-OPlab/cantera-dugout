@@ -1,0 +1,59 @@
+{
+  "id": "target-hub",
+  "name": "Target man hub (bridge)",
+  "engine": "Oyarzabal's layoff drags a defender out, and the stretched defence lets Yamal's passes through reach Olmo.",
+  "about": "The bridge between the layoff engine and stretch and thread. Oyarzabal lays the ball off to Yamal (Lays it off) and, because he drops deep to do it, a centre-back follows him: a clean layoff leaves their defence stretched for the rest of the attack (Drops deep). The layoff engine's output, a layoff, becomes stretch and thread's input, a stretched defence: Yamal's pass through or cut-back then gets there on a half win (Threads it) and goes to Olmo in the gap (Runs the channels). Third man runs and Rehearsed layoff keep the layoffs coming.",
+  "decisions": [
+    "The ball into Oyarzabal first, even at worse odds than the carry: a clean one stretches them for the whole attack.",
+    "After the layoff, the pass through or cut-back rather than the shot: against a stretched defence a half win still arrives.",
+    "Olmo stays out of the build-up so he can be the man in the gap."
+  ],
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "TA_THIRD_MAN",
+    "GR_REHEARSED",
+    "EX_STACK_EDGES"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "target man"
+      ],
+      "traits": [
+        "TR_WALL",
+        "TR_DRAG"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "finisher"
+      ],
+      "specialisations": [
+        "TR_THREADER"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "runner"
+      ],
+      "traits": [
+        "TR_CHANNEL_RUNNER"
+      ]
+    },
+    {
+      "name": "Rodri",
+      "roles": [
+        "playmaker"
+      ]
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CP_PASS_IT_ON"
+  }
+}
