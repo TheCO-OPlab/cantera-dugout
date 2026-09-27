@@ -1,0 +1,80 @@
+/* col: THE SEVERITY SCALE on the page. The colour tokens (--sv-* for icons
+ * and bars, --svi-* for words, --svp-* for the hover arrows on the pitch) are
+ * injected by icons.js from its PALETTE, the one source colcheck.js checks.
+ * Loaded after onboard.css, so these win over m4's green/grey/red tones. */
+
+/* icons everywhere: the step's colour (the shape still carries the meaning) */
+.oi.sv-goal{color:var(--sv-goal)} .oi.sv-good{color:var(--sv-good)} .oi.sv-keep{color:var(--sv-keep)}
+.oi.sv-ground{color:var(--sv-ground)} .oi.sv-lost{color:var(--sv-lost)} .oi.sv-conceded{color:var(--sv-conceded)}
+/* the goal for you is the strong step: a heavier icon */
+.oi.sv-goal{stroke-width:2.6}
+
+/* the lean card: chips and the thin bar, split by the scale */
+.opt.lean .lo .lp{color:var(--ink)}
+.opt.lean .lbar i.sv-goal{background:var(--sv-goal)}
+.opt.lean .lbar i.sv-good{background:var(--sv-good)}
+.opt.lean .lbar i.sv-keep{background:color-mix(in srgb,var(--sv-keep) 70%,transparent)}
+.opt.lean .lbar i.sv-ground{background:var(--sv-ground)}
+.opt.lean .lbar i.sv-lost{background:var(--sv-lost)}
+.opt.lean .lbar i.sv-conceded{background:var(--sv-conceded)}
+.opt.lean .lbar{height:6px}
+/* the edge chip: "+2 next" for you, "them +2 next" in plain ink (m4 had it
+ * red, which read as a warning about the card) */
+.opt.lean .ledge{white-space:nowrap}
+.opt.lean .ledge.them{color:var(--ink-2)}
+.opt.lean.dead .lbar i{opacity:.55}
+.ldet .ld-row.sv-conceded .ld-t{color:var(--svi-conceded)}
+
+/* the verdict and the result box: coloured by what the result means for you,
+ * not by who won the roll (the box carries rs-<step> from the verdict on) */
+.result.rs-goal .verdict{color:var(--svi-goal)} .result.rs-good .verdict{color:var(--svi-good)}
+.result.rs-keep .verdict{color:var(--svi-keep)} .result.rs-ground .verdict{color:var(--svi-ground)}
+.result.rs-lost .verdict{color:var(--svi-lost)} .result.rs-conceded .verdict{color:var(--svi-conceded)}
+.result.rs-goal{border-color:var(--sv-goal)} .result.rs-good{border-color:color-mix(in srgb,var(--sv-good) 70%,var(--line))}
+.result.rs-keep{border-color:var(--line)} .result.rs-ground{border-color:color-mix(in srgb,var(--sv-ground) 75%,var(--line))}
+.result.rs-lost{border-color:color-mix(in srgb,var(--sv-lost) 75%,var(--line))} .result.rs-conceded{border-color:var(--sv-conceded)}
+.result.rs-ground .headline{color:var(--svi-ground)} .result.rs-lost .headline{color:var(--svi-lost)}
+.result.rs-conceded .headline{color:var(--svi-conceded)} .result.rs-goal .headline{color:var(--svi-goal)}
+
+/* the key ("?"): the scale, one row per step */
+.sv-key li.sv-row{padding-left:0;text-indent:0;margin:6px 0 8px}
+.sv-key .sv-sw{display:inline-block;width:22px;height:6px;border-radius:3px;vertical-align:3px;margin-right:7px}
+.sv-key .sv-sw.sv-goal{background:var(--sv-goal)} .sv-key .sv-sw.sv-good{background:var(--sv-good)}
+.sv-key .sv-sw.sv-keep{background:var(--sv-keep)} .sv-key .sv-sw.sv-ground{background:var(--sv-ground)}
+.sv-key .sv-sw.sv-lost{background:var(--sv-lost)} .sv-key .sv-sw.sv-conceded{background:var(--sv-conceded)}
+.sv-key .sv-t{font-weight:800}
+.sv-key .sv-t.sv-goal{color:var(--svi-goal)} .sv-key .sv-t.sv-good{color:var(--svi-good)} .sv-key .sv-t.sv-keep{color:var(--svi-keep)}
+.sv-key .sv-t.sv-ground{color:var(--svi-ground)} .sv-key .sv-t.sv-lost{color:var(--svi-lost)} .sv-key .sv-t.sv-conceded{color:var(--svi-conceded)}
+.sv-key .sv-k{display:block;padding-left:52px;text-indent:-23px;margin:2px 0}
+.sv-key .sv-k .oi{margin-right:7px}
+
+/* the full-time card (dark backdrop): icons in the pitch tints, tiles for a
+ * lost ball and for their attack coming closer in their own steps */
+.obe .oi.sv-goal{color:var(--svp-goal)} .obe .oi.sv-good{color:var(--svp-good)} .obe .oi.sv-keep{color:var(--svp-keep)}
+.obe .oi.sv-ground{color:var(--svp-ground)} .obe .oi.sv-lost{color:var(--svp-lost)} .obe .oi.sv-conceded{color:var(--svp-conceded)}
+.obe-m.sv-lost{background:color-mix(in srgb,#ff9a3c 20%,rgba(0,0,0,.2));border-color:rgba(255,190,130,.45)}
+.obe-m.sv-ground{background:color-mix(in srgb,#ffd23f 14%,rgba(0,0,0,.2));border-color:rgba(255,220,120,.4)}
+
+/* the stats timeline and "last" line under the pitch */
+.sp .oi.sv-goal{color:var(--sv-goal)} .sp .oi.sv-conceded{color:var(--sv-conceded)}
+.obe-key.sv-lost{border-left-color:#ff9a3c} .obe-key.sv-ground{border-left-color:#ffd23f} .obe-key.sv-conceded{border-left-color:#ff5a5a}
+
+/* m6: the seventh step, "they get into your box" (danger, purple): the same
+ * places the other steps are coloured */
+.oi.sv-danger{color:var(--sv-danger)}
+.opt.lean .lbar i.sv-danger{background:var(--sv-danger)}
+.result.rs-danger .verdict{color:var(--svi-danger)}
+.result.rs-danger{border-color:color-mix(in srgb,var(--sv-danger) 80%,var(--line))}
+.result.rs-danger .headline{color:var(--svi-danger)}
+.sv-key .sv-sw.sv-danger{background:var(--sv-danger)}
+.sv-key .sv-t.sv-danger{color:var(--svi-danger)}
+.obe .oi.sv-danger{color:var(--svp-danger)}
+.obe-m.sv-danger{background:color-mix(in srgb,#e39bff 16%,rgba(0,0,0,.2));border-color:rgba(227,155,255,.45)}
+.obe-key.sv-danger{border-left-color:#e39bff}
+
+/* m6 (designer ruling 2026-09-26: risky starred cards stay playable): a live
+ * starred card that goes wrong at least half the time shows it plainly, its
+ * losing chances and one line in the page's warning colour */
+.opt.lean .lo.risk,.opt.lean .lo.risk .lp{color:var(--warn)}
+.opt.lean .lrisk{display:block;flex:1 0 100%;margin-top:6px;font:700 13px/1.3 ui-sans-serif,system-ui;color:var(--warn)}
+.ldet .lrisk,.opt .why.risk{color:var(--warn);font-weight:700}

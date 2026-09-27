@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How The Call Build Plays</title>
+<style>
+  :root{
+    color-scheme: light;
+    --ground:#f7f8f5; --surface:#fcfcfb; --surface-2:#f1f3ee;
+    --ink:#0b0b0b; --ink-2:#52514e; --muted:#8a9083; --line:#dfe3d8;
+    --accent:#1a7a3e; --warn:#b3402f; --you:#1a7a3e; --them:#b3402f; --gold:#a8740b;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#141610; --surface:#1a1a19; --surface-2:#22231f;
+    --ink:#ffffff; --ink-2:#c3c2b7; --muted:#7c826f; --line:#2c3026;
+    --accent:#4cb371; --warn:#d96a58; --you:#4cb371; --them:#d96a58; --gold:#d9a53a;
+  }}
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --ground:#141610; --surface:#1a1a19; --surface-2:#22231f;
+    --ink:#ffffff; --ink-2:#c3c2b7; --muted:#7c826f; --line:#2c3026;
+    --accent:#4cb371; --warn:#d96a58; --you:#4cb371; --them:#d96a58; --gold:#d9a53a;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);margin:0;
+       font:16px/1.6 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 16px 80px}
+  h1{font-size:28px;margin:0 0 6px;letter-spacing:-.015em}
+  .lede{color:var(--ink-2);font-size:17px;margin:0 0 24px}
+  h2{font-size:20px;margin:34px 0 8px;letter-spacing:-.01em}
+  p{margin:0 0 12px}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .card{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;background:var(--surface-2)}
+  .card b{display:block}
+  .card .rd{color:var(--ink-2);font-size:14px}
+  .card .up{color:var(--gold);font-size:14px}
+  .card .dn{color:var(--warn);font-size:14px}
+  .card.grey{opacity:.55}
+  .formula{font:600 15px/1.7 ui-monospace,Menlo,monospace;background:var(--surface-2);border-radius:10px;
+           padding:12px 14px;overflow-x:auto;white-space:pre}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:0 6px 6px 0;border-bottom:1px solid var(--line)}
+  td{padding:6px 6px 6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  svg{width:100%;height:auto;display:block}
+  svg.oi{display:inline-block;width:16px;height:16px;flex:none;vertical-align:-3px;fill:none;stroke:currentColor;
+    stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+  .oi.g{color:var(--accent)} .oi.r{color:var(--warn)} .oi.n{color:var(--ink-2)}
+  .ikey-list{list-style:none;margin:0;padding:0;font-size:15px;color:var(--ink-2)}
+  .ikey-list li{margin:6px 0;padding-left:25px;text-indent:-25px}
+  .ikey-list .oi{margin-right:9px}
+  .ikey-list b{color:var(--ink)}
+  .tiny{font-size:13px;color:var(--muted)}
+  ul{padding-left:20px;margin:0 0 12px}
+  li{margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>How this version plays</h1>
+  <p class="lede">A match is six moments. In each one somebody attacks, and you make one decision after another
+    until the attack ends. Every decision is a duel between one of your players and one of theirs, and the card
+    tells you both numbers before you choose.</p>
+
+  <h2>What happens after you choose</h2>
+  <p>The page plays the result in the same order every time, in about three seconds, and all of it on the pitch:
+    the card you chose stays marked beside the pitch; over the two players in the duel a small box shows the two dice
+    rolling next to their names; the verdict says who won the roll and by how
+    much ("Oyarzabal won by 7", "Álvarez won by 2", "Level: nobody won it cleanly"; when a half win and a clean win
+    end the same way, just "Yamal won by 2"), with every plus and minus that
+    applied under it; the ball moves on the field; the headline says what it means; then the
+    next decision appears. The counter at the top says where you are: "Moment 2 of 6, decision 3", because one moment
+    can take a few decisions. When a new moment starts, the last result is gone from the pitch; when the same play
+    goes on, it fades after a beat. A goal says GOAL on the pitch itself. A click or a key skips to the end. On a
+    phone the page first goes back to the top, so the score, the field and the result are on screen.</p>
+  <p>Settings has "Card detail", with three choices. Lean is the default at every size: one line and each result as
+    an icon with its chance; point at the card (or tap it once on a phone) for the rest. Full is "Show all the
+    working". Short (or opening the page with
+    <code>?playtesting=yes</code>) shows each option's results in a few words with their chances ("Goal 72% · Saved,
+    Yamal follows up 28%") and any edge a result carries; the rest is under Details on each card. An edge your last
+    decision won shows as a chip on the card it helps ("+2"); point at it for the reason. "+2 in your next duel"
+    means your player adds 2 to his number in the next duel.</p>
+
+  <p>A new play says so. The minute at the top runs from the last moment's to this one's while the play before it
+    runs (the first play is the kick-off at 0'), and the commentator opens with "A new attack of yours" (or "of
+    theirs"), and "Yamal has the ball again" when the man on the ball is the one who had it when the last play ended.</p>
+
+  <h2>What the icons on each result mean</h2>
+  <p>Every result on every card starts with one icon, and so do the headline of the result and each line of "What
+    has happened". The icon is always from your side: your goal is at the bottom of the pitch. Green is good for you,
+    red is bad, grey is neither, and the shape says what happens, so the colour is never the only clue. The one
+    shape that comes in two colours is the arrow back: red when the ball goes toward your goal with them, grey when
+    you pass it back and keep it. The "?" over
+    the cards opens the key; Settings always has it.</p>
+  <div class="panel" id="iconkey"></div>
+  <p class="tiny">Which icon a result gets is worked out once, from what the result does to the ball (where it goes and
+    whose it is, or how play stops), never card by card.</p>
+
+  <h2>The pitch, and four zones on it</h2>
+  <p>The match is drawn on a pitch standing up: your goal at the bottom, theirs at the top, all 22 players as dots
+    with their shirt numbers (each team in its own kit colours, which the title screen names; the keepers in light grey or yellow). Between moments the match plays
+    itself for about five seconds, like fast forward: passes, runs, now and then a tackle. It stops exactly where the
+    next moment starts, with a ring and a name on the player who has the ball and the zone lit up. "Skip to the
+    moment" jumps to the stop, and 1x or 2x sets the speed. After you choose, the dots do what the result says: the
+    ball goes to the player the result names, a defender who was beaten is left behind, and a lost ball changes side.
+    The play between moments is only a picture: it never changes what happens in the match.</p>
+  <p>Your attack moves up the pitch one zone at a time. Win a duel and the ball goes forward; lose it and their
+    team attacks from where you lost it. You get at most four decisions in one attack (three if the attack started
+    with you winning the ball back), then their players are all back and the attack is over.</p>
+  <svg viewBox="0 0 720 96" role="img" aria-label="Four zones from your half to their box">
+    <g font-family="ui-sans-serif,system-ui" font-size="15" text-anchor="middle">
+      <rect x="2" y="18" width="170" height="60" rx="8" fill="none" stroke="var(--line)" stroke-width="2"/>
+      <text x="87" y="53" fill="var(--ink-2)">Your half</text>
+      <rect x="182" y="18" width="170" height="60" rx="8" fill="none" stroke="var(--line)" stroke-width="2"/>
+      <text x="267" y="53" fill="var(--ink-2)">Midfield</text>
+      <rect x="362" y="18" width="170" height="60" rx="8" fill="none" stroke="var(--line)" stroke-width="2"/>
+      <text x="447" y="53" fill="var(--ink-2)">Edge of their box</text>
+      <rect x="542" y="18" width="176" height="60" rx="8" fill="none" stroke="var(--you)" stroke-width="2"/>
+      <text x="630" y="53" fill="var(--you)">Their box: shoot</text>
+      <text x="360" y="12" fill="var(--muted)" font-size="12">your attack goes this way</text>
+    </g>
+  </svg>
+  <p>Their attack comes the other way: midfield, the edge of your box, your box. There you choose how to stop
+    them, and your keeper usually has the last decision.</p>
+
+  <h2>Each decision is a short menu</h2>
+  <p>You see three options you can pick (two when only two make sense) and at most one greyed out. The three are
+  always: the option least likely to lose the ball, the strongest option, and a third that is either something
+  only your players can do or the option that plays most differently from the other two.</p>
+  <p>Why an option is greyed out:</p>
+  <ul>
+    <li>An option your players unlock, and the placed shot, say why in one line under the card: it goes wrong N
+    times in 36, or another option on the menu does at least as well on every count. That other option is always
+    one you can see on the same menu.</li>
+    <li>Any other greyed option cannot come off, goes wrong nearly every time, or is far worse than an option next to
+    it that is no riskier. It has no line of its own: turn on the maths switch in Settings, and the reason is at
+    the end of that card's working.</li>
+  </ul>
+  <div class="card">
+    <b>Yamal dribbles at González</b>
+    <span class="rd">Yamal (RW, Technique 18) against González (LB, Defending 13).</span><br>
+    <span class="up">Then: González is out of position (+2 in your next duel against him).</span>
+  </div>
+  <div class="card">
+    <b>Yamal gives it to Porro, who crosses it low across the 5.5-metre box for Oyarzabal</b>
+    <span class="rd">Unlocked by Porro (Crosser).</span>
+  </div>
+  <div class="card grey">
+    <b>Oyarzabal places it carefully at the corner</b>
+    <span class="rd">Greyed: "Oyarzabal shoots as hard as he can" does at least as well on every count.</span>
+  </div>
+  <p class="tiny">Card text is shortened here; in the match every part of every number is on the card.</p>
+
+  <h2>Edges: what one decision wins carries into the next</h2>
+  <p>Beat a defender and he is out of position for the next duel against him. Get the ball to a man who is
+    unmarked and his next duel is easier. The card says so before you choose, in a line that starts with
+    "Then:". Only the biggest edge from before counts on any one duel; a bad one (a booked defender, a man who
+    just missed) always counts.</p>
+
+  <h2>Keywords and pairs: your squad changes the menu</h2>
+  <p>Some players have a keyword (Dribbler, Crosser, Free-kick taker, Ball winner, Destroyer, Poacher, Shot blocker,
+  Sweeper keeper, Cross catcher, Target man, Late runner, Playmaker) and some pairs play together (One-two, Overlap
+  partners, Strike partners, Pressing pair, Practised routine, Playing out together). Each one adds an option that does not exist without them, marked "Unlocked by".
+    Their players have keywords too: their Free-kick taker makes a foul near your box a shot at goal, and your
+    keyword option that answers one of theirs says "Your answer to". An option your players unlock is only
+    offered when it is a real choice: if it would lose the ball half the time, or another option on the menu does
+  better on every count, it is shown greyed out with that reason.</p>
+  <p>Four you may not have met yet:</p>
+  <ul>
+    <li>Destroyer: once a match he can stop their attack with a foul and the referee shows no card. Near your box it
+    is still a free kick.</li>
+    <li>Sweeper keeper: your keeper can run out of his goal for a ball over your defence or for their Playmaker's pass,
+    and can run out of the penalty area with the ball when they press him.</li>
+    <li>Practised routine (a Free-kick taker and a Target man): at a free kick or a corner, the taker aims at the far
+    post, where the Target man arrives unmarked.</li>
+    <li>Playing out together (a Sweeper keeper and a Playmaker in defence): when they press your keeper, he passes
+    short to the Playmaker, who passes it past their forwards, so your attack starts in midfield.</li>
+  </ul>
+
+  <h2>Counterplay: they learn what you keep doing</h2>
+  <ul>
+    <li>A defender you beat with a move is +2 against that same move next time, up to +6. The card says it in
+      red: "Tagliafico has seen this run at him twice: +4 to him".</li>
+    <li>A defender who has learned a move stays close to the man on that card, so a different move on the same
+      menu has more room (+1, in gold).</li>
+    <li>Their keeper is +2 against the same kind of shot as your last one (hard or placed).</li>
+    <li>A pass backwards is not learned: it beats nobody.</li>
+  </ul>
+  <p>None of this looks at the score. The switch in Settings changes it to Fade (a move that worked is -2 for a
+    while), Adapt (at half-time they put a second man on your best side) or Off.</p>
+
+  <h2>The dice</h2>
+  <p>Both players add their stat, the parts on the card, and one roll of a six-sided dice each.</p>
+  <div class="formula">you  = your stat + parts + roll(1 to 6)
+them = their stat + parts + roll(1 to 6)
+
+you - them is 4 or more   it comes off cleanly
+you - them is 0 to 3      it half comes off
+you - them is below 0     it goes wrong</div>
+  <p>What "half comes off" means is on each result line: a shot saved, a pass that arrives but a step behind the
+  man. When your man wins the roll by 1 to 3, the result banner's verdict says so ("Cubarsí edged it by 3: half a win (4 or more is a clean win)"), so a won roll that only half comes off is never a surprise. The two dice can swing the result by at most 5 either way, so a lead of 9 or more before the dice cannot
+    go wrong, and a deficit of 6 or more cannot come off (that option is shown greyed out).</p>
+  <table id="odds" aria-label="Chances by the lead before the dice">
+    <thead><tr><th>Your lead before the dice</th><th>Comes off cleanly</th><th>Half comes off</th><th>Goes wrong</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p class="tiny">This table is computed by the same code the match uses (resolve.js), out of 36 ways the two dice can land.</p>
+
+  <h2>Shots</h2>
+  <ul>
+    <li>A shot from inside the box is easier: +3 for your hard shot and for any shot of theirs, +2 for your placed shot.</li>
+    <li>No shot is a sure goal, yours or theirs: the keeper always keeps at least one chance in 4, and a defender
+      throwing himself in front of it when the keeper is out of his goal has at least one chance in 4 too.</li>
+    <li>A placed shot the keeper saves, or one that goes wide, ends your attack, but their team does not get the ball
+    from it. A hard shot the keeper pushes out can fall to one of your players; one he holds starts their attack.</li>
+    <li>The placed shot's card says the keeper has a better chance only when it really scores less often than the hard
+    shot next to it. When it is no better on any count, it is greyed out.</li>
+  </ul>
+
+  <h2>Stamina</h2>
+  <p>A gamble costs the line of the man who tries it: 16 stamina for running and chasing, 5 for anything else. The
+    careful pass, a substitution and running the clock cost nothing. A tired line plays below its numbers, and a
+    substitution brings it back to 100.</p>
+
+  <h2>Your keeper with the ball</h2>
+  <p>When they press your keeper, he can always kick it out of play: finding the touchline goes wrong at most 3 times
+  in 36 (the card shows it as a part). A throw-in near his own box still ends their attack.</p>
+
+  <h2>The final</h2>
+  <p>The real 2026 final was level after 90 minutes and went to extra time. This prototype stops at 90: a level
+  final says so on the full-time screen.</p>
+
+  <p class="tiny" style="margin-top:30px">The call build (from g2) of the key moments tree. Try the World Cup final both ways:
+    beat the same full-back twice and read the red line on the next menu, and play one match carefully (the
+    low-risk option every time you can) to see how far that gets you.</p>
+</div>
+<script src="./resolve.js"></script>
+<script src="./icons.js"></script>
+<script>
+  (function () {
+    var el = document.getElementById('iconkey');
+    if (el && window.KMIcons) el.innerHTML = window.KMIcons.keyHTML(false);
+  })();
+</script>
+<script>
+(function () {
+  var R = window.KMResolve, body = document.querySelector('#odds tbody');
+  if (!R || !body) return;
+  [-5, -3, -1, 0, 1, 2, 3, 4, 5, 7, 9].forEach(function (m) {
+    var o = R.odds(m), tr = document.createElement('tr');
+    function c(p) { return Math.round(p * 36) + ' in 36'; }
+    tr.innerHTML = '<td>' + (m > 0 ? '+' : '') + m + '</td><td>' + c(o.good) + '</td><td>' + c(o.mixed) + '</td><td>' + c(o.bad) + '</td>';
+    body.appendChild(tr);
+  });
+  document.title = document.title;
+  document.body.setAttribute('data-rows', String(body.children.length));
+})();
+</script>
+</body>
+</html>
