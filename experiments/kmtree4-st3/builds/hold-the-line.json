@@ -1,0 +1,34 @@
+{
+  "id": "hold-the-line",
+  "name": "Hold the line",
+  "engine": "Step your line up in your own box, then go straight over the top when you win the ball.",
+  "about": "A back line that steps up even inside its own box. When their man waits for a cross, your line can step up and leave him offside (+2 the first time, 2 less every time after: they learn to time their runs), with Simón sweeping behind it: he is +2 and wins cleanly at 3 when he comes out, -1 when he has to react on his line. When a clean stop or an offside wins you the ball, their players are still upfield, and on the first decision of your attack the ball can go straight over the top for your fastest forward. Rodri leaves a runner free on purpose and steps into the pass, which also starts that ball over the top when it works.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WE_HOLD_LINE",
+    "WE_OVER_THE_TOP"
+  ],
+  "players": [
+    {
+      "name": "Simón",
+      "roles": [
+        "keeper"
+      ],
+      "traits": [
+        "WE_SWEEPER"
+      ]
+    },
+    {
+      "name": "Rodri",
+      "roles": [
+        "playmaker"
+      ],
+      "traits": [
+        "WE_INVITE"
+      ]
+    }
+  ],
+  "captain": "Rodri"
+}

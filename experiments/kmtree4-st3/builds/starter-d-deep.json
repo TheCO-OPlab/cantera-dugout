@@ -1,0 +1,31 @@
+{
+ "id": "starter-d-deep",
+ "name": "Starter D: how deep do we defend?",
+ "family": "D",
+ "engine": "Sit back and take a booking when you must, then turn every clean stop into an attack with a head start.",
+ "about": "Defence and transition. On their attacks, covering, dropping back, blocking and marking are +1, and tackling and pressing -1; a stop near your box wins you the ball, and the attack that starts from a won ball finds their team stretched (Sit deep). Outside your box, a lost tackle, press or interception becomes a foul: a free kick to them where it was, your man is booked, and his tackles are -1 for the rest of the match (Takes one for the team). A clean win on defence gives the attack it starts +1, and in that attack the edges you carry add up (Defence into attack, captain Rodri).",
+ "decisions": [
+  "Cover and drop back rather than tackle: the stop is what starts your attack.",
+  "A tackle you lose is a booking, not a chance for them: know who is already booked.",
+  "After a clean stop, go forward at once: the edges add up in that attack."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "WE_ONE_FOR_TEAM",
+  "WC_SIT_DEEP"
+ ],
+ "players": [
+  {
+   "name": "Rodri",
+   "roles": [
+    "ball winner"
+   ]
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "WC_DEFENCE_TO_ATTACK"
+ }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "grows",
+  "name": "Grows into the match",
+  "engine": "Clean wins build confidence, links and tempo, so the team is strongest in the last moments.",
+  "about": "Weaker at kick-off, strong by the last moments. Every clean win gives that player confidence; at 2 he is in form and once a moment his half win on your attack counts as clean, at 3 he rolls two dice on his shots. Yamal earns a run at their whole defence after two clean runs. The links Rodri to Baena and Yamal to Porro grow with every clean pass between them until those passes are free and the receiver is unmarked. Attacks that reach their box build the team's tempo, one more decision for every later attack, until they score. Captain Rodri makes each of these grow one step faster once a moment.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "GR_CONFIDENCE",
+    "GR_TEMPO"
+  ],
+  "players": [
+    {
+      "name": "Yamal",
+      "roles": [
+        "carrier",
+        "winger"
+      ],
+      "traits": [
+        "GR_EARNED_OPTION"
+      ]
+    },
+    {
+      "name": "Rodri",
+      "roles": [
+        "playmaker"
+      ]
+    },
+    {
+      "name": "Baena",
+      "roles": [
+        "finisher"
+      ]
+    },
+    {
+      "name": "Porro",
+      "roles": [
+        "runner"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "component": "LK_CHEMISTRY",
+      "a": "Rodri",
+      "b": "Baena"
+    },
+    {
+      "component": "LK_CHEMISTRY",
+      "a": "Yamal",
+      "b": "Porro"
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CAP_STANDARD"
+  }
+}
