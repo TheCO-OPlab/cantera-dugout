@@ -1,0 +1,69 @@
+{
+  "id": "test-f-rhythm",
+  "name": "Test (wave F): rhythm and the banked edge",
+  "about": "Wave F test build: rhythm (Rhythm, Knows his run, Sets the pace, Tempo builds, the captain Conducts) and the banked edge (Keep it for later, Show them one side, Dead-ball specialist, Two edges at once).",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 5,
+  "tactics": [
+    "SE_RHYTHM",
+    "GR_TEMPO",
+    "EC_BANK_EDGE",
+    "AD_DECOY_ROUTE",
+    "EX_STACK_EDGES"
+  ],
+  "players": [
+    {
+      "name": "Rodri",
+      "roles": [
+        "playmaker"
+      ],
+      "traits": [
+        "RO_SETS_PACE"
+      ]
+    },
+    {
+      "name": "Fabián",
+      "roles": [
+        "link player"
+      ],
+      "traits": [
+        "RO_SETS_PACE"
+      ]
+    },
+    {
+      "name": "Baena",
+      "roles": [
+        "set-piece taker"
+      ],
+      "traits": [
+        "TR_DEAD_BALL"
+      ]
+    },
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "PF_DRAWS_FOULS"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "component": "LK_KNOWS_RUN",
+      "a": "Rodri",
+      "b": "Yamal"
+    },
+    {
+      "component": "LK_KNOWS_RUN",
+      "a": "Olmo",
+      "b": "Oyarzabal"
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CAP_CONDUCTOR"
+  }
+}

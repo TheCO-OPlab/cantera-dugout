@@ -1,0 +1,42 @@
+{
+ "id": "starter-c-target",
+ "name": "Starter C: who do we go after?",
+ "family": "C",
+ "engine": "Beat one man, keep running at him, and turn the half wins against him into clean wins.",
+ "about": "A man under pressure. A run or carry in midfield or their half that wins against one of their outfield men (a half win is enough) leaves him rattled until he wins a duel against you; your later runs and carries at him are +1 (Run at him). Once in each possession, a half win against a rattled man counts as a clean win: on a forward duel against him, or a tackle or press on him when they attack (Keep at him, captain Rodri); where it applies it replaces Run at him's +1. Guessing is on for both teams in every match.",
+ "decisions": [
+  "Pick the man to go after and run at him: a half win is enough to rattle him.",
+  "Save the captain's call for the duel that matters: once a possession, a half win against the rattled man counts as a clean win.",
+  "On defence, a tackle or press on a rattled attacker gets the same call."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "TA_RUN_AT_HIM"
+ ],
+ "players": [
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "carrier"
+   ]
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "CAP_KEEP_AT_HIM"
+ }
+}
