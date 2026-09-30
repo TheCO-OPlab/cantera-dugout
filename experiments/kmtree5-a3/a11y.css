@@ -1,0 +1,127 @@
+/* acc1: ACCESSIBILITY. Loaded after the page's own styles and onboard.css;
+ * everything here is either new (the screen reader's text, the key numbers,
+ * the settings) or keyed on an attribute a11y.js sets on <html>:
+ * data-a11y-hc (on|off), data-a11y-text (100|115|130),
+ * data-a11y-motion (reduce|os), and the class a11y-kbd (keyboard mode). */
+
+/* the screen reader's text: read, never seen */
+.a11y-sr{position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ------------------------------------------------ focus rings
+ * The page's green, 3 px, a little off the edge, so a focused card reads
+ * as "the keyboard is here" and a chosen card (its 2 px green border) as
+ * "you picked this". Only for the keyboard (:focus-visible), never after a
+ * mouse click. */
+:root{--a11y-ring:var(--accent)}
+:where(button,input,summary,a,[tabindex]):focus-visible{outline:3px solid var(--a11y-ring);outline-offset:2px;border-radius:6px}
+.opt:focus-visible{outline:3px solid var(--a11y-ring);outline-offset:3px;border-radius:12px}
+.opt.lean:focus-visible{border-color:var(--accent)}
+.optw.chosen .opt:focus-visible{outline-offset:4px}
+input[type=radio]:focus-visible,input[type=checkbox]:focus-visible{outline-offset:1px;border-radius:3px}
+/* the card numbers for keys 1 to 4, only once a key has been used */
+.a11y-kn{display:none}
+.a11y-kbd #cards .a11y-kn{display:inline-flex;align-items:center;justify-content:center;flex:none;width:19px;height:19px;margin:0 7px 0 0;vertical-align:1px;
+  border-radius:5px;font:800 11.5px/1 ui-sans-serif,system-ui,sans-serif;color:var(--surface);background:var(--ink-2)}
+.a11y-kbd #cards .opt:focus-visible .a11y-kn{background:var(--accent);color:var(--surface)}
+.a11y-kbd #cards .opt.lean .a11y-kn{float:left;margin-top:2px}
+
+/* ------------------------------------------------ colour: a second cue
+ * "They score" drew the same net as "Goal", told apart by colour alone
+ * (green and red). The net is turned upside down for a goal against you:
+ * the goal at the bottom of the screen, yours. */
+/* m6: col1's icons.js draws "They score" as its own shape (your goal, at the
+ * bottom: the frame opens upward, the ball in it), so the flip is gone: over
+ * col1's drawing it turned "They score" back into the "Goal" icon. */
+
+/* ------------------------------------------------ contrast, default look
+ * Measured in Edge (a11ycheck.js): every text node 4.5:1 or more against
+ * what is behind it. The grey for small print and the gold for "then +2"
+ * were 3.4:1 and 3.0:1 on white; both are darker now, the same hues. */
+:root{--muted:#62685a;--gold:#8a6300}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--muted:#9aa08e;--gold:#e0b04a;--warn:#e27b69} }
+:root[data-theme="dark"]{--muted:#9aa08e;--gold:#e0b04a;--warn:#e27b69}
+
+/* ------------------------------------------------ high contrast */
+:root[data-a11y-hc="on"]{
+  --ground:#ffffff;--surface:#ffffff;--surface-2:#f2f2f2;--ink:#000000;--ink-2:#1a1a1a;--muted:#3b3b3b;--line:#1a1a1a;
+  --accent:#0a5c28;--accent-2:#07471f;--warn:#9e1b0c;--gold:#6b4a00;--bubble:#ffffff;--bubble-line:#000000;--bubble-ink:#000000;
+  --a11y-ring:#0047b3}
+@media (prefers-color-scheme:dark){ :root[data-a11y-hc="on"]:not([data-theme="light"]){
+  --ground:#000000;--surface:#000000;--surface-2:#111111;--ink:#ffffff;--ink-2:#f0f0f0;--muted:#d0d0d0;--line:#e6e6e6;
+  --accent:#6ee39a;--accent-2:#8cf0b0;--warn:#ff8f7f;--gold:#ffd166;--bubble:#000000;--bubble-line:#ffffff;--bubble-ink:#ffffff;
+  --a11y-ring:#ffd24a} }
+:root[data-a11y-hc="on"][data-theme="dark"]{
+  --ground:#000000;--surface:#000000;--surface-2:#111111;--ink:#ffffff;--ink-2:#f0f0f0;--muted:#d0d0d0;--line:#e6e6e6;
+  --accent:#6ee39a;--accent-2:#8cf0b0;--warn:#ff8f7f;--gold:#ffd166;--bubble:#000000;--bubble-line:#ffffff;--bubble-ink:#ffffff;
+  --a11y-ring:#ffd24a}
+:root[data-a11y-hc="on"] .opt,:root[data-a11y-hc="on"] .card,:root[data-a11y-hc="on"] .waitcard,:root[data-a11y-hc="on"] button.ghost,
+:root[data-a11y-hc="on"] .duelbox,:root[data-a11y-hc="on"] .drawer,:root[data-a11y-hc="on"] .legend{border-width:2px;border-color:var(--line);border-style:solid}
+:root[data-a11y-hc="on"] .opt.dead{border-style:dashed}
+:root[data-a11y-hc="on"] .opt:focus-visible,:root[data-a11y-hc="on"] :where(button,input,summary,a):focus-visible{outline-width:4px}
+:root[data-a11y-hc="on"] #cards.locked .optw:not(.chosen){opacity:.55}
+:root[data-a11y-hc="on"] .opt.dead{opacity:.62}
+:root[data-a11y-hc="on"] svg.pfield .pd circle{stroke-width:.42}
+
+/* ------------------------------------------------ text size
+ * The words grow, the pitch keeps its place: the header, the commentator's
+ * column, the cards' column and the side panels are zoomed; the pitch
+ * column takes what is left (the page lays the pitch out again). */
+:root[data-a11y-text="115"] .bar,:root[data-a11y-text="115"] .inmatch .tcol,:root[data-a11y-text="115"] .inmatch .colR,
+:root[data-a11y-text="115"] .drawer,:root[data-a11y-text="115"] body:not(.inmatch) #stage{zoom:1.15}
+:root[data-a11y-text="130"] .bar,:root[data-a11y-text="130"] .inmatch .tcol,:root[data-a11y-text="130"] .inmatch .colR,
+:root[data-a11y-text="130"] .drawer,:root[data-a11y-text="130"] body:not(.inmatch) #stage{zoom:1.3}
+
+/* ------------------------------------------------ motion
+ * The computer's "less motion" and the setting both stop every CSS
+ * animation and transition on the page (the pieces' own motion is
+ * juice.js's, which reads the same two). */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+}
+:root[data-a11y-motion="reduce"] *,:root[data-a11y-motion="reduce"] *::before,:root[data-a11y-motion="reduce"] *::after{
+  animation:none !important;transition:none !important;scroll-behavior:auto !important}
+
+/* ------------------------------------------------ the settings */
+.a11y-set{padding:8px 0 10px;border-bottom:1px solid var(--line)}
+.a11y-set > span:first-child{font-weight:700;color:var(--ink)}
+.a11y-tx{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
+.a11y-tx label{display:inline-flex}
+.a11y-keys{margin:8px 0 12px;font-size:13px;color:var(--ink-2)}
+.a11y-keys summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.a11y-keys dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:8px 0 0}
+.a11y-keys dt{font:700 12px ui-monospace,monospace;color:var(--ink);white-space:nowrap}
+.a11y-keys dd{margin:0}
+
+/* ------------------------------------------------ contrast, the pieces with their own colours
+ * (measured in Edge, a11ycheck.js E4) */
+/* the tip's step count was a fixed gold, 4.4:1 on the dark bubble */
+.obc-step{color:var(--gold)}
+/* the dash between the two teams on the title screen was faded to 3.1:1 */
+.obi-vs span{opacity:1}
+/* THEIR GOAL and YOUR GOAL on the board's edge (1.6 to 4.4:1 where the
+ * board or the felt showed through): the words get a halo, as the arrows'
+ * percentages already have, so they read on the board, the felt or grass */
+.field.cv svg.pfield .glab{fill:#2a2113;stroke:#f3ead2;stroke-width:.42px;paint-order:stroke;stroke-linejoin:round}
+.field.cv.dark svg.pfield .glab,.field.cv.bc svg.pfield .glab{fill:#fff;stroke:#0d140e}
+:root[data-a11y-hc="on"] .field.cv svg.pfield .glab{fill:#000;stroke:#fff}
+:root[data-a11y-hc="on"] .field.cv.dark svg.pfield .glab,:root[data-a11y-hc="on"] .field.cv.bc svg.pfield .glab{fill:#fff;stroke:#000}
+/* dark mode: the green buttons and the tip's result chips are light, so their words are dark (white was 2.6:1) */
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) :is(button.go,.obc-bands .good,.obc-bands .bad,.obe-num){color:#0b140d} }
+:root[data-theme="dark"] :is(button.go,.obc-bands .good,.obc-bands .bad,.obe-num){color:#0b140d}
+.obc-bands .b small{opacity:1}
+/* the score under GOAL sat on the pitch itself (2.5:1 on a light board): it has a dark card now */
+.goalban small{display:table;margin:10px auto 0;padding:3px 11px;border-radius:8px;background:rgba(8,12,8,.78)}
+/* a result box fading out is gone at once when motion is reduced (lay1: it is gone 2.3 s after the next decision shows) */
+@media (prefers-reduced-motion:reduce){ .duelbox.past{visibility:hidden} }
+:root[data-a11y-motion="reduce"] .duelbox.past{visibility:hidden}
+/* the "YOUR CHANCE" and "YOU HAVE TO STOP THIS" chips: the words a step darker than their tint (4.0 and 4.2:1) */
+.comm-who .who.you{color:color-mix(in srgb,var(--accent) 78%,var(--ink))}
+.comm-who .who.them{color:color-mix(in srgb,var(--warn) 78%,var(--ink))}
+/* the title screen's pitch: its two labels at full white (4.4:1 at 75%) */
+svg.obi-pitch .lab{fill:#fff}
+/* FULL TIME: its small print was white at 45 to 80% on the green card (2.4 to 4.4:1 where the green is lightest); full white now,
+ * the verdict's tints nearer white, and the player of the match's number dark on a light kit */
+.obe .obe-kick,.obe .obe-h,.obe-who,.obe-min,.obe-t .obe-sc,.obe-pl,.obe-pn small,.obe .obe-more{color:#fff}
+.obe-n i{opacity:1}
+.obe.won .obe-verdict{color:#e6fff0} .obe.lost .obe-verdict{color:#fff0ec} .obe.drew .obe-verdict{color:#f6f3e0}
+body.you-argentina .obe-num{color:#0b140d}

@@ -1,0 +1,99 @@
+{
+ "id": "hunt-into-the-ground",
+ "name": "Run them into the ground",
+ "engine": "Oyarzabal runs their defence into the ground from both ends: with his two drains their back line ends every match under 40 stamina.",
+ "about": "Found by the hunt with Guessing and Invites the pass banned. Oyarzabal carries three traits. Harrier: while your attack has 50 stamina or more, each of their attacks starts with him pressing their back line (10 stamina) and each duel he takes costs them 8. Wears them down: each of your attacks that reaches the edge of their box costs their defence 12, and a clean win of his 5 more. Either drain alone leaves their defence at about 62 of 100 stamina at full time (under 40 in 1% and 6% of matches); together it ends at about 20 (under 40 in 99%), and every duel against a tired defender is played below his numbers (the engine rule for a tired line; the card says \"their defence is tired\"). Lays it off gives the ball into his feet and out to an unmarked finisher. Bodies in the box (Oyarzabal, Fabián and Olmo count) makes a half-won shot drop loose to one of yours with +2. Behind it, Clean tackler turns Rodri's half-won tackles into clean wins, and Takes one for the team turns a lost tackle outside your box into a foul and a booking.",
+ "decisions": [
+  "Get the ball to the edge of their box every attack, even without a shot: each one costs their defence 12 stamina.",
+  "Play it into Oyarzabal to lay off: it keeps him in the duels that tire them.",
+  "Late in the match, attack their tired back line directly: every duel there is against men below their numbers."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "D_BODIES",
+  "WE_ONE_FOR_TEAM"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "D_WEAR_DOWN",
+    "TR_WALL",
+    "WC_HARRIER"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "playmaker"
+   ],
+   "traits": [
+    "WB_CLEAN_TACKLER"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Cubarsí",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Porro",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Laporte",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Cucurella",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Simón",
+   "roles": [
+    "keeper"
+   ]
+  }
+ ],
+ "captain": "Rodri",
+ "hunt": {
+  "genes": "P:D_WEAR_DOWN@Oyarzabal | P:TR_WALL@Oyarzabal | P:WB_CLEAN_TACKLER@Rodri | P:WC_HARRIER@Oyarzabal | T:D_BODIES | T:WE_ONE_FOR_TEAM",
+  "found": "hunt/HUNT.md"
+ }
+}

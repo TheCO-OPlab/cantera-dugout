@@ -1,0 +1,199 @@
+/* ob1: the first-time study. Four pieces, each in its own section, all on
+ * the page's own tokens (--you, --them, --accent, --warn, --surface ...),
+ * so light and dark both work. */
+
+/* ============================================ 2. THE TITLE SCREEN */
+body.ob-intro .bar .scorebox .score,body.ob-intro .bar .clock{visibility:hidden}
+.obi{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:36px;align-items:center;
+  max-width:860px;margin:max(4vh,calc(50vh - 380px)) auto 0;padding:34px 36px;border:1px solid var(--line);border-radius:18px;
+  background:radial-gradient(120% 90% at 100% 0%,color-mix(in srgb,var(--pitch) 16%,transparent),transparent 55%),var(--surface)}
+.obi-kick{font:700 11.5px ui-sans-serif,system-ui;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.obi-teams{display:flex;align-items:center;gap:18px;margin:0 0 22px}
+.obi-team{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.obi-team.them{align-items:flex-end;text-align:right}
+.obi-team .flag{transform:scale(1.6);transform-origin:left center;margin:4px 0 6px}
+.obi-team.them .flag{transform-origin:right center}
+.obi-team b{font:800 30px/1.05 ui-sans-serif,system-ui;letter-spacing:-.02em}
+.obi-who{display:inline-flex;align-items:center;gap:6px;font:700 12px ui-sans-serif,system-ui;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.obi-dot{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25);flex:none}
+/* m2: the dots are the kits on the pitch */
+.obi-dot.you{background:var(--kit-you)} .obi-dot.them{background:var(--kit-them)}
+.obi-vs{font:800 34px/1 ui-sans-serif,system-ui;color:var(--muted);font-variant-numeric:tabular-nums;padding:0 6px;margin-top:10px}
+.obi-vs span{margin:0 6px;opacity:.6}
+.obi-line{font-size:18px;line-height:1.45;margin:0 0 8px;color:var(--ink-2);max-width:30em}
+.obi-line b{color:var(--ink)} .obi-line b.c-you{color:var(--you)}
+.obi-go{margin:24px 0 10px}
+.obi-start{font-size:19px;padding:14px 38px;border-radius:12px;box-shadow:0 4px 0 var(--accent-2)}
+.obi-start:active{transform:translateY(2px);box-shadow:0 2px 0 var(--accent-2)}
+.obi-links{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;margin:0;color:var(--muted);font-size:14px}
+.obi-link{font:inherit;color:var(--ink-2);background:none;border:0;padding:2px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+.obi-link:hover{color:var(--ink)}
+.obi-art{display:flex;justify-content:center}
+svg.obi-pitch{height:min(56vh,400px);width:auto;display:block;aspect-ratio:74/117}
+svg.obi-pitch .t{fill:var(--pitch)}
+svg.obi-pitch .s{fill:#fff;opacity:.05}
+svg.obi-pitch .c{fill:none;stroke:rgba(255,255,255,.6);stroke-width:.45}
+svg.obi-pitch .c .g{fill:rgba(255,255,255,.35)}
+svg.obi-pitch .d{stroke:#fff;stroke-width:.5}
+svg.obi-pitch .d.you{fill:var(--kit-you)} svg.obi-pitch .d.them{fill:var(--kit-them)}
+svg.obi-pitch .arr path{fill:none;stroke:#ffd84a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+svg.obi-pitch .arr{animation:obiup 2.2s ease-in-out infinite}
+svg.obi-pitch .lab{font:800 3.2px ui-sans-serif,system-ui;letter-spacing:.4px;fill:rgba(255,255,255,.75);text-anchor:middle}
+@keyframes obiup{0%,100%{transform:translateY(3px);opacity:.75}50%{transform:translateY(-3px);opacity:1}}
+@media (max-width:720px){
+  .obi{grid-template-columns:1fr;gap:14px;padding:20px 18px;margin-top:0}
+  .obi-art{order:-1}
+  svg.obi-pitch{height:210px}
+  .obi-team b{font-size:24px}
+  .obi-teams{justify-content:space-between;gap:10px}
+  .obi-vs{font-size:26px}
+  .obi-line{font-size:16px}
+  .obi-go{margin:16px 0 8px}
+  .obi-start{width:100%}
+}
+@media (prefers-reduced-motion:reduce){ svg.obi-pitch .arr{animation:none} }
+
+/* ============================================ 1. THE COACH MARKS */
+.obc-layer{position:fixed;inset:0;z-index:40;pointer-events:none}
+.obc-layer.block{pointer-events:auto}
+.obc-layer svg{display:block}
+.obc-dim{fill:rgba(4,8,4,.68)}
+.obc-ring{fill:none;stroke:#ffd84a;stroke-width:2.5;animation:obcpulse 1.3s ease-in-out infinite}
+@keyframes obcpulse{0%,100%{stroke-opacity:1}50%{stroke-opacity:.35}}
+.obc-bubble{position:fixed;z-index:41;width:min(340px,calc(100vw - 24px));padding:14px 16px 12px;border-radius:14px;
+  background:var(--bubble);color:var(--bubble-ink);border:2px solid #ffd84a;box-shadow:0 10px 30px rgba(0,0,0,.45);
+  animation:obcin .28s ease-out both}
+@keyframes obcin{0%{transform:translateY(8px) scale(.98)}100%{transform:none}}
+.obc-step{font:800 10.5px ui-sans-serif,system-ui;letter-spacing:.12em;text-transform:uppercase;color:#b8860b;margin:0 0 4px}
+.obc-text{font:600 17px/1.35 ui-sans-serif,system-ui;margin:0 0 6px}
+.obc-sub{font-size:14px;line-height:1.4;color:var(--ink-2);margin:0 0 8px}
+.obc-sum{font:600 14.5px/1.4 ui-sans-serif,system-ui;margin:2px 0 10px}
+.obc-sum .c-you{color:var(--you)} .obc-sum .c-them{color:var(--them)}
+.obc-btns{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 0}
+.obc-btns .go.sm{padding:7px 16px;font-size:14px}
+.obc-skip{font:600 13px ui-sans-serif,system-ui;color:var(--muted);background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+/* the ruler of margins: they win | half win (0 to 3) | clean win (4 or more), a marker at this roll */
+.obc-ruler{position:relative;margin:4px 0 30px}
+.obc-bands{display:flex;height:34px;border-radius:8px;overflow:hidden;font:800 11.5px/1.05 ui-sans-serif,system-ui}
+.obc-bands .b{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;white-space:nowrap}
+.obc-bands .b small{font-weight:600;font-size:10px;opacity:.9}
+.obc-bands .bad{background:var(--warn)} .obc-bands .half{background:#6f7566} .obc-bands .good{background:var(--accent)}
+.obc-mark{position:absolute;top:36px;width:0;height:0;margin-left:-7px;border:7px solid transparent;border-top:0;border-bottom:8px solid var(--bubble-ink)}
+.obc-mark span{position:absolute;top:8px;left:0;transform:translateX(-50%);font:800 12px/1.3 ui-sans-serif,system-ui;white-space:nowrap;
+  background:var(--bubble-ink);color:var(--bubble);border-radius:6px;padding:0 6px}
+/* labels on the dice themselves while beat 2 is open: yours to the left of
+ * the dice pointing right at your die, theirs to the right pointing left */
+.obc-dlab{position:fixed;z-index:42;white-space:nowrap;transform:translate(-100%,-50%);
+  font:800 12px ui-sans-serif,system-ui;color:#12160f;background:#ffd84a;border-radius:7px;padding:4px 9px;pointer-events:none;
+  box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.obc-dlab::after{content:"";position:absolute;top:50%;margin-top:-6px;right:-6px;border:6px solid transparent;border-right:0;border-left-color:#ffd84a}
+.obc-dlab.them{transform:translate(0,-50%)}
+.obc-dlab.them::after{right:auto;left:-6px;border:6px solid transparent;border-left:0;border-right-color:#ffd84a}
+.obc-dlab.up{transform:translateY(-100%)} .obc-dlab.down{transform:none}
+.obc-dlab.up::after,.obc-dlab.down::after{top:auto;right:auto;left:var(--ax,50%);margin:0 0 0 -6px;border:6px solid transparent}
+.obc-dlab.up::after{bottom:-6px;border-bottom:0;border-top-color:#ffd84a}
+.obc-dlab.down::after{top:-6px;border-top:0;border-bottom-color:#ffd84a}
+@media (prefers-reduced-motion:reduce){ .obc-ring,.obc-bubble,.obc-dlab{animation:none} }
+
+/* ============================================ 3. THE LEAN CARD (?cards=lean) */
+.lean-w{margin-bottom:8px}
+.opt.lean{padding:12px 14px 11px;display:block}
+.opt.lean .lact{display:block;font:700 16px/1.3 ui-sans-serif,system-ui;margin:0 0 8px;letter-spacing:-.005em}
+.opt.lean .lstar{color:var(--gold);margin-right:5px}
+.opt.lean .louts{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.opt.lean .lo{display:inline-flex;align-items:center;gap:5px;font:800 15px ui-sans-serif,system-ui;font-variant-numeric:tabular-nums}
+.opt.lean .lo .oi{width:19px;height:19px;stroke-width:2.4}
+.opt.lean .lo.g{color:var(--accent)} .opt.lean .lo.r{color:var(--warn)} .opt.lean .lo.n{color:var(--ink-2)}
+.opt.lean .lo .lp{color:var(--ink)}
+/* m2: (ob1 turned the arrow icons a quarter here; m1's icons.js already draws them up and down) */
+.opt.lean .ledge{font:800 11px ui-sans-serif,system-ui;color:var(--gold);margin-left:1px;vertical-align:6px}
+.opt.lean .ledge.them{color:var(--warn)}
+.opt.lean .lbar{display:flex;gap:2px;height:5px;margin-top:9px;border-radius:3px;overflow:hidden}
+.opt.lean .lbar i{display:block;min-width:3px}
+.opt.lean .lbar i.g{background:var(--accent)} .opt.lean .lbar i.n{background:color-mix(in srgb,var(--ink-2) 55%,transparent)} .opt.lean .lbar i.r{background:var(--warn)}
+.opt.lean .lwhy{display:block;font-size:13px;color:var(--muted)}
+.ldet{display:none;margin:-4px 0 0;padding:10px 14px 10px;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;
+  background:var(--surface-2);font-size:13.5px;line-height:1.4;color:var(--ink-2)}
+.ldet .ld-rows{display:block}
+.ldet .ld-row{display:flex;align-items:flex-start;gap:7px;margin:2px 0}
+.ldet .ld-row .oi{margin-top:1px}
+.ldet .ld-t{flex:1 1 auto}
+.ldet .ld-p{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.ldet .ld-duel{display:block;margin-top:7px;padding-top:6px;border-top:1px dashed var(--line);font-weight:600;color:var(--ink)}
+.ldet .ld-mods{display:block;margin-top:4px;color:var(--gold);font-weight:600}
+.ldet .ld-unl{display:block;margin-top:4px;color:var(--gold);font-weight:700}
+@media (hover:hover) and (pointer:fine){
+  #cards:not(.locked) .lean-w:hover .ldet,#cards:not(.locked) .lean-w:focus-within .ldet{display:block;animation:fadein .18s ease-out both}
+  #cards:not(.locked) .lean-w:hover .opt.lean:not(.dead){border-color:var(--accent);border-radius:12px 12px 0 0}
+}
+.lean-w.open .ldet{display:block}
+.lean-w.open .opt.lean{border-color:var(--accent);border-radius:12px 12px 0 0}
+#cards.lean-touch .lean-w.open .ldet::after{content:"Tap the card again to play it";display:block;margin-top:7px;font:700 12.5px ui-sans-serif,system-ui;color:var(--accent)}
+#cards.locked .ldet{display:none!important}
+
+/* ============================================ 4. FULL TIME */
+.obe-back{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:16px;
+  background:rgba(4,8,4,.62);backdrop-filter:blur(2px);animation:fadein .35s ease-out both;overflow-y:auto}
+.obe{width:min(780px,100%);max-height:calc(100vh - 32px);overflow-y:auto;border-radius:20px;padding:24px 30px 20px;
+  border:1px solid color-mix(in srgb,#fff 12%,transparent);color:#f4f7ef;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 26px,transparent 26px 52px),
+    radial-gradient(90% 70% at 50% 0%,#2a7a47 0%,#17492b 60%,#123a22 100%);
+  box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.obe .obe-kick{font:800 11.5px ui-sans-serif,system-ui;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);text-align:center;margin:0 0 12px}
+.obe-score{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px}
+.obe-t{display:flex;flex-direction:column;gap:3px;min-width:0}
+.obe-t.you{align-items:flex-end;text-align:right} .obe-t.them{align-items:flex-start}
+.obe-t .flag{transform:scale(1.5);margin:4px 8px 6px}
+.obe-t b{font:800 28px/1.05 ui-sans-serif,system-ui;letter-spacing:-.02em;color:#fff}
+.obe-t .obe-sc{font:600 13px/1.35 ui-sans-serif,system-ui;color:rgba(255,255,255,.75)}
+.obe-n{display:flex;align-items:center;gap:10px;font:900 64px/1 ui-sans-serif,system-ui;font-variant-numeric:tabular-nums;color:#fff;
+  text-shadow:0 3px 0 rgba(0,0,0,.25)}
+.obe-n i{font-style:normal;opacity:.45;font-weight:700}
+.obe-verdict{text-align:center;font:800 14px ui-sans-serif,system-ui;letter-spacing:.1em;text-transform:uppercase;margin:6px 0 16px}
+.obe.won .obe-verdict{color:#9ff0b9} .obe.lost .obe-verdict{color:#ffb4a6} .obe.drew .obe-verdict{color:#e8e4c9}
+.obe-h{font:800 10.5px ui-sans-serif,system-ui;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.62);margin:0 0 7px}
+.obe-strip{list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:0 0 16px;padding:0;position:relative}
+.obe-m{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px 8px;border-radius:11px;
+  background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.1);text-align:center;animation:fadein .4s ease-out both;min-width:0}
+.obe-m.g{background:color-mix(in srgb,#4cb371 26%,rgba(0,0,0,.2));border-color:rgba(160,240,190,.45)}
+.obe-m.r{background:color-mix(in srgb,#d96a58 24%,rgba(0,0,0,.2));border-color:rgba(255,170,150,.4)}
+.obe-min{font:800 12px ui-monospace,monospace;color:rgba(255,255,255,.8)}
+.obe-ic .oi{width:26px;height:26px;stroke-width:2.2}
+.obe .oi.g{color:#8fe8ad} .obe .oi.r{color:#ffa391} .obe .oi.n{color:#e9eee2}
+.obe-w{font:700 12.5px/1.2 ui-sans-serif,system-ui;color:#fff;min-height:2.4em;display:flex;align-items:center;justify-content:center}
+.obe-w>span{display:block;overflow-wrap:anywhere}
+.obe-who{font:700 10px ui-sans-serif,system-ui;letter-spacing:.04em;color:rgba(255,255,255,.6);white-space:nowrap}
+.obe-two{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px;margin:0 0 16px}
+.obe-potm,.obe-key{border-radius:12px;padding:11px 14px;background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.1)}
+.obe-key{border-left:4px solid #e9eee2} .obe-key.g{border-left-color:#8fe8ad} .obe-key.r{border-left-color:#ffa391}
+.obe-pn{display:flex;align-items:center;gap:9px;margin:0;font:800 22px/1.1 ui-sans-serif,system-ui;color:#fff}
+.obe-pn .pl{color:#fff}
+.obe-pn small{font:700 11px ui-sans-serif,system-ui;letter-spacing:.06em;color:rgba(255,255,255,.6);margin-left:2px}
+.obe-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;flex:none;
+  background:var(--kit-you);border:2px solid #fff;font:800 13px ui-sans-serif,system-ui;color:#fff}
+.obe-num:empty{display:none}
+.obe-pl{margin:6px 0 0;font-size:14px;color:rgba(255,255,255,.82)}
+.obe-kl{margin:0;font:600 15px/1.4 ui-sans-serif,system-ui;color:#fff}
+.obe-kl .pl{color:#fff}
+.obe-btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0}
+.obe-btns .ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.25)}
+.obe-more{margin-left:auto;font:600 13.5px ui-sans-serif,system-ui;color:rgba(255,255,255,.8);background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.obe-report{margin-top:10px;padding:10px 14px;border-radius:12px;background:rgba(0,0,0,.28)}
+.obe-report .reason b{color:#fff} .obe-report .reason span{color:rgba(255,255,255,.75)}
+@media (max-width:640px){
+  .obe{padding:18px 14px 16px;border-radius:16px}
+  .obe-t b{font-size:19px}
+  .obe-n{font-size:44px;gap:6px}
+  .obe-score{gap:10px}
+  .obe-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .obe-two{grid-template-columns:1fr}
+  .obe-more{margin-left:0}
+}
+@media (max-width:720px){ .obi-links span[aria-hidden]{display:none} .obi-links{gap:4px 16px} }
+
+/* lay1: the title screen's dots wear the kit the pieces wear (Argentina's stripes) */
+body.you-argentina .obi-dot.you,body.them-argentina .obi-dot.them{
+  background:linear-gradient(90deg,var(--kit-arg) 0 30%,#fff 30% 45%,var(--kit-arg) 45% 60%,#fff 60% 75%,var(--kit-arg) 75%)}
+/* lay1: a greyed card's reason sits at the top of its details */
+.ldet .lwhy{display:block;margin:0 0 6px;color:var(--muted);font-size:13px}
