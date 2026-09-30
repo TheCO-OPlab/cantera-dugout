@@ -1,0 +1,12 @@
+{
+ "id": "opp-press-mid",
+ "name": "Pressing midfield",
+ "engine": "While their midfield has legs it presses yours every moment: your midfield options cost more and are resisted.",
+ "about": "An opponent build. While their midfield has 50 stamina or more it presses yours every moment, at 6 stamina a moment: your midfield options cost 4 more, the first decision after you win the ball is +1 to them, and a duel you lose in midfield gives them +1 next. It taxes Defend deep, break fast (the break starts in midfield), and it fades if you tire them.",
+ "base": "argentina",
+ "opponent": "spain",
+ "slots": 3,
+ "tactics": [
+  "WCO_PRESS_MID"
+ ]
+}

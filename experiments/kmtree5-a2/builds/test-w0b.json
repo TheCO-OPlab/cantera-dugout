@@ -1,0 +1,15 @@
+{
+  "id": "test-w0b",
+  "name": "Test build: the w0b plumbing",
+  "about": "Spain with real substitutions (Torres, a bench finisher, comes on for Oyarzabal), a forward who wears their defence down, and a defence whose clean wins start attacks in midfield, against Argentina's test build (an aerial keeper and a pressing midfield). Not balanced and not for playtesting: it exists to show the w0b plumbing works.",
+  "base": "spain",
+  "opponent": "argentina",
+  "against": "test-opp",
+  "slots": 3,
+  "tactics": ["TEST_DEF", "TEST_POSS"],
+  "players": [
+    { "name": "Oyarzabal", "roles": ["presser"], "traits": ["TEST_WEAR"] },
+    { "name": "Torres", "roles": ["finisher"], "traits": ["TEST_BENCH"] }
+  ],
+  "subs": { "mode": "real", "from": 45, "plan": [ { "off": "Oyarzabal", "on": "Torres" } ] }
+}

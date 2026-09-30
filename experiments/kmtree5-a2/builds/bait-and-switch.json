@@ -1,0 +1,42 @@
+{
+  "id": "bait-and-switch",
+  "name": "Bait and switch: the decoy",
+  "engine": "Do not pass to Oyarzabal: a defender follows him, and the pass meant for him goes to Fabián.",
+  "about": "The value is in NOT giving Oyarzabal the ball. Every attack a centre-back of theirs goes wherever he goes, so until Oyarzabal touches the ball a pass to him or a move by him in their half is -2, and a move by anyone else against one of their defenders is +1. A pass that was meant for him (or for any man they are watching) goes to Fabián instead, arriving late, and the pass to him is +2. Their defence remembers the last kind of move each of your men tried, so the same kind again is +2 to them and any other kind is +2 to you. On their attack, Rodri can leave a runner free on purpose and step into the pass (+2 the first time, and 2 less each time it works).",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WE_GUESSING"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "WE_DECOY"
+      ]
+    },
+    {
+      "name": "Fabián",
+      "roles": [
+        "runner"
+      ],
+      "traits": [
+        "WE_ARRIVES_LATE"
+      ]
+    },
+    {
+      "name": "Rodri",
+      "roles": [
+        "playmaker"
+      ],
+      "traits": [
+        "WE_INVITE"
+      ]
+    }
+  ],
+  "captain": "Rodri"
+}

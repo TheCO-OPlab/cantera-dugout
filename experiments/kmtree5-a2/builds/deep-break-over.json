@@ -1,0 +1,77 @@
+{
+ "id": "deep-break-over",
+ "name": "Defend deep, break fast, over the press",
+ "engine": "Defend deep, break fast, and when their midfield presses, the won ball goes long over it to the edge of their box.",
+ "about": "The same engine with Simón's trait for the matchup: against a pressing midfield (or when your own midfield is spent), a ball you win goes long over the press to Oyarzabal and your attack starts at the edge of their box. It skips the press and its tax, and with it the break's midfield decision. You sit deep: covering, dropping back and blocking are +1, and a stop near your box wins you the ball instead of just ending their attack. Every ball you win catches their men upfield (their team is stretched for your attack) and goes straight to Yamal, your quickest forward. The first decision of that break is +1 for forward play and free; with Yamal and Baena both runners, a clean stop gives the break one more decision; when Rodri let them come, the break gets another. Against a stretched team, Yamal's half win on a run counts as a clean win (once an attack), and Rodri as captain makes the defence's edges add up on that first decision.",
+ "decisions": [
+  "When their midfield is pressing, the won ball goes long: the break starts closer to goal but on a header, not a run.",
+  "On defence, cover and drop back rather than tackle: the stop is what starts your attack.",
+  "On the break, go forward on the first decision: waiting throws away the free decision and the +1.",
+  "Let them come (Rodri drops off) when you can afford it: it costs you ground but buys the break a decision."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "against": "opp-press-mid",
+ "slots": 3,
+ "tactics": [
+  "WC_SIT_DEEP",
+  "WC_BREAK",
+  "WC_PACE_IN_NUMBERS"
+ ],
+ "players": [
+  {
+   "name": "Cubarsí",
+   "roles": [
+    "defender"
+   ],
+   "traits": [
+    "WC_OUTLET"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "WC_CAUGHT_UPFIELD"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "ball winner"
+   ],
+   "traits": [
+    "WC_LETS_THEM_COME"
+   ]
+  },
+  {
+   "name": "Simón",
+   "roles": [
+    "keeper"
+   ],
+   "traits": [
+    "WC_OVER_PRESS"
+   ]
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "WC_DEFENCE_TO_ATTACK"
+ },
+ "bench": [
+  "Torres",
+  "Pedri",
+  "Merino",
+  "Williams",
+  "Zubimendi",
+  "García"
+ ]
+}
