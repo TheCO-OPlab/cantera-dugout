@@ -1,0 +1,80 @@
+{
+ "id": "partnership",
+ "name": "The partnership",
+ "engine": "Link each winger with the full-back on his own flank: a half win on a dribble or overlap there counts clean.",
+ "about": "Four links, and a man has one partner. Porro and Yamal play on the right, Cucurella and Baena on the left, both linked Same side: on each flank their full-back is two against one, so a half win on a dribble or an overlap there counts as a clean win. Rodri and Olmo play give and go: after one passes to the other, the pass straight back is on. Fabián always looks for Oyarzabal. Yamal is captain and leads his partnership: his link works twice an attack, and when it is his own dribble, a loss counts as a half win. Link Porro to Baena instead and nothing happens: they are on different flanks.",
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [],
+ "players": [
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ],
+   "traits": [
+    "D_GHOST"
+   ]
+  },
+  {
+   "name": "Porro",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Cucurella",
+   "roles": [
+    "defender"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "playmaker"
+   ],
+   "traits": [
+    "D_GHOST"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "playmaker"
+   ]
+  }
+ ],
+ "relationships": [
+  {
+   "component": "D_SAME_SIDE",
+   "a": "Porro",
+   "b": "Yamal"
+  },
+  {
+   "component": "D_SAME_SIDE",
+   "a": "Cucurella",
+   "b": "Baena"
+  },
+  {
+   "component": "D_GIVE_AND_GO",
+   "a": "Rodri",
+   "b": "Olmo"
+  },
+  {
+   "component": "D_LOOKS_FOR",
+   "a": "Fabián",
+   "b": "Oyarzabal"
+  }
+ ],
+ "captain": {
+  "name": "Yamal",
+  "component": "D_LINK_CAPTAIN"
+ }
+}

@@ -1,0 +1,62 @@
+{
+  "id": "isolate-him",
+  "name": "Isolate him",
+  "engine": "The decoy drags a centre-back, so the full-back beside him is on his own: your wingers run at him with two dice, and every man they beat stays rattled.",
+  "about": "Every attack a centre-back of theirs follows Oyarzabal, the decoy, so the full-back beside him has no cover inside him and is on his own (against Argentina that is Tagliafico, up against Yamal). Yamal and Baena cut inside: against a man on his own a clean win needs only 3. Isolate him gives your wingers, carriers and finishers two dice on their runs at a man on his own, and +1 on a pass to them past him. A run that beats a man cleanly leaves him rattled until he wins a duel against you (Run at him), and the captain, Rodri, points him out: once an attack a half win against him counts as a clean win. Their defence is set for the last kind of move each of your men tried (Guessing), so a winger who ran last time is better off passing, and the other way round.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "TA_ISOLATE",
+    "WE_GUESSING",
+    "TA_RUN_AT_HIM"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "target man"
+      ],
+      "traits": [
+        "WE_DECOY"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger"
+      ],
+      "traits": [
+        "RO_INSIDE_FORWARD"
+      ]
+    },
+    {
+      "name": "Baena",
+      "roles": [
+        "winger"
+      ],
+      "traits": [
+        "RO_INSIDE_FORWARD"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "finisher",
+        "carrier"
+      ],
+      "traits": []
+    },
+    {
+      "name": "Fabián",
+      "roles": [
+        "carrier"
+      ],
+      "traits": []
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CAP_KEEP_AT_HIM"
+  }
+}

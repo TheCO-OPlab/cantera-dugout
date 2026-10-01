@@ -1,0 +1,67 @@
+{
+  "id": "flick-on",
+  "name": "Sets it (bridge)",
+  "engine": "Cut-backs from the right count as layoffs, so the layoff pieces pay off on the flank.",
+  "about": "The bridge between the loaded flank and the layoff engine. Porro and Yamal load the right and cut it back; a cut-back or cross to Oyarzabal counts as a layoff (Sets it), and he can hold it up and lay it off to Olmo, who is unmarked (Lays it off). Because the flank's cut-backs are layoffs, Third man runs and Rehearsed layoff read them: a cut-back that comes off sets Yamal running as the third man and, after the first layoff of the match, every layoff costs no decision. Olmo, unmarked, needs only 2 for a clean win on his shot (Cool head).",
+  "decisions": [
+    "Cut it back to Oyarzabal rather than shooting from the angle: it is a layoff, it sets Olmo, and it counts towards the rehearsed layoff.",
+    "Oyarzabal in their box: shoot, or lay it off to Olmo unmarked with Cool head.",
+    "The right flank or the middle: the overlap and the pass to the loaded flank make men unmarked."
+  ],
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 4,
+  "tactics": [
+    "TA_OVERLOAD",
+    "TA_THIRD_MAN",
+    "GR_REHEARSED"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "target man"
+      ],
+      "traits": [
+        "TR_FLICK",
+        "TR_WALL"
+      ]
+    },
+    {
+      "name": "Porro",
+      "roles": [
+        "crosser"
+      ],
+      "traits": [
+        "RO_OVERLAPPER"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger",
+        "runner"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "finisher"
+      ],
+      "specialisations": [
+        "TR_COOL_HEAD"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "component": "LK_FLANK_PAIR",
+      "a": "Porro",
+      "b": "Yamal"
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CP_PASS_IT_ON"
+  }
+}
