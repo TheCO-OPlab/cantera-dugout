@@ -492,6 +492,7 @@
    * onto many menus; it now acts in your attack only, where the review found it. KM_G_SURE=all: both attacks) */
   var G_SUREALL = typeof process !== 'undefined' && process.env && process.env.KM_G_SURE === 'all';
   var G_NOLAST = typeof process !== 'undefined' && process.env && process.env.KM_G_SURE === 'nolast';
+  var G_SAMEOK = !(typeof process !== 'undefined' && process.env && process.env.KM_G_SAMEOK === 'off');
   var G_DOMFIRST = typeof process !== 'undefined' && process.env && process.env.KM_G_DOMFIRST === '1';
   var G_GHOST = !(typeof process !== 'undefined' && process.env && process.env.KM_G_GHOST === 'off');
   var G_RECVFIELD = typeof process !== 'undefined' && process.env && process.env.KM_G_RECV === 'field';
@@ -5651,6 +5652,16 @@
         var la = a._gLast, lb = b._gLast;
         return ra === rb || ra === lb || la === rb || la === lb;
       };
+      /* (Eduardo's ruling, 2026-10-01: "same man, different outcome/real decision is fine". Two cards to the same man are
+       * a REAL DECISION when neither beats or equals the other on every rung, they are different kinds of play (one can
+       * score, one moves the ball on, one keeps it: the shape of their results), and their odds are not the same. Then
+       * both may be shown (the cut-back and the low cross to Oyarzabal). Otherwise the pair is a near-duplicate and
+       * one goes (two passes to Yamal at 72/28). KM_G_SAMEOK=off: every same-man pair blocked) */
+      var gReal = function (a, b) {
+        if (gBeats(a, b) || gBeats(b, a) || gK(a) === gK(b)) return false;
+        var ca = a.chances || {}, cb = b.chances || {};
+        return !(Math.abs((ca.good || 0) - (cb.good || 0)) < 0.01 && Math.abs((ca.mixed || 0) - (cb.mixed || 0)) < 0.01 && Math.abs((ca.bad || 0) - (cb.bad || 0)) < 0.01);
+      };
       var gK = function (o) {
         if (gWho === 'you') {
           if ((o.outcomes || []).some(function (x) { return x.effect === 'goal'; })) return 'shoot';
@@ -5696,7 +5707,7 @@
         /* (beaten by any card the rule could show, not only by one on this menu: a menu never drops the card that beats
          * the others to hide that they are beaten) */
         all.forEach(function (o) { if (!gProt(o) && gAllPool.some(function (q) { return q !== o && gBeats(q, o) && !(gBeats(o, q) && gAllPool.indexOf(o) < gAllPool.indexOf(q)); })) dom++; });
-        for (var i = 0; i < all.length; i++) for (var j = i + 1; j < all.length; j++) { if (gSameTo(all[i], all[j])) rec++; }
+        for (var i = 0; i < all.length; i++) for (var j = i + 1; j < all.length; j++) { if (gSameTo(all[i], all[j]) && !(G_SAMEOK && gReal(all[i], all[j]))) rec++; }
         var und = all.filter(function (o) { return !all.some(function (q) { return q !== o && gDom(q, o, gWho, gZ, true); }); });
         var strict = 0, loose = 0;
         for (var a = 0; a < und.length; a++) for (var b = a + 1; b < und.length; b++) {
