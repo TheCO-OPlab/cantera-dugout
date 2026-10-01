@@ -1,10 +1,14 @@
-# Cantera Dugout
+# Cantera
 
-A playable prototype of Cantera, a football deckbuilder: one duel per
-turn, the opponent commits face up, you answer. Friendly matches or a
-full 8-club cup run with extra time and penalties.
+Playable builds of Cantera, a roguelike football game where you coach a creature club through cup runs: at each
+decision of an attack you pick a card (a pass, a run, a shot) and a stat-against-stat roll settles it.
 
-Play it here: https://theco-oplab.github.io/cantera-dugout/
+Play the builds here: https://theco-oplab.github.io/cantera-dugout/experiments/
 
-This playtest build records anonymous gameplay events (which cards are
-played and what happens in the match); no personal data is collected.
+- `experiments/`: one folder a build, newest first on the index page. Each is frozen as it was published.
+- `matchcore/`: an earlier match core build.
+- `archive/dugout-0.0.46/`: the card-duel prototype (the Dugout), archived on 2026-10-01 and still playable at
+  https://theco-oplab.github.io/cantera-dugout/archive/dugout-0.0.46/
+
+These playtest builds record anonymous gameplay events (which cards are played and what happens in the match); no
+personal data is collected.
