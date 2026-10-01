@@ -492,6 +492,8 @@
    * onto many menus; it now acts in your attack only, where the review found it. KM_G_SURE=all: both attacks) */
   var G_SUREALL = typeof process !== 'undefined' && process.env && process.env.KM_G_SURE === 'all';
   var G_NOLAST = typeof process !== 'undefined' && process.env && process.env.KM_G_SURE === 'nolast';
+  var G_DOMFIRST = typeof process !== 'undefined' && process.env && process.env.KM_G_DOMFIRST === '1';
+  var G_GHOST = !(typeof process !== 'undefined' && process.env && process.env.KM_G_GHOST === 'off');
   var G_RECVFIELD = typeof process !== 'undefined' && process.env && process.env.KM_G_RECV === 'field';
   var G_STAGEGATE = !(typeof process !== 'undefined' && process.env && process.env.KM_G_STAGEGATE === 'off');
   function gOn(k) { return G_ACTION !== 'a3' && (',' + G_OFF + ',').indexOf(',' + k + ',') < 0; }
@@ -5673,7 +5675,11 @@
         if (gPool.indexOf(o) >= 0 || fixedG.indexOf(o) >= 0 || o.disabled || o.fxCreated || o.hardGrey || o.fxClog) return;
         /* (the lead, 2026-09-30 evening: gated on first decisions too. The picture checks of these cards (c_check C2, C5,
          * claimscheck runbehind) were measured on a3's menus; this rule shows them only where a3's menu did) */
-        if (gStaged[o.id] && G_STAGEGATE) return;
+        /* (Eduardo's screen, 2026-10-01: the cut-back beat every card and was hidden, while a card it beat was shown and a
+         * greyed card's reason named it. A staged card that no other playable card beats is always in the pool: hiding
+         * the card that beats the others is never right; the gate keeps out only the staged cards that something beats.
+         * KM_G_GHOST=off: the previous gate) */
+        if (gStaged[o.id] && G_STAGEGATE && (!G_GHOST || built.some(function (q) { return q !== o && !q.disabled && !q.hardGrey && gBeats(q, o); }))) return;
         gPool.push(o);
       });
       /* the card worth most of all the rule could show (a3's rule 2: the strongest one always stays) */
@@ -5683,6 +5689,7 @@
       var gVal = function (o) { return (o.outcomes || []).reduce(function (a, x) { return a + x.p * (x.effect === 'ground' ? 0.6 : (WORTH[x.effect] || 0)); }, 0); };
       var gTopV = gPool.concat(fixedG).reduce(function (t, o) { return Math.max(t, gVal(o)); }, -9);
       var gAllPool = gPool.concat(fixedG);
+      var gMaster = gPool.filter(function (o) { return gAllPool.every(function (q) { return q === o || (gBeats(o, q) && !gBeats(q, o)); }); })[0] || null;
       var a3Safe = gA3.some(function (o) { return o.pinned === 'safe' || (o.risk === 'low' && lossOf(o) < 0.1); });
       var gScore = function (set) {
         var all = fixedG.concat(set), dom = 0, rec = 0;
@@ -5705,7 +5712,14 @@
         /* (the a4 review: a card certain to lose the ball or concede, live beside a card that beats it, is never the
          * second card while another can take its place; and two cards to the same man rank before a beaten card) */
         var sure = !G_SURE || (gWho !== 'you' && !G_SUREALL) ? 0 : all.filter(function (o) { return !gProt(o) && o.chances && (o.chances.impossible || o.chances.bad >= 0.99); }).length;
-        return [all.length >= 2 ? 1 : 0, -sure, -rec, -dom, strong, safe, strict, loose, -heldN, Math.min(set.length, gWant), keep, w];
+        /* (Eduardo's screen, 2026-10-01: the card that beats every other card the rule could show is always on the menu,
+         * before the rule about two passes to one man) */
+        var master = !G_GHOST || !gMaster || all.indexOf(gMaster) >= 0 ? 1 : 0;
+        /* (a question for Eduardo, 2026-10-01: when every card nothing beats goes to the same man (his screen: the cut-back
+         * and the low cross, both to Oyarzabal), either two passes to one man are shown or a beaten card fills the second
+         * place. Default: no second pass to one man first (the review's blocker); KM_G_DOMFIRST=1: nothing beaten first) */
+        return G_DOMFIRST ? [all.length >= 2 ? 1 : 0, -sure, master, -dom, -rec, strong, safe, strict, loose, -heldN, Math.min(set.length, gWant), keep, w]
+          : [all.length >= 2 ? 1 : 0, -sure, master, -rec, -dom, strong, safe, strict, loose, -heldN, Math.min(set.length, gWant), keep, w];
       };
       /* (an opponent's clog card takes one of the three places: ruling 5, archcheck E2c) */
       var gWant = Math.max(1, want - fixedG.filter(function (o) { return o.fxClog || o.pinned === 'clog'; }).length);
@@ -5745,6 +5759,7 @@
       });
       /* shown in the offer's order, the build cards last */
       out = built.filter(function (o) { return bestSet.indexOf(o) >= 0; }).concat(fixedG);
+
       if (!out.some(function (o) { return o.pinned === 'safe'; })) {
         var gSafe = out.filter(function (o) { return !o.extraSlot; }).sort(function (a, b) { return lossOf(a) - lossOf(b); })[0];
         if (gSafe && lossOf(gSafe) < 0.5) { gSafe.pinned = 'safe'; gSafe.risk = 'low'; }
@@ -5753,6 +5768,23 @@
     }
     var greyed = built.filter(function (o) { return o.disabled && !o.hide && mustGrey.indexOf(o) < 0; })
       .sort(function (a, b) { return (b.modeOpt ? 2 : b.cutGrey ? 1 : 0) - (a.modeOpt ? 2 : a.cutGrey ? 1 : 0); }).slice(0, MENU_GREY);
+    /* kmtree5 a4 (helper G; Eduardo's screen, 2026-10-01): A GREYED CARD'S REASON NAMES A CARD YOU CAN SEE. A greyed card
+     * whose reason quotes a card that is not live on this menu is not shown; another greyed card whose reason holds
+     * takes its place, or none (a1's GUARD.ghostFree ran before the a4 menu rule re-chose the live cards).
+     * KM_G_GHOST=off: a4's first version. */
+    if (gOn('menu') && G_GHOST) {
+      var gLabels = out.map(function (o) { return o.label; });
+      var gHolds = function (o) {
+        var t = String(o.greyWhy || '') + ' ' + String(o.check || ''), re = /"([^"]+)"/g, mq, ok = true;
+        while ((mq = re.exec(t))) if (gLabels.indexOf(mq[1]) < 0) ok = false;
+        return ok;
+      };
+      var gGrey = built.filter(function (o) { return o.disabled && !o.hide && mustGrey.indexOf(o) < 0 && gHolds(o); })
+        .sort(function (a, b) { return (b.modeOpt ? 2 : b.cutGrey ? 1 : 0) - (a.modeOpt ? 2 : a.cutGrey ? 1 : 0); }).slice(0, MENU_GREY);
+      var gWas = greyed.filter(function (o) { return mustGrey.indexOf(o) < 0; }).map(function (o) { return o.id; }).join(',');
+      if (gGrey.map(function (o) { return o.id; }).join(',') !== gWas) gFire('menu');
+      greyed = gGrey;
+    }
     if (mustGrey.length) greyed = mustGrey.concat(greyed).slice(0, Math.max(MENU_GREY, mustGrey.length));
     /* call2: every result gets a short form of a few words (x.short), and
      * the edge it carries a short "Then:" line (x.edgeShort), for the
@@ -5788,6 +5820,14 @@
         out[out.indexOf(worst)] = g; greyed[greyed.indexOf(g)] = worst;
         gFire('mark');
       });
+    }
+    /* kmtree5 a4 (helper G; archcheck E2d): Superb effort only beside a live real shot, judged on the final menu (the menu
+     * rule may have left the shot off; the grey guard may have brought one in) */
+    if (gOn('menu') && G_GHOST && fx && KM5_BREAK !== 'pairshot' && !out.some(function (o) { return !o.disabled && !o.fxCreated && R.canScore(ctx.sit.who, o.pays) && (o.tags || []).indexOf('shot') >= 0; })) {
+      out = out.filter(function (o) { if (!o.pairShot) return true; o.pairCut = true; o.hide = true; o.disabled = true; return false; });
+    } else if (gOn('menu') && G_GHOST && fx) {
+      /* (and when the menu now holds a live shot, a Superb effort cut earlier for want of one comes back, in its own place) */
+      built.forEach(function (o) { if (o.pairShot && o.pairCut && !o.hardGrey && out.indexOf(o) < 0) { o.pairCut = false; o.hide = false; o.disabled = false; o.extraSlot = true; o.pinned = 'build'; out.push(o); } });
     }
     return { shown: out.concat(greyed), live: out, greyed: greyed, available: built };
   }
