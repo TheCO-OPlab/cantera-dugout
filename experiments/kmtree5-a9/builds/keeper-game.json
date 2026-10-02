@@ -1,0 +1,48 @@
+{
+ "id": "keeper-game",
+ "name": "The keeper's guessing game",
+ "engine": "Hard shots set their keeper for a hard shot; then place it past him, +3, and change the kind of shot each time.",
+ "about": "Oyarzabal hits it hard: +1 while their keeper is not set for it, and a parried shot gives the next shot +1. Every hard shot sets their keeper for another (he is +2 against the next one), and so does Rodri when he shapes to shoot and passes instead. That is what Yamal wants: against a keeper set for the hard shot, his placed shots are +2. Keep the keeper guessing: each time your shot is the other kind from your last, the next switch is +1 more, up to +3, and the same kind twice wipes it.",
+ "decisions": [
+  "Choose the shot from the last shot, not only from the odds now: after a hard shot, the placed one is the better bet.",
+  "Sometimes take the hard shot with worse odds, because it sets the keeper for Yamal's placed one.",
+  "Let Rodri pass in the box: his dummy sets the keeper without using a shot."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "against": "opp-big-keeper",
+ "slots": 3,
+ "tactics": [
+  "WC_KEEP_GUESSING",
+  "WC_SHOOT_ON_SIGHT"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "WC_HITS_IT_HARD"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "WC_PLACES_IT",
+    "WC_SHAPES_TO_SHOOT"
+   ]
+  }
+ ],
+ "bench": [
+  "Torres",
+  "Pedri",
+  "Merino",
+  "Williams",
+  "Zubimendi",
+  "García"
+ ]
+}
