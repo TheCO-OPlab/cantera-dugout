@@ -1,0 +1,53 @@
+{
+  "id": "test-f-caught",
+  "name": "Test (wave F): Break on them",
+  "engine": "Win the ball while their players are going forward and they are caught upfield: the first pass goes to Yamal for free, and any ball in behind needs 3.",
+  "about": "Four ways of winning the ball leave their players caught upfield for the attack that starts: a clean recovery (Oyarzabal is gone before they turn), Rodri stepping into the pass he invited, the press straight after you lose it, and your back line leaving their man offside. While they are caught upfield, the first pass of the attack goes to Yamal, the outlet, and does not use up a decision, and any ball in behind them needs only 3 for a clean win (Straight over the top). The value is in the ball you win, not the ball you keep.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WB_COUNTERPRESS",
+    "WE_OVER_THE_TOP",
+    "WE_HOLD_LINE"
+  ],
+  "players": [
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger",
+        "outlet"
+      ],
+      "traits": [
+        "RO_OUTLET"
+      ]
+    },
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "WB_GONE"
+      ]
+    },
+    {
+      "name": "Rodri",
+      "roles": [
+        "ball winner",
+        "presser"
+      ],
+      "traits": [
+        "WE_INVITE"
+      ]
+    },
+    {
+      "name": "Fabián",
+      "roles": [
+        "presser"
+      ],
+      "traits": []
+    }
+  ],
+  "captain": "Rodri"
+}

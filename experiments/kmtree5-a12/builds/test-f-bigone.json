@@ -1,0 +1,59 @@
+{
+  "id": "test-f-bigone",
+  "name": "Test (wave F): the captain saves the banked edge",
+  "about": "Wave F test build: the banked edge spent by the captain on the finisher's shot, and the link that hears another component (Flank partners), and scrambling from a rehearsed near-post flick.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 4,
+  "tactics": [
+    "EC_BANK_EDGE",
+    "AD_DECOY_ROUTE",
+    "TA_OVERLOAD",
+    "SP_ROUTINES"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "target man",
+        "finisher"
+      ],
+      "traits": [
+        "TR_WALL"
+      ],
+      "specialisations": []
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger"
+      ],
+      "traits": [
+        "PF_DRAWS_FOULS"
+      ]
+    },
+    {
+      "name": "Porro",
+      "roles": [
+        "runner"
+      ],
+      "traits": []
+    }
+  ],
+  "relationships": [
+    {
+      "component": "LK_FLANK_PAIR",
+      "a": "Porro",
+      "b": "Yamal"
+    },
+    {
+      "component": "LK_WALL_PASS",
+      "a": "Oyarzabal",
+      "b": "Olmo"
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CAP_BIG_ONE"
+  }
+}
