@@ -33,6 +33,17 @@ footer{color:var(--muted);font-size:13px;margin-top:28px}
 var EXPERIMENTS = [
   {
     date: '2026-10-07',
+    title: 'Fixes from the b7 playtest',
+    folder: 'kmtree6-b9',
+    label: 'matchcore-kmtree6-b9',
+    about: 'This build replaces b7 as the one to play. It fixes what came up in the b7 playtest. The match shows a kick-off picture at the start, after every goal and at half time. A moment now has four pips. They count down across pauses and go back to four at each new moment. When the other side ends up with the ball, the words say their attack is over and who is counter-attacking, and \u201cover\u201d no longer ends a moment against the roll. A ball you win stays yours. Passes are aimed ahead of the runner, and are still sometimes behind him. The keeper\u2019s long kick goes long. The score and Settings stay on screen on smaller windows. Known faults: the one-two pass back is sometimes not offered (about 1 in 5), on the last pip a won roll can still end the attack, and free kicks named in the words are not taken. Play at 2X. Movement fitted to real tracking data: Bassek, Rein, Weber, Memmert (2025), Scientific Data 12, 195; data DFL; CC BY 4.0.',
+    links: [
+      ['Play the match', 'play.html'],
+      ['Play the cup', 'play.html?cup']
+    ]
+  },
+  {
+    date: '2026-10-07',
     title: 'Headers in the air and crosses to the named man',
     folder: 'kmtree6-b7',
     label: 'matchcore-kmtree6-b7',
