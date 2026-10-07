@@ -1,0 +1,12 @@
+{
+ "id": "opp-deep-block",
+ "name": "Deep block",
+ "engine": "They sit deep and do not chase: runs and passes through at their box are resisted, and they rest after each attack.",
+ "about": "An opponent build (play it against: ?opp=opp-deep-block). They sit deep and do not chase: your runs and passes through at the edge of their box and in it are +1 to them, and after every attack of yours without a shot their defence rests and gets 10 stamina back. It taxes Wear them down (the runs and the fatigue), not closes it.",
+ "base": "argentina",
+ "opponent": "spain",
+ "slots": 3,
+ "tactics": [
+  "WCO_DEEP_BLOCK"
+ ]
+}

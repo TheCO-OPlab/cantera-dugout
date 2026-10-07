@@ -1,0 +1,69 @@
+{
+ "id": "midfield-swarm",
+ "name": "Midfield swarm",
+ "engine": "No striker and four bodies: Fabián, Olmo and Rodri arrive from midfield, and a half-won shot is another shot.",
+ "about": "A bridge between No striker and Chaos in the box. Nobody up front finishes: Oyarzabal is a false nine. Fabián, Olmo and Rodri (box to box) all arrive from midfield, so they are three runners AND three bodies in their box at once. With no striker their shots are unmarked and need only 3; when one is saved the ball drops loose and Olmo, first to it, gets the next shot. The strongest single forward would switch half of it off.",
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "D_NO_STRIKER",
+  "D_BODIES",
+  "D_RUNNERS"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "link player"
+   ],
+   "kw": [],
+   "traits": [
+    "D_FALSE_NINE"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "D_GHOST"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "D_FIRST_TO_IT"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "playmaker"
+   ],
+   "traits": [
+    "D_BOX_TO_BOX"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ],
+   "traits": [
+    "D_DECOY"
+   ]
+  }
+ ],
+ "captain": "Rodri"
+}

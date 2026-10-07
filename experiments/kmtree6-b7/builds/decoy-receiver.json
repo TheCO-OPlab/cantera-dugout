@@ -1,0 +1,41 @@
+{
+ "id": "decoy-receiver",
+ "name": "Decoy and receiver",
+ "engine": "Never give it to Oyarzabal: his marker follows him, so every cut-back goes to Olmo, who has not touched the ball yet.",
+ "about": "Found by the simulations, not designed: the Decoy (wave E) and Nominated receiver (wave A) were worth +0.18 goals a match more together than apart, the biggest pair measured across all waves. At the start of each attack a centre-back of theirs goes wherever Oyarzabal goes: a pass to him or a move by him is -2, and a move by anyone else against one of their defenders is +1, until Oyarzabal touches the ball. Every cut-back and low cross goes to Olmo instead of Oyarzabal, so Oyarzabal never touches it and the +1 lasts. If Olmo has not had the ball earlier in the attack, a clean win on his shot needs 3, not 4 (Fresh feet); when he shoots unmarked it needs only 2 (Cool head). Two clean wins in a row give the attack one more decision (Rhythm), and the +1 makes clean wins likelier.",
+ "decisions": [
+  "Keep the ball away from Oyarzabal: every pass to him ends the +1 for the rest of the attack.",
+  "Keep Olmo out of the build-up: his shot is best when the cut-back is his first touch.",
+  "Go for clean wins early: two in a row buy one more decision."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "SE_RHYTHM"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "WE_DECOY"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "RT_NOMINATE",
+    "SE_UNTOUCHED"
+   ],
+   "specialisations": [
+    "TR_COOL_HEAD"
+   ]
+  }
+ ]
+}
