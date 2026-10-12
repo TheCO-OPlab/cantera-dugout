@@ -1,0 +1,59 @@
+{
+ "id": "chaos-box",
+ "name": "Chaos in the box",
+ "engine": "Four men in their box: a half-won shot or header drops loose for another shot, and Oyarzabal is first to it.",
+ "about": "Four men attack their box: Oyarzabal the finisher, Fabián box to box, Olmo and Rodri arriving from midfield. A shot or header that is only half won does not end the attack: the ball drops loose in the scramble (+2 to the next shot), twice an attack with four bodies. Oyarzabal, the only man with First to it, is first to any loose ball he did not make himself, and his shot after it needs only 3 for a clean win; as the only one with it, he does that twice an attack. Rodri and Fabián are tall, so a lost header still counts as a half win, which is exactly the result the loose ball needs, so a cross at bad odds is worth playing. The price: with four men forward, their counter starts with a man over.",
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "D_BODIES",
+  "D_HEIGHT",
+  "D_LONE"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "D_FIRST_TO_IT"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "D_BOX_TO_BOX"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  }
+ ],
+ "captain": "Rodri"
+}

@@ -1,0 +1,60 @@
+{
+  "id": "metronome",
+  "name": "The metronome",
+  "engine": "Vary the kind of play before the shot, and keep Oyarzabal out of the build-up until he shoots.",
+  "about": "The order of your passes is the build. Rodri's first short pass in each attack is free, and Rodri with Olmo and Olmo with Yamal know each other's runs, so the build-up rarely breaks down. Two clean wins in a row buy one more decision; three different kinds of play before the shot mean it needs only 3 for a clean win and their keeper learns nothing. Oyarzabal stays out of it: if he has not been on the ball in this attack his shot needs only 3, if he has it is -1.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "SE_VARIETY",
+    "SE_RHYTHM"
+  ],
+  "players": [
+    {
+      "name": "Rodri",
+      "roles": [
+        "link player",
+        "playmaker"
+      ],
+      "traits": [
+        "RO_SETS_PACE"
+      ]
+    },
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "SE_FRESH_FEET"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "link player"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger",
+        "carrier"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "component": "LK_KNOWS_RUN",
+      "a": "Rodri",
+      "b": "Olmo"
+    },
+    {
+      "component": "LK_KNOWS_RUN",
+      "a": "Olmo",
+      "b": "Yamal"
+    }
+  ],
+  "captain": "Rodri"
+}

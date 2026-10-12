@@ -1,0 +1,44 @@
+{
+  "id": "scramble",
+  "name": "Scramble (the best combination)",
+  "engine": "The decoy, the late runner and loose balls together: the best combination the simulations found.",
+  "about": "The pieces from Bait and switch and Broken play that changed the most decisions, in one team. Oyarzabal is the decoy (a centre-back follows him until he touches the ball) and the pass meant for him goes to Fabián arriving late (+2 to the pass). Their defence is set for the last kind of move each of your men tried (+2 to them if he tries it again, +2 to him for anything else), so you keep changing the move. A hard shot their keeper only saves is loose in their box, and it falls to Olmo. On defence, a lost tackle becomes a foul that costs a booking.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WE_GUESSING",
+    "WE_SECOND_BALL",
+    "WE_ONE_FOR_TEAM"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "WE_DECOY"
+      ]
+    },
+    {
+      "name": "Fabián",
+      "roles": [
+        "runner"
+      ],
+      "traits": [
+        "WE_ARRIVES_LATE"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "link player"
+      ],
+      "traits": [
+        "WE_FIRST_TO_IT"
+      ]
+    }
+  ],
+  "captain": "Rodri"
+}

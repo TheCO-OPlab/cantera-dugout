@@ -1,0 +1,220 @@
+/* art2 look 2: TRADING CARDS.
+ * Every option is a collectible card: a portrait of the man who plays it
+ * (a small creature in his kit, drawn by looks.js from his name, with his
+ * initials on the chest), and a rarity edge for the kind of move: gold foil
+ * for a shot, purple for a run, blue for a pass, steel for defending, bronze
+ * for anything else; a keyword unlock gets a holographic edge. The dice are
+ * chunky tokens in each side's kit, the commentator talks in a comic bubble,
+ * and the table is a playmat. Light: a cream sunburst mat. Dark: a violet
+ * mat under a spotlight.
+ * Restyles m2's classes and tokens only; no markup, no layout. The kit
+ * colours (--kit-*) are never touched. */
+:root[data-look=cards]{
+  --f-display:"Segoe UI Black","Arial Black","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --f-ui:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --f-num:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --mat:#f6ecd4; --mat-2:#efe0bb;
+  --ground:var(--mat); --surface:#ffffff; --surface-2:#f4efe6; --ink:#1b1530; --ink-2:#463f5e;
+  --muted:#645c7c; --line:#dcd4e6; --accent:#0e7443; --accent-2:#0b5a33;
+  --warn:#c0271d; --gold:#8c5b00; --pitch:#2f7d4a;
+  --bubble:#ffffff; --bubble-line:#1b1530; --bubble-ink:#15102a;
+  --die:#ffffff; --die-pip:#1b1530;
+  --edge:#1b1530;
+  --r-shot:linear-gradient(135deg,#fff1a8 0%,#e0a91f 22%,#fff6c9 42%,#b77d06 64%,#ffe27a 84%,#a86f00 100%);
+  --r-run:linear-gradient(135deg,#e6c7ff 0%,#9a4dff 35%,#f0dcff 55%,#6a1fd6 100%);
+  --r-pass:linear-gradient(135deg,#cfeeff 0%,#3a9cf0 35%,#e3f5ff 55%,#1662c4 100%);
+  --r-defend:linear-gradient(135deg,#f2f5f8 0%,#9aa7b5 35%,#ffffff 55%,#66737f 100%);
+  --r-plain:linear-gradient(135deg,#f3d9bd 0%,#b9804a 40%,#f6e2cc 60%,#8d5a2b 100%);
+  --r-holo:conic-gradient(from 200deg,#ff7ab6,#ffd36e,#8cf58c,#6ed8ff,#b28cff,#ff7ab6);
+  color-scheme:light;
+}
+:root[data-look=cards][data-mode=dark]{
+  --mat:#1b1438; --mat-2:#120d28;
+  --ground:var(--mat); --surface:#261e48; --surface-2:#30275a; --ink:#f6f2ff; --ink-2:#d2c9f2;
+  --muted:#b6aedb; --line:#4a3f7c; --accent:#52d38d; --accent-2:#8ee8b5;
+  --warn:#ff7d70; --gold:#ffcb52; --pitch:#1d5a37;
+  --bubble:#2c2352; --bubble-line:#efe9ff; --bubble-ink:#fbf9ff;
+  --die:#f6f2ff; --die-pip:#1b1530;
+  --edge:#0b0718;
+  color-scheme:dark;
+}
+
+/* ---------------------------------------------------------------- the playmat */
+:root[data-look=cards] body{
+  background-color:var(--mat);
+  background-image:
+    radial-gradient(90% 70% at 50% 45%,rgba(255,255,255,.45),transparent 70%),
+    repeating-conic-gradient(from 0deg at 50% 45%,var(--mat) 0deg 7deg,var(--mat-2) 7deg 14deg);
+  background-attachment:fixed;
+}
+:root[data-look=cards][data-mode=dark] body{
+  background-image:
+    radial-gradient(70% 60% at 50% 40%,rgba(160,120,255,.18),transparent 70%),
+    repeating-conic-gradient(from 0deg at 50% 40%,var(--mat) 0deg 7deg,var(--mat-2) 7deg 14deg);
+}
+
+/* ---------------------------------------------------------------- header */
+:root[data-look=cards] .bar{border-bottom:3px solid var(--edge)}
+:root[data-look=cards][data-mode=dark] .bar{border-bottom-color:var(--line)}
+:root[data-look=cards] .bar h1,:root[data-look=cards] .inmatch .bar h1{font-family:var(--f-display);font-style:italic;letter-spacing:.01em;font-size:24px;
+  text-shadow:2px 2px 0 var(--gold)}
+:root[data-look=cards] .score{--ff:var(--f-display);background:var(--edge);color:#fff;border-radius:12px;padding:3px 12px 4px;
+  box-shadow:0 4px 0 color-mix(in srgb,var(--edge) 60%,#000)}
+:root[data-look=cards][data-mode=dark] .score{background:var(--surface-2);box-shadow:0 4px 0 #0b0718,0 0 0 2px var(--line)}
+:root[data-look=cards] .clock{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- buttons */
+:root[data-look=cards] button.ghost{background:var(--surface);border:2px solid var(--edge);border-radius:10px;color:var(--ink);font-weight:700;
+  box-shadow:0 3px 0 var(--edge)}
+:root[data-look=cards][data-mode=dark] button.ghost{border-color:var(--line);box-shadow:0 3px 0 #0b0718}
+:root[data-look=cards] button.ghost:hover{transform:translateY(-1px);box-shadow:0 4px 0 var(--edge)}
+:root[data-look=cards] button.ghost:active{transform:translateY(2px);box-shadow:0 1px 0 var(--edge)}
+:root[data-look=cards] .pctl .spd button.on{background:var(--gold);color:#fff;border-color:var(--edge)}
+:root[data-look=cards][data-mode=dark] .pctl .spd button.on{background:var(--gold);color:#1b1530}
+:root[data-look=cards] button.go{font-family:var(--f-display);background:var(--accent);border:2px solid var(--edge);border-radius:12px;color:#fff;
+  box-shadow:0 5px 0 var(--edge);letter-spacing:.02em}
+:root[data-look=cards][data-mode=dark] button.go{color:#0b1f14;border-color:#0b0718;box-shadow:0 5px 0 #0b0718}
+:root[data-look=cards] #sndbtn[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+
+/* ---------------------------------------------------------------- the board */
+:root[data-look=cards] .field.cv .pbox{border-radius:14px;box-shadow:0 0 0 3px var(--edge),6px 8px 0 3px color-mix(in srgb,var(--edge) 35%,transparent)}
+:root[data-look=cards] .field .ends{color:var(--ink-2)}
+:root[data-look=cards] .field .car{--ff:var(--f-display);font-size:14px}
+:root[data-look=cards] .teamkey{color:var(--ink-2)}
+:root[data-look=cards] .cardshead{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- dice: chunky tokens in the kits */
+:root[data-look=cards] .die,:root[data-look=cards] .jz-die{border:2.5px solid var(--edge);border-radius:11px;
+  background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.7),rgba(255,255,255,0) 45%),var(--die);
+  box-shadow:0 4px 0 var(--edge),0 7px 10px rgba(0,0,0,.25)}
+:root[data-look=cards] .die.mine{--die:var(--kit-you);--die-pip:#fff}
+:root[data-look=cards] .die.theirs{--die:var(--kit-them);--die-pip:#fff}
+:root[data-look=cards] body.you-argentina .die.mine,:root[data-look=cards] body.them-argentina .die.theirs,
+:root[data-look=cards] body.them-rnd .die.theirs{--die-pip:#0b1f3a}
+:root[data-look=cards] .die i{box-shadow:inset 0 1px 1px rgba(0,0,0,.35)}
+
+/* ---------------------------------------------------------------- the result: a duel panel */
+:root[data-look=cards] .result{border:3px solid var(--edge);border-radius:16px;background-color:var(--surface);
+  box-shadow:5px 5px 0 color-mix(in srgb,var(--edge) 80%,transparent)}
+:root[data-look=cards][data-mode=dark] .result{border-color:var(--line);box-shadow:5px 5px 0 #0b0718}
+:root[data-look=cards] .result.won{border-color:var(--accent)}
+:root[data-look=cards] .result.lost{border-color:var(--warn)}
+:root[data-look=cards] .result.goal{background-color:color-mix(in srgb,var(--accent) 16%,var(--surface));border-color:var(--accent)}
+:root[data-look=cards] .result.conceded{background-color:color-mix(in srgb,var(--warn) 14%,var(--surface));border-color:var(--warn)}
+:root[data-look=cards] .result .verdict{--ff:var(--f-display);letter-spacing:.005em}
+:root[data-look=cards] .result .headline{font-weight:800}
+:root[data-look=cards] .result .side small{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- the commentator: a comic bubble */
+:root[data-look=cards] .comm-who{color:var(--ink)}
+:root[data-look=cards] .comm-who svg{background:var(--gold);color:#1b1530;box-shadow:0 0 0 2px var(--edge)}
+:root[data-look=cards] .bubble{border:3px solid var(--bubble-line);border-radius:22px;box-shadow:5px 5px 0 var(--bubble-line)}
+:root[data-look=cards][data-mode=dark] .bubble{box-shadow:5px 5px 0 #0b0718}
+:root[data-look=cards] .bubble::before{top:-15px;border-width:0 12px 14px 12px}
+:root[data-look=cards] .bubble .scene{font-weight:750}
+:root[data-look=cards] .who.you{background:var(--accent);color:#fff}
+:root[data-look=cards][data-mode=dark] .who.you{color:#0b1f14}
+:root[data-look=cards] .who.them{background:var(--warn);color:#fff}
+:root[data-look=cards][data-mode=dark] .who.them{color:#2a0a06}
+:root[data-look=cards] .chip .cmin{background:var(--edge);color:#fff;border-color:var(--edge);border-radius:8px}
+:root[data-look=cards][data-mode=dark] .chip .cmin{background:var(--surface-2);border-color:var(--line)}
+:root[data-look=cards] .carry{border:2px dashed var(--gold);border-radius:14px;background-color:color-mix(in srgb,var(--gold) 10%,var(--surface))}
+:root[data-look=cards] .carry .carry-head{color:var(--gold)}
+
+/* ---------------------------------------------------------------- the option cards */
+:root[data-look=cards] .opt{position:relative;padding-left:82px;min-height:94px;border:4px solid transparent;border-radius:16px;
+  --rar:var(--r-plain);
+  background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--rar) border-box;
+  box-shadow:0 4px 0 color-mix(in srgb,var(--edge) 70%,transparent),0 10px 18px rgba(20,10,40,.18);
+  transition:transform .15s cubic-bezier(.3,1.4,.5,1),box-shadow .15s}
+:root[data-look=cards] .opt[data-kind=shot]{--rar:var(--r-shot)}
+:root[data-look=cards] .opt[data-kind=run]{--rar:var(--r-run)}
+:root[data-look=cards] .opt[data-kind=pass]{--rar:var(--r-pass)}
+:root[data-look=cards] .opt[data-kind=defend]{--rar:var(--r-defend)}
+:root[data-look=cards] .opt.kw{--rar:var(--r-holo)}
+/* the portrait, and the rarity gem on its corner */
+:root[data-look=cards] .opt::before{content:"";position:absolute;left:10px;top:10px;width:60px;height:72px;border-radius:10px;
+  background:var(--portrait,linear-gradient(#e9e3f5,#cfc5e6)) center/cover no-repeat;border:2.5px solid var(--edge);
+  box-shadow:0 3px 0 color-mix(in srgb,var(--edge) 50%,transparent)}
+:root[data-look=cards] .opt::after{content:"";position:absolute;left:62px;top:4px;width:14px;height:14px;transform:rotate(45deg);
+  background:var(--rar);border:2px solid var(--edge);border-radius:3px}
+:root[data-look=cards] .opt b,:root[data-look=cards] .opt.lean .lact{font-family:var(--f-display);font-weight:900;font-size:16px;letter-spacing:.005em;line-height:1.25}
+:root[data-look=cards] .opt .desc{font-size:14px}
+:root[data-look=cards] .opt .outc-head{color:var(--muted);font-weight:700}
+:root[data-look=cards] :is(.opt:hover,.opt.art2-hov):not(.dead){transform:translateY(-5px) rotate(-.7deg) scale(1.01);
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 44%,transparent 58%) padding-box,
+    linear-gradient(var(--surface),var(--surface)) padding-box,var(--rar) border-box;
+  box-shadow:0 8px 0 color-mix(in srgb,var(--edge) 70%,transparent),0 22px 30px rgba(20,10,40,.32)}
+:root[data-look=cards][data-mode=dark] :is(.opt:hover,.opt.art2-hov):not(.dead){
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.12) 44%,transparent 58%) padding-box,
+    linear-gradient(var(--surface),var(--surface)) padding-box,var(--rar) border-box}
+:root[data-look=cards] .opt.dead{opacity:.7;filter:grayscale(.85);--rar:var(--r-defend);min-height:0;padding-left:82px}
+:root[data-look=cards] .opt.dead::before{height:36px;width:30px;top:6px;left:14px}
+:root[data-look=cards] .opt.dead::after{display:none}
+:root[data-look=cards] .optw.chosen .opt{box-shadow:0 0 0 3px var(--accent),0 10px 18px rgba(20,10,40,.25)}
+:root[data-look=cards] .opt.certain{box-shadow:0 4px 0 var(--accent),0 10px 18px rgba(20,10,40,.18)}
+:root[data-look=cards] .opt .unl{border-radius:99px;border:2px solid var(--gold);background:color-mix(in srgb,var(--gold) 14%,var(--surface))}
+:root[data-look=cards] .optw .det{border:2px solid var(--edge);border-radius:8px;background:var(--surface);color:var(--ink);font-weight:700}
+:root[data-look=cards][data-mode=dark] .optw .det{border-color:var(--line)}
+:root[data-look=cards] .ldet,:root[data-look=cards] .detbody.open{border:3px solid var(--line);border-top:0;border-radius:0 0 16px 16px}
+
+/* ---------------------------------------------------------------- stats */
+:root[data-look=cards] .sp{border:2px solid var(--edge);border-radius:14px;box-shadow:0 4px 0 color-mix(in srgb,var(--edge) 60%,transparent)}
+:root[data-look=cards][data-mode=dark] .sp{border-color:var(--line);box-shadow:0 4px 0 #0b0718}
+:root[data-look=cards] .sp-head h2{--ff:var(--f-display)}
+:root[data-look=cards] .sp-btn{border:2px solid var(--edge);border-radius:8px;font-weight:700;color:var(--ink)}
+:root[data-look=cards][data-mode=dark] .sp-btn{border-color:var(--line)}
+
+/* ---------------------------------------------------------------- the title: a legendary card */
+:root[data-look=cards] .obi{border:7px solid transparent;border-radius:26px;
+  background:radial-gradient(120% 90% at 100% 0%,color-mix(in srgb,var(--gold) 18%,transparent),transparent 55%) padding-box,
+    linear-gradient(var(--surface),var(--surface)) padding-box,var(--r-shot) border-box;
+  box-shadow:0 8px 0 var(--edge),0 30px 50px rgba(20,10,40,.35)}
+:root[data-look=cards] .obi-kick{color:var(--ink-2)}
+:root[data-look=cards] .obi-team b{--ff:var(--f-display);font-size:36px}
+:root[data-look=cards] .obi-vs{--ff:var(--f-display);color:var(--ink-2)}
+:root[data-look=cards] .obi-start{box-shadow:0 6px 0 var(--edge)}
+:root[data-look=cards] svg.obi-pitch{border-radius:12px;box-shadow:0 0 0 3px var(--edge),5px 6px 0 3px color-mix(in srgb,var(--edge) 35%,transparent)}
+:root[data-look=cards] .obi-link{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- full time: the match card */
+:root[data-look=cards] .obe-back{background:rgba(15,8,35,.6)}
+:root[data-look=cards] .obe{color:var(--ink);border:7px solid transparent;border-radius:26px;
+  background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--r-shot) border-box;
+  box-shadow:0 8px 0 var(--edge),0 30px 60px rgba(0,0,0,.45)}
+:root[data-look=cards] .obe .obe-kick,:root[data-look=cards] .obe-h,:root[data-look=cards] .obe-who,:root[data-look=cards] .obe-min{color:var(--ink-2)}
+:root[data-look=cards] .obe-t b,:root[data-look=cards] .obe-n{--ff:var(--f-display);color:var(--ink);text-shadow:none}
+:root[data-look=cards] .obe-t .obe-sc{color:var(--ink-2)}
+:root[data-look=cards] .obe.won .obe-verdict{color:var(--accent)} :root[data-look=cards] .obe.lost .obe-verdict{color:var(--warn)} :root[data-look=cards] .obe.drew .obe-verdict{color:var(--ink-2)}
+:root[data-look=cards] .obe-m{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--r-defend) border-box;border:3px solid transparent;border-radius:12px}
+:root[data-look=cards] .obe-m.g{background:linear-gradient(color-mix(in srgb,var(--accent) 12%,var(--surface)),color-mix(in srgb,var(--accent) 12%,var(--surface))) padding-box,var(--r-shot) border-box}
+:root[data-look=cards] .obe-m.r{background:linear-gradient(color-mix(in srgb,var(--warn) 12%,var(--surface)),color-mix(in srgb,var(--warn) 12%,var(--surface))) padding-box,linear-gradient(135deg,#ffb3a8,#c0271d) border-box}
+:root[data-look=cards] .obe-w,:root[data-look=cards] .obe-pn,:root[data-look=cards] .obe-pn .pl,:root[data-look=cards] .obe-kl,:root[data-look=cards] .obe-kl .pl{color:var(--ink)}
+:root[data-look=cards] .obe-pn{--ff:var(--f-display)}
+:root[data-look=cards] .obe-pn small,:root[data-look=cards] .obe-pl{color:var(--ink-2)}
+:root[data-look=cards] .obe .oi.g{color:var(--accent)} :root[data-look=cards] .obe .oi.r{color:var(--warn)} :root[data-look=cards] .obe .oi.n{color:var(--ink-2)}
+:root[data-look=cards] .obe-potm,:root[data-look=cards] .obe-key{background:var(--surface-2);border:2px solid var(--line);border-radius:14px}
+:root[data-look=cards] .obe-key{border-left:6px solid var(--ink-2)} :root[data-look=cards] .obe-key.g{border-left-color:var(--accent)} :root[data-look=cards] .obe-key.r{border-left-color:var(--warn)}
+:root[data-look=cards] .obe-num{box-shadow:0 0 0 2px var(--edge)}
+:root[data-look=cards] .obe-btns .ghost{background:var(--surface);color:var(--ink);border-color:var(--edge)}
+:root[data-look=cards] .obe-more{color:var(--ink-2)}
+:root[data-look=cards] .obe-report{background:var(--surface-2)}
+:root[data-look=cards] .obe-report .reason b{color:var(--ink)} :root[data-look=cards] .obe-report .reason span{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- tips and panels */
+:root[data-look=cards] .obc-bubble{border:3px solid var(--gold);border-radius:18px;box-shadow:5px 5px 0 var(--edge)}
+:root[data-look=cards] .obc-step{color:var(--gold)}
+:root[data-look=cards] .drawer{border-left:3px solid var(--edge)}
+/* locked while the result plays: the cards turn face-down grey, not see-through */
+:root[data-look=cards] #cards.locked .optw:not(.chosen){opacity:1;filter:grayscale(1) contrast(.55) brightness(1.06)}
+:root[data-look=cards][data-mode=dark] #cards.locked .optw:not(.chosen){filter:grayscale(1) contrast(.6) brightness(.75)}
+/* a laptop: the text column beside the pitch must never scroll, so the comic
+ * frames are thinner and the scene is the size m2 prints it there */
+@media (min-width:900px) and (max-width:1500px){
+  :root[data-look=cards] .inmatch .tcol .bubble{border-width:2px;box-shadow:3px 3px 0 var(--bubble-line)}
+  :root[data-look=cards] .inmatch .tcol .result{border-width:2px;box-shadow:3px 3px 0 color-mix(in srgb,var(--edge) 80%,transparent)}
+  :root[data-look=cards] .inmatch .tcol .bubble .scene{font-size:16px;font-weight:700}
+  :root[data-look=cards] .inmatch .tcol .result .verdict{font-size:17px}
+}
+:root[data-look=cards][data-mode=dark] .obi{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--r-shot) border-box}

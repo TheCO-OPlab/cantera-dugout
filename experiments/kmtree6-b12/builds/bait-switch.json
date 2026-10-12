@@ -1,0 +1,58 @@
+{
+  "id": "bait-switch",
+  "name": "Bait and switch: the learned move",
+  "engine": "Beat a defender with one move until he learns it, then beat him with another while he guesses.",
+  "about": "The first attack is for show: no shot and no stamina, and afterwards their defence is stretched in every attack. Yamal and Baena beat a man with a move until he learns it; then that defender is guessing (-2 against any other move of theirs), the room he leaves is +3 instead of +1 (Bait), and a pass meant for the watched man goes to Olmo, arriving late and unmarked (Arrives late). Once a match, the wide forwards change their runs and what the defenders learned is gone.",
+  "decisions": [
+    "Repeat the move that worked, knowing the defender will learn it: that learning is what the rest of the build spends.",
+    "Then switch: the other move, the room option, or the pass to Olmo arriving late.",
+    "Give up the first attack: no shot in it, for a stretched defence in every attack after."
+  ],
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "AD_BAIT",
+    "LN_SWAP_FLANKS",
+    "AD_DECOY_ROUTE"
+  ],
+  "players": [
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger"
+      ],
+      "traits": [
+        "AD_OVERCOMMIT"
+      ],
+      "specialisations": [
+        "TR_THREADER"
+      ]
+    },
+    {
+      "name": "Baena",
+      "roles": [
+        "winger"
+      ],
+      "traits": [
+        "AD_OVERCOMMIT"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "runner"
+      ],
+      "traits": [
+        "RO_SHADOW_STRIKER"
+      ],
+      "specialisations": [
+        "TR_COOL_HEAD"
+      ]
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CP_PASS_IT_ON"
+  }
+}

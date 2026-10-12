@@ -1,0 +1,79 @@
+{
+  "id": "late-arrival",
+  "name": "The late arrival",
+  "engine": "Fabián arrives only on the second decision of an attack: pass early, or wait for him.",
+  "about": "Timing is the build. Fabián arrives on the second decision of each attack and on no other: on that decision a new option plays him in (+2, nobody tracked him). The first decision at the edge of their box is when their defence is still running back, so a cross, cut-back or ball through needs only 3 for a clean win then. So you choose: use the early window now, or have Oyarzabal hold it up on the first decision (it costs no decision) so Fabián arrives. On defence Rodri and the whole back four never dive in on the first ball of their attack (-2), and from the second decision on they are +2 with a clean win at 3, so you drop off first and tackle second.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WE_BEFORE_SET"
+  ],
+  "players": [
+    {
+      "name": "Fabián",
+      "roles": [
+        "runner"
+      ],
+      "traits": [
+        "WE_LATE_RUNNER"
+      ],
+      "kw": []
+    },
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "target man"
+      ],
+      "traits": [
+        "WE_HOLD_UP"
+      ]
+    },
+    {
+      "name": "Rodri",
+      "roles": [
+        "ball winner"
+      ],
+      "traits": [
+        "WE_PICKS_MOMENT"
+      ]
+    },
+    {
+      "name": "Laporte",
+      "roles": [
+        "defender"
+      ],
+      "traits": [
+        "WE_PICKS_MOMENT"
+      ]
+    },
+    {
+      "name": "Cubarsí",
+      "roles": [
+        "defender"
+      ],
+      "traits": [
+        "WE_PICKS_MOMENT"
+      ]
+    },
+    {
+      "name": "Cucurella",
+      "roles": [
+        "defender"
+      ],
+      "traits": [
+        "WE_PICKS_MOMENT"
+      ]
+    },
+    {
+      "name": "Porro",
+      "roles": [
+        "defender"
+      ],
+      "traits": [
+        "WE_PICKS_MOMENT"
+      ]
+    }
+  ],
+  "captain": "Rodri"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "rattle-them",
+  "name": "Rattle them",
+  "engine": "Beat a man, tackle him cleanly or make him foul, and he is rattled until he wins one back: go at him with two dice, and the captain keeps at him.",
+  "about": "A man of theirs who is beaten or fouls stays rattled until he wins a duel against you, and every part of this team feeds on that. Yamal and Baena (wingers) and Olmo (carrier) run at their men: Run at him rattles anyone a run beats cleanly, and a winger or carrier rattles him on a half win too. Yamal draws fouls, and the man who fouls him is booked and rattled. On their attack, Rodri and Laporte are clean tacklers: the man they take it from cleanly is rattled. Go at the booked man rolls two dice on your runs at a booked or rattled man, and on your tackles against a rattled attacker. The captain, Rodri, points out every man your components rattle: once an attack, a half win against him counts as a clean win. When you lose the ball going forward, Rodri presses at once.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": ["TA_RUN_AT_HIM", "TA_BOOKED_MAN", "WB_COUNTERPRESS"],
+  "players": [
+    { "name": "Yamal", "roles": ["winger"], "traits": ["PF_DRAWS_FOULS"] },
+    { "name": "Olmo", "roles": ["carrier"], "traits": [] },
+    { "name": "Baena", "roles": ["winger"], "traits": [] },
+    { "name": "Rodri", "roles": ["ball winner", "presser"], "traits": ["WB_CLEAN_TACKLER"] },
+    { "name": "Laporte", "roles": ["defender"], "traits": ["WB_CLEAN_TACKLER"] }
+  ],
+  "captain": { "name": "Rodri", "component": "CAP_KEEP_AT_HIM" }
+}

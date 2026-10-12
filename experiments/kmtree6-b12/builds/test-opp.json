@@ -1,0 +1,13 @@
+{
+  "id": "test-opp",
+  "name": "Test opponent build: aerial keeper and pressing midfield",
+  "about": "Argentina with a keeper who comes for every high ball (+2 against your crosses and headers), a midfield that presses (your midfield options cost 4 more stamina), a tactic that keeps their attacks going, and a planned substitution at 58 minutes. Meant as the opponent's build (play.html?build=test-w0b, or ?opp=test-opp). Not balanced.",
+  "base": "argentina",
+  "opponent": "spain",
+  "slots": 3,
+  "tactics": ["TEST_PRESS_MID", "TEST_OPP_ROUTE"],
+  "players": [
+    { "name": "Martínez", "roles": ["keeper"], "traits": ["TEST_AERIAL_KEEPER"] }
+  ],
+  "subs": { "mode": "real", "plan": [ { "minute": 58, "off": "Montiel", "on": "Molina" } ] }
+}

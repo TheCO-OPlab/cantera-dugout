@@ -1,0 +1,59 @@
+{
+  "id": "test-f-keeper",
+  "name": "Test (wave F): Keeper on the floor",
+  "engine": "Hard shots their keeper cannot hold leave him on the ground and their defence scrambling: the rebound falls to a finisher who needs 3.",
+  "about": "Yamal, Olmo and Baena hit it hard: once an attack, a hard shot their keeper only saves is loose in their box and falls to Oyarzabal, your finisher, with one more decision if it was the last. Second ball does the same for any hard or long shot. Either way their keeper is on the ground and their defence is scrambling for the rest of the attack. Then your finishers are +2 on their shots and every cut-back goes to a finisher (Follow it in), Yamal's shot needs 3 (First to it), and every cross, cut-back or ball through needs 3 because their defence is not set (Before they are set). In the scramble Oyarzabal takes the loose balls, and a shot of his that would be lost is only blocked. Weaker than the two above: it needs a saved shot first.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "WE_SECOND_BALL",
+    "TA_FOLLOW_IN",
+    "WE_BEFORE_SET"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "finisher",
+        "target man"
+      ],
+      "traits": [
+        "TR_TARGET_MAN",
+        "RO_POACHER"
+      ],
+      "specialisations": [
+        "TR_COOL_HEAD"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "TR_HITS_HARD",
+        "WE_FIRST_TO_IT"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "link player"
+      ],
+      "traits": [
+        "TR_HITS_HARD"
+      ]
+    },
+    {
+      "name": "Baena",
+      "roles": [
+        "winger"
+      ],
+      "traits": [
+        "TR_HITS_HARD"
+      ]
+    }
+  ],
+  "captain": "Rodri"
+}

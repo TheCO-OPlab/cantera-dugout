@@ -1,0 +1,204 @@
+/* art2 look 1: MATCHDAY PROGRAMME.
+ * The match is laid out on a table: the Tabletop board in the middle, and
+ * everything you read is printed paper lying beside it (the masthead, the
+ * commentary column, the result slip, one profile card per option), in a
+ * serif display face with halftone shading, like the programme you buy at
+ * the ground. Light: oak table, cream newsprint, black and green ink.
+ * Dark: a walnut table under a lamp, the programme printed on dark stock
+ * with cream ink.
+ * Restyles m2's classes and tokens only; no markup, no layout. The kit
+ * colours (--kit-*) are never touched. */
+:root[data-look=programme]{
+  --f-display:"Palatino Linotype","Book Antiqua",Palatino,"Iowan Old Style","URW Palladio L",Georgia,serif;
+  --f-body:Cambria,"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --f-ui:Bahnschrift,"DIN Alternate","Franklin Gothic Medium","Arial Narrow",system-ui,sans-serif;
+  --f-num:Bahnschrift,"DIN Alternate","Franklin Gothic Medium",system-ui,sans-serif;
+  --table:#6f4a2c; --table-2:#5c3b22;
+  --paper:#f7f0dc; --on-ground:#fbf3df;
+  --ground:var(--table); --surface:#f7f0dc; --surface-2:#eee3c6; --ink:#1c1812; --ink-2:#463d2f;
+  --muted:#6a5e49; --line:#cdbd98; --accent:#1c6a3a; --accent-2:#11472a;
+  --warn:#a3301d; --gold:#80580c; --pitch:#2e6b45;
+  --bubble:#fffaeb; --bubble-line:#1c1812; --bubble-ink:#16120d;
+  --die:#fdf8ea; --die-pip:#1c1812;
+  --ht:rgba(28,24,18,.2);
+  color-scheme:light;
+}
+:root[data-look=programme][data-mode=dark]{
+  --table:#2a1a10; --table-2:#1f130b;
+  --paper:#27221b; --on-ground:#f1e6c8;
+  --ground:var(--table); --surface:#27221b; --surface-2:#312a21; --ink:#f4ead0; --ink-2:#d6c9a8;
+  --muted:#ab9d7f; --line:#4d4334; --accent:#72c98f; --accent-2:#9adcae;
+  --warn:#f28b73; --gold:#e3bb62; --pitch:#1f4d31;
+  --bubble:#2d271f; --bubble-line:#e9dcb8; --bubble-ink:#f7eed6;
+  --die:#f4ead0; --die-pip:#1c1812;
+  --ht:rgba(244,234,208,.14);
+  color-scheme:dark;
+}
+
+/* ---------------------------------------------------------------- the table */
+:root[data-look=programme] body{
+  background-color:var(--table);
+  background-image:
+    radial-gradient(120% 80% at 50% 30%,rgba(255,236,200,.10),transparent 60%),
+    repeating-linear-gradient(0deg,transparent 0 187px,rgba(0,0,0,.28) 187px 189px,rgba(255,255,255,.05) 189px 190px),
+    repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 3px,transparent 3px 11px,rgba(255,255,255,.03) 11px 13px,transparent 13px 29px),
+    linear-gradient(180deg,var(--table) 0%,var(--table-2) 100%);
+  background-attachment:fixed;
+}
+:root[data-look=programme][data-mode=dark] body{
+  background-image:
+    radial-gradient(70% 60% at 40% 35%,rgba(255,200,120,.10),transparent 70%),
+    repeating-linear-gradient(0deg,transparent 0 187px,rgba(0,0,0,.4) 187px 189px,rgba(255,255,255,.03) 189px 190px),
+    repeating-linear-gradient(0deg,rgba(0,0,0,.08) 0 3px,transparent 3px 11px,rgba(255,255,255,.02) 11px 13px,transparent 13px 29px),
+    linear-gradient(180deg,var(--table) 0%,var(--table-2) 100%);
+}
+
+/* a sheet of paper: the look of everything printed */
+:root[data-look=programme] :is(.bar,.opt,.result,.bubble,.carry,.waitcard,.intro,.endcard,.sp,.drawer,.obi,.obe,.ldet,.detbody.open,.obc-bubble,.card,.mode,.sty,details.oppd){
+  background-color:var(--paper);
+}
+
+/* ---------------------------------------------------------------- masthead */
+:root[data-look=programme] .bar{
+  border-bottom:0;border-radius:2px;
+  box-shadow:0 0 0 10px var(--paper),0 0 0 11px color-mix(in srgb,var(--ink) 25%,transparent),0 14px 22px 8px rgba(0,0,0,.35);
+  background-image:linear-gradient(var(--ink),var(--ink));background-size:100% 3px;background-position:0 100%;background-repeat:no-repeat;
+}
+:root[data-look=programme] .bar h1{font-family:var(--f-display);font-style:italic;font-weight:700;letter-spacing:.005em}
+:root[data-look=programme] .inmatch .bar h1,:root[data-look=programme] .bar h1{font-size:25px}
+:root[data-look=programme] .bar .tag{font-family:var(--f-body);font-style:italic;color:var(--ink-2)}
+:root[data-look=programme] .score{--ff:var(--f-display);font-weight:700;letter-spacing:.02em}
+:root[data-look=programme] .clock{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- buttons */
+:root[data-look=programme] button.ghost{background:var(--paper);border:1px solid color-mix(in srgb,var(--ink) 45%,transparent);border-radius:3px;color:var(--ink);
+  font-family:var(--f-ui);letter-spacing:.02em}
+:root[data-look=programme] button.ghost:hover{border-color:var(--ink);background:var(--surface-2)}
+:root[data-look=programme] .pctl button.ghost{box-shadow:0 2px 6px rgba(0,0,0,.3)}
+:root[data-look=programme] .pctl .spd button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+:root[data-look=programme] button.go{background:var(--ink);border-color:var(--ink);color:var(--paper);border-radius:3px;
+  font-family:var(--f-display);font-style:italic;letter-spacing:.02em}
+:root[data-look=programme] #sndbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+
+/* ---------------------------------------------------------------- the board */
+:root[data-look=programme] .field.cv .pbox{box-shadow:0 2px 0 rgba(0,0,0,.35),0 18px 34px rgba(0,0,0,.5);border-radius:4px}
+/* words that lie on the table are printed on a paper strip */
+:root[data-look=programme] :is(.field .ends,.teamkey,.comm-who,.cardshead,#foot){
+  background:var(--paper);border-radius:2px;box-shadow:0 0 0 3px var(--paper),0 4px 10px 2px rgba(0,0,0,.28);color:var(--ink-2)}
+:root[data-look=programme] #foot:empty{background:none;box-shadow:none}
+:root[data-look=programme] .field .ends{--ff:var(--f-ui);letter-spacing:.08em}
+:root[data-look=programme] .field .car{--ff:var(--f-display);font-size:14px;font-style:italic}
+:root[data-look=programme] .teamkey{display:inline-block;padding:0 4px;color:var(--ink-2)}
+:root[data-look=programme] .comm-who{display:flex;width:max-content;max-width:100%;padding:0 6px;margin-left:0;color:var(--ink)}
+:root[data-look=programme] .comm-who svg{background:var(--ink);color:var(--paper)}
+:root[data-look=programme] .cardshead{display:inline-block;padding:0 6px}
+
+/* ---------------------------------------------------------------- the result slip */
+:root[data-look=programme] .result{position:relative;border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);border-radius:3px;
+  box-shadow:0 1px 0 rgba(0,0,0,.2),0 10px 18px rgba(0,0,0,.32);border-left-width:6px}
+:root[data-look=programme] .result.won{border-left-color:var(--accent)}
+:root[data-look=programme] .result.lost{border-left-color:var(--warn)}
+:root[data-look=programme] .result.goal{border-color:var(--accent);background-color:color-mix(in srgb,var(--accent) 12%,var(--paper))}
+:root[data-look=programme] .result.conceded{border-color:var(--warn);background-color:color-mix(in srgb,var(--warn) 10%,var(--paper))}
+/* halftone shading fading in from the right edge of the slip */
+:root[data-look=programme] .result::after{content:"";position:absolute;right:0;top:0;bottom:0;width:34%;pointer-events:none;
+  background:radial-gradient(circle,var(--ht) 0 1.15px,transparent 1.5px) 0 0/5px 5px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000);mask-image:linear-gradient(90deg,transparent,#000)}
+:root[data-look=programme] .result .verdict{--ff:var(--f-display);font-weight:700;font-style:italic;letter-spacing:0}
+:root[data-look=programme] .result .headline{font-family:var(--f-display);font-weight:700}
+:root[data-look=programme] .result .side small{color:var(--ink-2)}
+:root[data-look=programme] .result .side small .st{color:var(--muted)}
+:root[data-look=programme] .result .kick,:root[data-look=programme] .result .sum{color:var(--ink-2)}
+:root[data-look=programme] .die,:root[data-look=programme] .jz-die{border-radius:6px;border-width:1.5px;
+  background:radial-gradient(circle at 30% 25%,#fff 0,var(--die) 60%);box-shadow:0 3px 0 var(--die-pip),0 6px 10px rgba(0,0,0,.25)}
+
+/* ---------------------------------------------------------------- the commentary column */
+:root[data-look=programme] .bubble{border-width:1.5px;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),0 10px 18px rgba(0,0,0,.32)}
+:root[data-look=programme] .bubble .scene{font-family:var(--f-display);font-weight:700;letter-spacing:0}
+:root[data-look=programme] .bubble .lead{font-style:italic}
+:root[data-look=programme] .chip .cmin{background:var(--ink);color:var(--paper);border-color:var(--ink);border-radius:2px}
+:root[data-look=programme] .who.you{background:var(--accent);color:var(--paper)}
+:root[data-look=programme] .who.them{background:var(--warn);color:var(--paper)}
+:root[data-look=programme] .carry{border:1px dashed color-mix(in srgb,var(--gold) 70%,transparent);border-radius:3px;box-shadow:0 8px 16px rgba(0,0,0,.28)}
+:root[data-look=programme] .carry .carry-head{color:var(--gold)}
+
+/* ---------------------------------------------------------------- the option cards: player profiles */
+:root[data-look=programme] .opt{border:1px solid color-mix(in srgb,var(--ink) 28%,transparent);border-radius:3px;
+  box-shadow:inset 0 4px 0 var(--ink),0 1px 0 rgba(0,0,0,.2),0 8px 16px rgba(0,0,0,.3);
+  transition:transform .14s ease,box-shadow .14s ease,border-color .14s}
+:root[data-look=programme] .opt b,:root[data-look=programme] .opt.lean .lact{font-family:var(--f-display);font-size:16.5px;letter-spacing:0}
+:root[data-look=programme] .opt .desc{font-size:14px}
+:root[data-look=programme] :is(.opt:hover,.opt.art2-hov):not(.dead){border-color:var(--ink);transform:translateY(-3px) rotate(-.35deg);
+  box-shadow:inset 0 4px 0 var(--accent),0 2px 0 rgba(0,0,0,.2),0 18px 28px rgba(0,0,0,.42)}
+:root[data-look=programme] .opt.kw{box-shadow:inset 0 4px 0 var(--gold),0 1px 0 rgba(0,0,0,.2),0 8px 16px rgba(0,0,0,.3)}
+:root[data-look=programme] .opt.certain{box-shadow:inset 0 4px 0 var(--accent),inset 4px 0 0 var(--accent),0 8px 16px rgba(0,0,0,.3)}
+:root[data-look=programme] .opt.dead{opacity:.8;background-color:var(--surface-2);box-shadow:0 4px 10px rgba(0,0,0,.2);border-style:dashed}
+:root[data-look=programme] .opt.dead :is(b,.out,.why,.pl){color:var(--muted)}
+:root[data-look=programme] .opt .outc-head{--ff:var(--f-ui);color:var(--muted)}
+:root[data-look=programme] .optw.chosen .opt{box-shadow:inset 0 4px 0 var(--accent),0 0 0 3px var(--accent),0 12px 22px rgba(0,0,0,.4)}
+:root[data-look=programme] .opt .unl{background:color-mix(in srgb,var(--gold) 16%,var(--paper));border-color:var(--gold);border-radius:2px}
+:root[data-look=programme] .optw .det{background:var(--paper);border-radius:2px}
+:root[data-look=programme] .ldet,:root[data-look=programme] .detbody.open{box-shadow:0 10px 18px rgba(0,0,0,.32);border-radius:0 0 3px 3px}
+
+/* ---------------------------------------------------------------- stats */
+:root[data-look=programme] .sp{border-radius:3px;box-shadow:0 8px 16px rgba(0,0,0,.3)}
+:root[data-look=programme] #statsbox.pop .sp:not(.collapsed) .sp-body{background:var(--paper);border-radius:3px}
+:root[data-look=programme] .sp-head h2{--ff:var(--f-display);font-style:italic;text-transform:none;letter-spacing:0;font-size:14px}
+
+/* ---------------------------------------------------------------- the title: a programme cover */
+:root[data-look=programme] .obi{position:relative;border:1px solid var(--ink);border-radius:2px;
+  box-shadow:inset 0 0 0 6px var(--paper),inset 0 0 0 7px var(--ink),0 2px 0 rgba(0,0,0,.3),0 30px 60px rgba(0,0,0,.5);
+  background-image:none}
+:root[data-look=programme] .obi::after{content:"";position:absolute;left:8px;right:8px;bottom:8px;height:42%;pointer-events:none;
+  background:radial-gradient(circle,var(--ht) 0 1.3px,transparent 1.7px) 0 0/6px 6px;
+  -webkit-mask-image:linear-gradient(0deg,#000,transparent);mask-image:linear-gradient(0deg,#000,transparent)}
+:root[data-look=programme] .obi-kick{--ff:var(--f-ui);color:var(--ink-2);letter-spacing:.18em;border-bottom:3px double var(--ink);padding-bottom:8px}
+:root[data-look=programme] .obi-team b{--ff:var(--f-display);font-size:38px;font-style:italic;letter-spacing:-.01em}
+:root[data-look=programme] .obi-vs{--ff:var(--f-display);color:var(--ink-2)}
+:root[data-look=programme] .obi-line{font-family:var(--f-body)}
+:root[data-look=programme] .obi-start{box-shadow:0 4px 0 color-mix(in srgb,var(--ink) 60%,#000),0 10px 18px rgba(0,0,0,.3)}
+:root[data-look=programme] svg.obi-pitch{filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+:root[data-look=programme] svg.obi-pitch .t{fill:#2e6b45}
+:root[data-look=programme] svg.obi-pitch .c{stroke:rgba(247,240,220,.8)}
+:root[data-look=programme] svg.obi-pitch .arr path{stroke:#f2c14e}
+:root[data-look=programme] .obi-link{color:var(--ink-2);text-decoration-color:var(--muted)}
+
+/* ---------------------------------------------------------------- full time: the back page */
+:root[data-look=programme] .obe-back{background:rgba(20,12,6,.55)}
+:root[data-look=programme] .obe{color:var(--ink);border:1px solid var(--ink);border-radius:2px;
+  background-image:radial-gradient(circle,var(--ht) 0 1.2px,transparent 1.6px);background-size:6px 6px;background-position:0 0;
+  box-shadow:inset 0 0 0 6px var(--paper),inset 0 0 0 7px var(--ink),0 30px 60px rgba(0,0,0,.55)}
+:root[data-look=programme] .obe{background-image:linear-gradient(var(--paper),var(--paper)),radial-gradient(circle,var(--ht) 0 1.2px,transparent 1.6px);
+  background-size:100% 70%,6px 6px;background-repeat:no-repeat,repeat}
+:root[data-look=programme] .obe .obe-kick{color:var(--ink-2);border-bottom:3px double var(--ink);padding-bottom:8px}
+:root[data-look=programme] .obe-t b,:root[data-look=programme] .obe-n{--ff:var(--f-display);color:var(--ink);text-shadow:none}
+:root[data-look=programme] .obe-t b{font-style:italic}
+:root[data-look=programme] .obe-t .obe-sc{color:var(--ink-2)}
+:root[data-look=programme] .obe.won .obe-verdict{color:var(--accent)}
+:root[data-look=programme] .obe.lost .obe-verdict{color:var(--warn)}
+:root[data-look=programme] .obe.drew .obe-verdict{color:var(--ink-2)}
+:root[data-look=programme] .obe-h{color:var(--ink-2)}
+:root[data-look=programme] .obe-m{background:var(--paper);border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);border-radius:2px}
+:root[data-look=programme] .obe-m.g{background:color-mix(in srgb,var(--accent) 14%,var(--paper));border-color:var(--accent)}
+:root[data-look=programme] .obe-m.r{background:color-mix(in srgb,var(--warn) 12%,var(--paper));border-color:var(--warn)}
+:root[data-look=programme] .obe-min,:root[data-look=programme] .obe-who{color:var(--ink-2)}
+:root[data-look=programme] .obe-w,:root[data-look=programme] .obe-pn,:root[data-look=programme] .obe-pn .pl,
+:root[data-look=programme] .obe-kl,:root[data-look=programme] .obe-kl .pl{color:var(--ink)}
+:root[data-look=programme] .obe-pn{--ff:var(--f-display);font-style:italic}
+:root[data-look=programme] .obe-pn small,:root[data-look=programme] .obe-pl{color:var(--ink-2)}
+:root[data-look=programme] .obe .oi.g{color:var(--accent)} :root[data-look=programme] .obe .oi.r{color:var(--warn)} :root[data-look=programme] .obe .oi.n{color:var(--ink-2)}
+:root[data-look=programme] .obe-potm,:root[data-look=programme] .obe-key{background:var(--paper);border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);border-radius:2px}
+:root[data-look=programme] .obe-key{border-left:5px solid var(--ink-2)} :root[data-look=programme] .obe-key.g{border-left-color:var(--accent)} :root[data-look=programme] .obe-key.r{border-left-color:var(--warn)}
+:root[data-look=programme] .obe-btns .ghost{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+:root[data-look=programme] .obe-more{color:var(--ink-2)}
+:root[data-look=programme] .obe-report{background:var(--surface-2)}
+:root[data-look=programme] .obe-report .reason b{color:var(--ink)} :root[data-look=programme] .obe-report .reason span{color:var(--ink-2)}
+
+/* ---------------------------------------------------------------- tips and panels */
+:root[data-look=programme] .obc-bubble{border-radius:3px;border-color:var(--gold)}
+:root[data-look=programme] .obc-step{color:var(--gold)}
+:root[data-look=programme] .obc-text{--ff:var(--f-display)}
+:root[data-look=programme] .drawer{box-shadow:-10px 0 30px rgba(0,0,0,.45)}
+/* locked while the result plays: faded print, not see-through paper */
+:root[data-look=programme] #cards.locked .optw:not(.chosen){opacity:1;filter:grayscale(1) contrast(.5) brightness(1.08)}
+:root[data-look=programme][data-mode=dark] #cards.locked .optw:not(.chosen){filter:grayscale(1) contrast(.6) brightness(.8)}

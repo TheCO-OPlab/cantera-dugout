@@ -1,0 +1,58 @@
+{
+ "id": "starter-a-attention",
+ "name": "Starter A: where is their attention?",
+ "family": "A",
+ "engine": "Keep the ball away from Oyarzabal so a centre-back stays on him, and let Fabián and Olmo take what was meant for him.",
+ "about": "The watched man. At the start of each attack a centre-back of theirs goes wherever Oyarzabal goes (Decoy): until Oyarzabal touches the ball, anything through him is -2 and a move by anyone else against one of their defenders in their half is +1. In their half, a pass or cross meant for the watched man goes to Fabián instead, at +2 (Arrives late); a pull-back or a ball across the goal stays with its man. Every cut-back and low cross goes to Olmo (Nominated receiver). Guessing is on for both teams in every match: their defence remembers the last kind of move each of your players tried.",
+ "decisions": [
+  "Keep the ball away from Oyarzabal: the moment he touches it, the +1 is over for that attack.",
+  "Play the pass to the watched man on purpose when Fabián is on the pitch: it goes to Fabián at +2.",
+  "Rotate who delivers the cut-back to Olmo: the deliverer who repeats himself gets read."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "link player"
+   ],
+   "traits": [
+    "WE_DECOY"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "WE_ARRIVES_LATE"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "finisher"
+   ],
+   "traits": [
+    "RT_NOMINATE"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  }
+ ],
+ "captain": "Rodri"
+}

@@ -1,0 +1,62 @@
+{
+ "id": "starter-mix",
+ "name": "Starter mix: decoy or target?",
+ "family": "mix",
+ "engine": "Pull their attention with the decoy, or pick on a rattled man: most decisions feed one of them, not both.",
+ "about": "One piece or two from each family. Oyarzabal is the decoy and Fabián arrives late for the pass meant for a watched man (A). Once in the first half you may play an attack for show, and every attack after it has their defence stretched from its second decision (B; Guessing is on for both teams in every match). Run at him rattles a man a run or carry beats (a half win is enough), and captain Rodri turns one half win a possession against a rattled man into a clean win (C). On their attacks you sit deep (D).",
+ "decisions": [
+  "Keep the ball away from Oyarzabal, or run at the man in front of you: the decoy wants passes, the target wants runs.",
+  "Spend the show attack early: every later attack is stretched.",
+  "Sitting deep makes your tackles -1: a rattled attacker is harder to punish on defence."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "AD_DECOY_ROUTE",
+  "TA_RUN_AT_HIM",
+  "WC_SIT_DEEP"
+ ],
+ "players": [
+  {
+   "name": "Oyarzabal",
+   "roles": [
+    "link player"
+   ],
+   "traits": [
+    "WE_DECOY"
+   ]
+  },
+  {
+   "name": "Fabián",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "WE_ARRIVES_LATE"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "winger"
+   ]
+  },
+  {
+   "name": "Olmo",
+   "roles": [
+    "carrier"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "winger"
+   ]
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "CAP_KEEP_AT_HIM"
+ }
+}

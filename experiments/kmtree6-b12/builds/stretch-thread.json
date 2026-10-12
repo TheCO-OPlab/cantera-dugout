@@ -1,0 +1,63 @@
+{
+  "id": "stretch-thread",
+  "name": "Stretch and thread",
+  "engine": "Switch the play to stretch their defence; then a half-won pass through still reaches Olmo in the gap.",
+  "about": "Rodri's long diagonal (a half win is enough), or any attack that goes from one flank to the other on consecutive decisions, leaves their defence stretched for the rest of the attack: +2 to every pass through, cut-back, pull-back and pass across the goal. Against a stretched defence Yamal's pass through or cut-back gets there even on a half win (Threads it), and it goes to Olmo, who gets into the gap unmarked (Runs the channels); unmarked, a clean win on his shot needs only 2 (Cool head). Baena can cut inside from the left, which opens the left behind him.",
+  "decisions": [
+    "Switch first, thread later: the switch is worth more than its own odds, because it stretches them for the whole attack.",
+    "Go wide to one side, then the other, instead of straight through the middle.",
+    "Thread it on a half-win chance: against a stretched defence the pass that half works still arrives, and it goes to Olmo."
+  ],
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "SE_ALTERNATE",
+    "EX_STACK_EDGES"
+  ],
+  "players": [
+    {
+      "name": "Rodri",
+      "roles": [
+        "playmaker"
+      ],
+      "traits": [
+        "TR_SWITCHER"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger"
+      ],
+      "specialisations": [
+        "TR_THREADER"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "runner"
+      ],
+      "traits": [
+        "TR_CHANNEL_RUNNER"
+      ],
+      "specialisations": [
+        "TR_COOL_HEAD"
+      ]
+    },
+    {
+      "name": "Baena",
+      "roles": [
+        "winger"
+      ],
+      "traits": [
+        "RO_INSIDE_FORWARD"
+      ]
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CP_PASS_IT_ON"
+  }
+}

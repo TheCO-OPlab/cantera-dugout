@@ -1,0 +1,49 @@
+{
+  "id": "foul-factory",
+  "name": "The foul factory",
+  "engine": "Yamal's lost runs become fouls, and each free kick is a menu of rehearsed routines.",
+  "about": "Yamal goes looking for contact: fewer of his runs come off cleanly, but once a moment a lost run is a foul instead, a free kick at the edge of their box and a booking. A booked man cannot risk a tackle, so the next run at him rolls two dice. Every free kick at the edge of their box is rehearsed: Baena's quick free kick before their wall is set, or the near-post flick, with Laporte coming up to win it, as well as Baena's shot. Baena's own free kicks need only 3 for a clean win, and one that hits the wall comes back to him. Each routine they see is -2 next time, so you alternate. Captain Rodri lets Yamal's once-a-moment foul work once more each half.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "SP_ROUTINES",
+    "TA_BOOKED_MAN"
+  ],
+  "players": [
+    {
+      "name": "Yamal",
+      "roles": [
+        "carrier",
+        "winger"
+      ],
+      "traits": [
+        "PF_DRAWS_FOULS"
+      ]
+    },
+    {
+      "name": "Baena",
+      "roles": [
+        "set-piece taker",
+        "carrier"
+      ],
+      "traits": [
+        "TR_DEAD_BALL"
+      ]
+    },
+    {
+      "name": "Laporte",
+      "roles": [
+        "target man",
+        "defender"
+      ],
+      "traits": [
+        "TR_TARGET_MAN"
+      ]
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CAP_ENCORE"
+  }
+}

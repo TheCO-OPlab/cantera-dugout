@@ -1,0 +1,17 @@
+{
+  "id": "test-all",
+  "name": "Test build: every hook",
+  "about": "The five w0 test components on Spain, so every hook in the effects layer is in play at once. Not balanced and not for playtesting: it exists to show the plumbing works.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": ["TEST_ROUTE", "TEST_MENU"],
+  "players": [
+    { "name": "Oyarzabal", "roles": ["finisher"], "traits": ["TEST_DUEL"] },
+    { "name": "Yamal", "roles": ["winger", "carrier"], "traits": ["TEST_READ"] },
+    { "name": "Rodri", "roles": ["playmaker"] },
+    { "name": "Fabián", "roles": ["runner"] }
+  ],
+  "relationships": [ { "component": "TEST_ENGINE", "a": "Rodri", "b": "Fabián" } ],
+  "captain": { "name": "Rodri", "component": "TEST_ECHO" }
+}

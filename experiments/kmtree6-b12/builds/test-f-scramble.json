@@ -1,0 +1,46 @@
+{
+  "id": "test-f-scramble",
+  "name": "Test (wave F): scrambling from set pieces and knock-downs",
+  "about": "Wave F test build: scrambling made by Broken play, the target man's knock-down and the near-post flick, read by Before they are set and the poacher; the drag that leaves a man on his own.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 4,
+  "tactics": [
+    "WE_BROKEN",
+    "SP_ROUTINES",
+    "WE_BEFORE_SET",
+    "TA_ISOLATE"
+  ],
+  "players": [
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "target man"
+      ],
+      "traits": [
+        "TR_TARGET_MAN",
+        "TR_DRAG",
+        "TR_WALL"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "RO_POACHER"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger"
+      ],
+      "traits": [
+        "PF_DRAWS_FOULS"
+      ]
+    }
+  ],
+  "captain": "Rodri"
+}

@@ -1,0 +1,77 @@
+{
+  "id": "captains-engine",
+  "name": "The captain's engine",
+  "engine": "Spend stamina on extra passes; covering partners and the captain keep the stamina coming.",
+  "about": "Stamina is the currency. Twice an attack a short pass can be paid for with legs instead of a decision, so every breather the team earns buys another pass before the shot. Fabián covers half of Yamal's running, Cubarsí half of Olmo's; Rodri breathes again after a clean recovery; tired men find a second wind. Captain Rodri gives the same breather again once a moment, up to three times a match.",
+  "base": "spain",
+  "opponent": "argentina",
+  "slots": 3,
+  "tactics": [
+    "EC_PAY_WITH_LEGS",
+    "SE_RHYTHM"
+  ],
+  "players": [
+    {
+      "name": "Rodri",
+      "roles": [
+        "playmaker",
+        "ball winner"
+      ],
+      "traits": [
+        "WB_BREATHES"
+      ]
+    },
+    {
+      "name": "Olmo",
+      "roles": [
+        "link player"
+      ],
+      "traits": [
+        "TR_SECOND_WIND"
+      ]
+    },
+    {
+      "name": "Oyarzabal",
+      "roles": [
+        "finisher"
+      ],
+      "traits": [
+        "TR_SECOND_WIND"
+      ]
+    },
+    {
+      "name": "Fabián",
+      "roles": [
+        "runner"
+      ]
+    },
+    {
+      "name": "Yamal",
+      "roles": [
+        "winger"
+      ]
+    },
+    {
+      "name": "Cubarsí",
+      "roles": [
+        "outlet"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "component": "LK_COVERS",
+      "a": "Fabián",
+      "b": "Yamal"
+    },
+    {
+      "component": "LK_COVERS",
+      "a": "Cubarsí",
+      "b": "Olmo"
+    }
+  ],
+  "captain": {
+    "name": "Rodri",
+    "component": "CAP_LEADS"
+  }
+}

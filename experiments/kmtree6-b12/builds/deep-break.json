@@ -1,0 +1,67 @@
+{
+ "id": "deep-break",
+ "name": "Defend deep, break fast",
+ "engine": "Sit deep and cover; every ball you win finds them stretched, goes to Yamal unmarked, and the first pass of the break is free.",
+ "about": "You sit deep: covering, dropping back and blocking are +1, and a stop near your box wins you the ball instead of just ending their attack. Every ball you win catches their men upfield (their team is stretched for your attack) and goes straight to Yamal, your quickest forward. The first decision of that break is +1 for forward play and free; with Yamal and Baena both runners, a clean stop gives the break one more decision; when Rodri let them come, the break gets another. Against a stretched team, Yamal's half win on a run counts as a clean win (once an attack), and Rodri as captain makes the defence's edges add up on that first decision.",
+ "decisions": [
+  "On defence, cover and drop back rather than tackle: the stop is what starts your attack.",
+  "On the break, go forward on the first decision: waiting throws away the free decision and the +1.",
+  "Let them come (Rodri drops off) when you can afford it: it costs you ground but buys the break a decision."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "against": "opp-press-mid",
+ "slots": 3,
+ "tactics": [
+  "WC_SIT_DEEP",
+  "WC_BREAK",
+  "WC_PACE_IN_NUMBERS"
+ ],
+ "players": [
+  {
+   "name": "Cubarsí",
+   "roles": [
+    "defender"
+   ],
+   "traits": [
+    "WC_OUTLET"
+   ]
+  },
+  {
+   "name": "Yamal",
+   "roles": [
+    "runner"
+   ],
+   "traits": [
+    "WC_CAUGHT_UPFIELD"
+   ]
+  },
+  {
+   "name": "Baena",
+   "roles": [
+    "runner"
+   ]
+  },
+  {
+   "name": "Rodri",
+   "roles": [
+    "ball winner"
+   ],
+   "traits": [
+    "WC_LETS_THEM_COME"
+   ]
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "WC_DEFENCE_TO_ATTACK"
+ },
+ "bench": [
+  "Torres",
+  "Pedri",
+  "Merino",
+  "Williams",
+  "Zubimendi",
+  "García"
+ ]
+}

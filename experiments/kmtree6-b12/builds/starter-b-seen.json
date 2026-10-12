@@ -1,0 +1,20 @@
+{
+ "id": "starter-b-seen",
+ "name": "Starter B: what have they seen?",
+ "family": "B",
+ "engine": "Pick one first-half attack to play for show, and change each man's kind of move so their defence is set for the wrong thing.",
+ "about": "Their defence learns. Guessing is a rule of every match for both teams: each defence remembers the last kind of move each attacker tried (a run, a cross, a cut-back, a ball in behind, a pass); the same kind again from him is +2 to the defender, any other kind +2 to him. Show them one side: once, on the first decision of one of your first-half attacks, press \"Show them this attack\". That attack is for show (nothing in it can end in a goal, and it costs no stamina) and every attack after it has their defence stretched from its second decision (+2 to a pass through, a cut-back, a pull-back or a pass across the goal).",
+ "decisions": [
+  "Choose which attack to give away: an attack that starts deep costs you little to play for show.",
+  "Change each man's kind of move: the same move twice from one man is +2 to his defender.",
+  "On defence, meet their man the way he came last time: that is +2 to your defender."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "AD_DECOY_ROUTE"
+ ],
+ "players": [],
+ "captain": "Rodri"
+}

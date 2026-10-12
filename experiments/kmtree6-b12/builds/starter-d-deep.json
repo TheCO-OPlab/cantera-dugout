@@ -1,0 +1,33 @@
+{
+ "id": "starter-d-deep",
+ "name": "Starter D: how deep do we defend?",
+ "family": "D",
+ "engine": "Sit back, keep one foul in hand for the attack that matters, then turn every clean stop into an attack with a head start.",
+ "about": "Defence and transition. On their attacks, covering, dropping back, blocking and marking are +1, and tackling and pressing -1; a stop near your box wins you the ball, and the attack that starts from a won ball finds their team stretched (Sit deep). When their attack is in midfield or at the edge of your box, Rodri can pull their man down: their attack stops and he is booked, after which he cannot do it again and his tackles, presses, interceptions and double teams are -1 (Tactical fouler, Rodri). A clean win on defence gives the attack it starts +1, and in that attack the edges you carry add up (Defence into attack, captain Rodri).",
+ "decisions": [
+  "Cover and drop back rather than tackle: the stop is what starts your attack.",
+  "Rodri's foul works once: spend it on the attack that would hurt most.",
+  "After a clean stop, go forward at once: the edges add up in that attack."
+ ],
+ "base": "spain",
+ "opponent": "argentina",
+ "slots": 3,
+ "tactics": [
+  "WC_SIT_DEEP"
+ ],
+ "players": [
+  {
+   "name": "Rodri",
+   "roles": [
+    "ball winner"
+   ],
+   "traits": [
+    "WS_TACTICAL_FOULER"
+   ]
+  }
+ ],
+ "captain": {
+  "name": "Rodri",
+  "component": "WC_DEFENCE_TO_ATTACK"
+ }
+}
